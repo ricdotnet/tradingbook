@@ -7,7 +7,7 @@ import bodyParser from "body-parser";
 import cors from 'cors'
 import helmet from 'helmet'
 
-import {tradeRouter} from "./routes/tradeRouter";
+import {router} from "./routes/router";
 
 dotenv.config()
 
@@ -26,7 +26,7 @@ APP.use(express.json())
 APP.use(helmet())
 APP.use(cors())
 
-APP.use('/trades', tradeRouter)
+APP.use(router)
 
 /**
  * Server Activation
