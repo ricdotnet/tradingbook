@@ -2,8 +2,14 @@ import express from "express";
 
 const router: express.Router = express.Router();
 
-import {tradeRouter} from "./tradeRouter";
+/**
+ * Define router imports
+ */
+import {userRouter} from "./userRouter";
 
-router.use('/trades', tradeRouter)
+/**
+ * Define main routes
+ */
+router.use('/user', userRouter)
 
 export {router}
