@@ -3,7 +3,7 @@ import {Request, Response, NextFunction} from "express";
 import {getConnection} from "typeorm";
 import {User} from "../entity/User";
 
-import {UserInterface} from "../interface/userInterface";
+import {RequestInterface} from "../interface/requestInterface";
 
 export async function createNewUser(req: Request, res: Response, next: NextFunction) {
 
@@ -54,7 +54,7 @@ export async function createNewUser(req: Request, res: Response, next: NextFunct
   next()
 }
 
-export async function loginExistingUser(req: UserInterface, res: Response, next: NextFunction) {
+export async function loginExistingUser(req: RequestInterface, res: Response, next: NextFunction) {
 
   let username: string = req.body.username
   let password: string = req.body.password
@@ -83,7 +83,7 @@ export async function loginExistingUser(req: UserInterface, res: Response, next:
   if(password !== user.password)
     return res.status(400).send({message: 'Wrong password.'})
 
-  req.userId = user.id
+  req.userId = user.userId
 
   next()
 }

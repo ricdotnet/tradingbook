@@ -3,15 +3,11 @@ import {User} from "./User";
 
 @Entity('trades')
 export class Trade {
-  constructor() {
-    this.id = ''
-    this.user = ''
-  }
 
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  tradeId?: string
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, user => user.userId)
   @Column('uuid')
-  user: string
+  userId?: string
 }

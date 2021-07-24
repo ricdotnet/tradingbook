@@ -3,39 +3,29 @@ import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn} from "typeorm"
 @Entity("users")
 export class User {
 
-  constructor() {
-    this.id = ''
-    this.username = ''
-    this.password = ''
-    this.email = ''
-    this.firstName = ''
-    this.lastName = ''
-    this.createdAt = ''
-  }
-
   @PrimaryGeneratedColumn("uuid")
-  id: string;
+  userId?: string
 
   @Column()
-  username: string
+  username?: string
 
   @Column()
-  password: string
+  password?: string
 
   @Column()
-  email: string
+  email?: string
 
   @Column({
     nullable: true
   })
-  firstName: string;
+  firstName?: string;
 
   @Column({
     nullable: true
   })
-  lastName: string;
+  lastName?: string;
 
   @CreateDateColumn()
-  createdAt: string
+  createdAt?: string
 
 }
