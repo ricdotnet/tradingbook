@@ -1,7 +1,8 @@
 import express, {Request, Response} from "express";
 import {encode} from '../services/tokenService'
 import {createNewUser, loginExistingUser} from '../controllers/userController'
-import {randomUUID} from "crypto";
+
+import {UserInterface} from "../interface/userInterface";
 
 const userRouter = express.Router();
 
@@ -13,27 +14,19 @@ type user = {
 };
 type body = JSON;
 
-userRouter.post('/login', loginExistingUser, (req: Request, res: Response) => {
+userRouter.post('/login', loginExistingUser, (req: UserInterface, res: Response) => {
 
-  // let token: any = encode(userId, true)
+  let token: any = encode(req.userId!, true)
 
-  res.status(200).send({message: 'logged in'})
+  res.status(200).send({loggedIn: true, token: token})
 });
 
 userRouter.post('/register', createNewUser, (req: Request, res: Response) => {
+  /**
+   * Any necessary last checks before ending the request
+   */
 
-  let username: user['username'] = req.body.username
-  let password: user['password'] = req.body.password
-  let email: user['email'] = req.body.email
-
-  let user: user = {
-    userId: randomUUID(),
-    username: username,
-    password: password,
-    email: email
-  }
-
-  res.status(200).send({message: 'registered'})
+  res.status(200).send({message: 'Account registered successfully.'})
 })
 
 export {userRouter}

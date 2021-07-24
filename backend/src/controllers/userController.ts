@@ -1,41 +1,89 @@
 import {Request, Response, NextFunction} from "express";
 
-function exists(type: string, value: string): boolean {
+import {getConnection} from "typeorm";
+import {User} from "../entity/User";
 
-  if (type === 'username') {
-    return value === process.env.USERNAME
+import {UserInterface} from "../interface/userInterface";
+
+export async function createNewUser(req: Request, res: Response, next: NextFunction) {
+
+  let username: string = req.body.username
+  let password: string = req.body.password
+  let email: string = req.body.email
+
+  if(!username)
+    return res.status(400).send({message: 'Please enter a username.'})
+
+  if(!password)
+    return res.status(400).send({message: 'Please enter a password.'})
+
+  if(!email)
+    return res.status(400).send({message: 'Please enter an email address.'})
+
+  let usernameExists: number = await getConnection()
+    .getRepository(User)
+    .createQueryBuilder( 'user')
+    .where('user.username = :username', {username: username})
+    .getCount()
+
+  if(usernameExists > 0) {
+    return res.status(400).send({ message: 'Username already registered.'})
   }
 
-  if (type === 'email') {
-    return value === process.env.EMAIL
+  let emailExists: number = await getConnection()
+    .getRepository(User)
+    .createQueryBuilder('user')
+    .where('user.email = :email', {email: email})
+    .getCount()
+
+  if(emailExists > 0) {
+    return res.status(400).send({message: 'Email already registered.'})
   }
 
-  if(type === 'password') {
-    return value === process.env.PASSWORD
-  }
-
-  return true;
-}
-
-export function createNewUser(req: Request, res: Response, next: NextFunction) {
-
-  if (exists('username', req.body.username))
-    return res.status(400).send({message: 'username exists'})
-
-  if (exists('email', req.body.email))
-    return res.status(400).send({message: 'email exists'})
+  await getConnection()
+    .createQueryBuilder()
+    .insert()
+    .into(User)
+    .values({
+      username: username,
+      password: password,
+      email: email
+    })
+    .execute()
 
   next()
 }
 
-export function loginExistingUser(req: Request, res: Response, next: NextFunction) {
-  if (!exists('username', req.body.username)) {
-    return res.status(400).send({message: 'username does not exist'})
-  }
+export async function loginExistingUser(req: UserInterface, res: Response, next: NextFunction) {
 
-  if(!exists('password', req.body.password)) {
-    return res.status(400).send({message: 'your password is wrong'})
-  }
+  let username: string = req.body.username
+  let password: string = req.body.password
+
+  if(!username)
+    return res.status(400).send({message: 'Please enter a username.'})
+
+  if(!password)
+    return res.status(400).send({message: 'Please enter a password.'})
+
+  /**
+   * TODO
+   * change this function to be more secure...
+   * as it stands it is for test purposes only...
+   */
+
+  let user = await getConnection()
+    .getRepository(User)
+    .createQueryBuilder('user')
+    .where('username = :username', {username: username})
+    .getOne()
+
+  if(!user)
+    return res.status(400).send({message: 'No user found with those details.'})
+
+  if(password !== user.password)
+    return res.status(400).send({message: 'Wrong password.'})
+
+  req.userId = user.id
 
   next()
 }
