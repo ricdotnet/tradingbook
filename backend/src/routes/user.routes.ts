@@ -5,7 +5,7 @@ import {auth} from "../services/auth.service";
 
 import {RequestInterface} from "../interface/request.interface";
 
-const userRoutes = express.Router();
+export const userRoutes = express.Router();
 
 userRoutes.post('/login', loginExistingUser, (req: RequestInterface, res: Response) => {
 
@@ -28,5 +28,3 @@ userRoutes.post('/authenticate', auth, (req: RequestInterface, res: Response) =>
     res.status(200).send(req.decoded)
   }
 })
-
-export {userRoutes}

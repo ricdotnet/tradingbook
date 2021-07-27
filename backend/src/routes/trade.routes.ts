@@ -3,7 +3,7 @@ import {RequestInterface} from "../interface/request.interface";
 
 import {addOne, deleteOne, getAll, getOne} from "../controllers/trade.controller";
 
-const tradeRoutes = express.Router()
+export const tradeRoutes = express.Router()
 
 /**
  * Get all your trades
@@ -33,5 +33,3 @@ tradeRoutes.delete('/delete', deleteOne, (req: RequestInterface, res: Response) 
 
   res.status(200).send({message: 'Trade deleted.'})
 })
-
-export {tradeRoutes}

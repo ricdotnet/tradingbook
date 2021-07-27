@@ -7,6 +7,7 @@ const routes: express.Router = express.Router();
  */
 import {userRoutes} from "./user.routes";
 import {tradeRoutes} from "./trade.routes";
+import {pairRoutes} from "./pair.routes";
 
 import {auth} from "../services/auth.service";
 
@@ -15,6 +16,7 @@ import {auth} from "../services/auth.service";
  */
 routes.use('/user', userRoutes)
 routes.use('/trade', auth, tradeRoutes)
+routes.use('/pair', pairRoutes)
 
 
 

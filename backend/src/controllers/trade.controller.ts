@@ -13,6 +13,7 @@ export async function getAll(req: RequestInterface, res: Response) {
     .getRepository(Trade)
     .createQueryBuilder()
     .where('userId = :id', {id: trade.userId})
+    .orderBy('createdAt', 'DESC')
     .getMany()
 
   return res.status(200).send({
