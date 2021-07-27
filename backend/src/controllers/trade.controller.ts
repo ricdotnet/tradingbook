@@ -1,13 +1,10 @@
 import {NextFunction, Response} from "express";
 import {RequestInterface} from "../interface/request.interface";
-
 import {getConnection} from "typeorm";
-
 import {Trade} from "../entity/Trade";
+import {Pair} from '../entity/Pair'
 
 const trade = new Trade();
-
-import {Pair} from '../entity/Pair'
 
 export async function getAll(req: RequestInterface, res: Response) {
   trade.userId = req.decoded?.userId
@@ -18,10 +15,12 @@ export async function getAll(req: RequestInterface, res: Response) {
     .where('userId = :id', {id: trade.userId})
     .getMany()
 
-  return res.status(200).send({trades: {
+  return res.status(200).send({
+    trades: {
       count: trades.length,
       list: trades
-    }})
+    }
+  })
 }
 
 export async function getOne(req: RequestInterface, res: Response) {
@@ -97,14 +96,14 @@ export function updateOne(req: RequestInterface, res: Response, next: NextFuncti
 export async function deleteOne(req: RequestInterface, res: Response, next: NextFunction) {
   trade.tradeId = req.body.tradeId
 
-  if(!trade.tradeId)
+  if (!trade.tradeId)
     return res.status(400).send({message: 'No Trade Id provided.'})
 
   let deleted = await getConnection()
     .getRepository(Trade)
     .delete({tradeId: trade.tradeId})
 
-  if(deleted.affected === 0)
+  if (deleted.affected === 0)
     return res.status(200).send({message: 'Nothing was deleted.'})
 
   next()

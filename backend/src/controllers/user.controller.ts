@@ -1,17 +1,11 @@
 import {Response, NextFunction} from "express";
-
 import {getConnection} from "typeorm";
+import {RequestInterface} from "../interface/request.interface";
 import {User} from "../entity/User";
 
 const user = new User()
 
-import {RequestInterface} from "../interface/request.interface";
-
 export async function createNewUser(req: RequestInterface, res: Response, next: NextFunction) {
-
-  // let username: string = req.body.username
-  // let password: string = req.body.password
-  // let email: string = req.body.email
 
   user.username = req.body.username;
   user.password = req.body.password;
