@@ -14,4 +14,9 @@ import {tradeRoutes} from "./trade.routes";
 routes.use('/user', userRoutes)
 routes.use('/trade', tradeRoutes)
 
+
+
+import {testRoutes} from "./test.routes";
+routes.use('/test', testRoutes)
+
 export {routes}

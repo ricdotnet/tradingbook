@@ -29,6 +29,8 @@ tradeRoutes.get('/t/:id', (req: RequestInterface, res: Response) => {
  */
 tradeRoutes.post('/add', addOne, (req: RequestInterface, res: Response) => {
 
+
+
   res.status(200).send({message: 'adding a trade...'})
 })
 tradeRoutes.patch('/update', (req: RequestInterface, res: Response) => {

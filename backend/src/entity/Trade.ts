@@ -12,10 +12,10 @@ export class Trade {
   @Column()
   pairName?: string
 
-  @Column()
+  @Column({type: 'float', precision: 6})
   entry?: number
 
-  @Column()
+  @Column({type: 'float', precision: 6})
   exit?: number
 
   // auto added
