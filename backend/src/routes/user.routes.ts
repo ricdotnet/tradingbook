@@ -1,6 +1,7 @@
 import express, {Response} from "express";
-import {encode, decode} from '../services/token.service'
+import {encode} from '../services/token.service'
 import {createNewUser, loginExistingUser} from '../controllers/user.controller'
+import {auth} from "../services/auth.service";
 
 import {RequestInterface} from "../interface/request.interface";
 
@@ -21,22 +22,11 @@ userRoutes.post('/register', createNewUser, (req: RequestInterface, res: Respons
   res.status(200).send({message: 'Account registered successfully.'})
 })
 
-userRoutes.post('/authenticate', (req: RequestInterface, res: Response) => {
+userRoutes.post('/authenticate', auth, (req: RequestInterface, res: Response) => {
 
-  const bearerHeader: string = req.header('authorization')!
-  if(!bearerHeader)
-    return res.status(400).send({message: 'No token provided.'})
-  //return res.status(400).send({message: 'No bearer/authorization header provided.'})
-
-  let token: string | string[] = bearerHeader.split(' ')
-  token = token[1]
-
-  let decoded: Object = decode(token)
-
-  if(!decoded)
-    return res.status(400).send({message: 'Invalid token provided.'})
-
-  res.status(200).send(decoded)
+  if(req.decoded) {
+    res.status(200).send(req.decoded)
+  }
 })
 
 export {userRoutes}

@@ -9,16 +9,37 @@ const trade = new Trade();
 
 import {Pair} from '../entity/Pair'
 
-export function getAll(req: RequestInterface, res: Response, next: NextFunction) {
+export async function getAll(req: RequestInterface, res: Response) {
+  trade.userId = req.decoded?.userId
 
+  let trades = await getConnection()
+    .getRepository(Trade)
+    .createQueryBuilder()
+    .where('userId = :id', {id: trade.userId})
+    .getMany()
+
+  return res.status(200).send({trades: {
+      count: trades.length,
+      list: trades
+    }})
 }
 
-export function getOne(req: RequestInterface, res: Response, next: NextFunction) {
+export async function getOne(req: RequestInterface, res: Response) {
+  trade.tradeId = req.params.id
 
+  let single = await getConnection()
+    .getRepository(Trade)
+    .findOne({
+      where: {
+        tradeId: trade.tradeId
+      }
+    })
+
+  return res.status(200).send(single)
 }
 
 export async function addOne(req: RequestInterface, res: Response, next: NextFunction) {
-  trade.userId = req.body.userId
+  trade.userId = req.decoded?.userId
   trade.pairName = req.body.pairName.toLowerCase()
   trade.entry = req.body.entry
   trade.exit = req.body.exit
@@ -43,7 +64,7 @@ export async function addOne(req: RequestInterface, res: Response, next: NextFun
       }
     })
 
-  if(pairExists.length < 1){
+  if (pairExists.length < 1) {
     await getConnection()
       .createQueryBuilder()
       .insert()
@@ -73,6 +94,18 @@ export function updateOne(req: RequestInterface, res: Response, next: NextFuncti
 
 }
 
-export function deleteOne(req: RequestInterface, res: Response, next: NextFunction) {
+export async function deleteOne(req: RequestInterface, res: Response, next: NextFunction) {
+  trade.tradeId = req.body.tradeId
 
+  if(!trade.tradeId)
+    return res.status(400).send({message: 'No Trade Id provided.'})
+
+  let deleted = await getConnection()
+    .getRepository(Trade)
+    .delete({tradeId: trade.tradeId})
+
+  if(deleted.affected === 0)
+    return res.status(200).send({message: 'Nothing was deleted.'})
+
+  next()
 }

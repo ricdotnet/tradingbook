@@ -79,7 +79,7 @@ export async function loginExistingUser(req: RequestInterface, res: Response, ne
 
   let curUser = await getConnection()
     .getRepository(User)
-    .createQueryBuilder('user')
+    .createQueryBuilder()
     .where('username = :username', {username: user.username})
     .getOne()
 

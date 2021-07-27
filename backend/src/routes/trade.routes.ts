@@ -1,25 +1,19 @@
 import express, {Response} from "express";
 import {RequestInterface} from "../interface/request.interface";
 
-import {addOne} from "../controllers/trade.controller";
+import {addOne, deleteOne, getAll, getOne} from "../controllers/trade.controller";
 
 const tradeRoutes = express.Router()
 
 /**
  * Get all your trades
  */
-tradeRoutes.get('/all', (req: RequestInterface, res: Response) => {
-
-  res.status(200).send({message: 'all trades...'})
-})
+tradeRoutes.get('/all', getAll)
 
 /**
  * Get a single trade
  */
-tradeRoutes.get('/t/:id', (req: RequestInterface, res: Response) => {
-
-  res.status(200).send({message: 'one trade...'})
-})
+tradeRoutes.get('/t/:id', getOne)
 
 /**
  * Add a new trade.
@@ -29,17 +23,15 @@ tradeRoutes.get('/t/:id', (req: RequestInterface, res: Response) => {
  */
 tradeRoutes.post('/add', addOne, (req: RequestInterface, res: Response) => {
 
-
-
-  res.status(200).send({message: 'adding a trade...'})
+  res.status(200).send({message: 'Trade added.'})
 })
 tradeRoutes.patch('/update', (req: RequestInterface, res: Response) => {
 
   res.status(200).send({message: 'updating a trade...'})
 })
-tradeRoutes.delete('/delete', (req: RequestInterface, res: Response) => {
+tradeRoutes.delete('/delete', deleteOne, (req: RequestInterface, res: Response) => {
 
-  res.status(200).send({message: 'deleting a trade...'})
+  res.status(200).send({message: 'Trade deleted.'})
 })
 
 export {tradeRoutes}
