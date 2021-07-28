@@ -39,9 +39,5 @@
     ],
     "ext": "ts",
     "exec": "ts-node ./src/index.ts"
-  },
-  "engines": {
-    "npm": "7.x",
-    "node": "15.x"
   }
 }
