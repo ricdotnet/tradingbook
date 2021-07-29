@@ -6,7 +6,6 @@ import {DecodedInterface} from "./decoded.interface";
  * controller to the main route itself;
  */
 export interface RequestInterface extends Request {
-  userId?: string
-  token?: string
   decoded?: DecodedInterface
+  [key: string]: any
 }
