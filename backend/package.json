@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon",
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon -x ts-node src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ricdotnet",
@@ -21,9 +22,8 @@
     "nodemon": "^2.0.12",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.34",
-    "mysql": "^2.18.1"
-  },
-  "devDependencies": {
+    "mysql": "^2.18.1",
+    "ts-node": "^10.1.0",
     "@types/body-parser": "^1.19.1",
     "@types/cors": "^2.8.12",
     "@types/dotenv": "^8.2.0",

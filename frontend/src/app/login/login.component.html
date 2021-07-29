@@ -1,0 +1,17 @@
+<div class="make-middle p-5 bg-white rounded-sm shadow-sm w-96">
+  <div class="text-2xl mb-5 flex flex-row items-center">
+    <user-icon></user-icon>
+    Login
+  </div>
+  <form (submit)="$event.preventDefault()" [formGroup]="loginForm">
+    <input name="username" type="text" formControlName="username"
+           class="input" placeholder="Username">
+    <input name="password" type="password" formControlName="password"
+           class="input" placeholder="password">
+    <div class="flex items-center mb-4">
+      <label for="remember" class="mr-5">Remember me.</label>
+      <input id="remember" type="checkbox" formControlName="remember">
+    </div>
+    <button (click)="submit()" class="btn-submit">Login</button>
+  </form>
+</div>
