@@ -17,10 +17,7 @@ export async function getAll(req: RequestInterface, res: Response) {
     .getMany()
 
   return res.status(200).send({
-    trades: {
-      count: trades.length,
-      list: trades
-    }
+    trades
   })
 }
 
