@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ToastService} from "../../services/toast/toast.service";
 
+import {RegisterService} from "../../services/register/register.service";
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html'
@@ -12,7 +14,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     public form: FormBuilder,
-    public toastService: ToastService
+    public toastService: ToastService,
+    public registerService: RegisterService
   ) {
     this.registerForm = this.form.group({
       username: '',
@@ -29,6 +32,11 @@ export class RegisterComponent implements OnInit {
     if (this.formValidate()) return;
 
     if (this.passwordsValidate()) return;
+
+    this.registerService.registerAccount(this.registerForm.value).subscribe(
+      (result) => console.log(result),
+      (error) => console.log(error)
+    )
   }
 
   formValidate() {
