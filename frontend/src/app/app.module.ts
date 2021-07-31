@@ -8,7 +8,7 @@ import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
 import {HomeComponent} from './components/home/home.component';
 import {NavComponent} from './components/nav/nav.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LogoutComponent} from "./components/logout/logout.component";
 import {UserIcon} from "./icons/user.icon";
 import {AuthGuard} from "./auth/auth.guard";
@@ -35,7 +35,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
+    FormsModule, ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule
   ],

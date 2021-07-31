@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 
-import {LoginService} from "../../services/login.service";
+import {LoginService} from "../../services/login/login.service";
+import {ToastService} from "../../services/toast/toast.service";
 
 @Component({
   selector: 'app-login',
@@ -10,15 +11,13 @@ import {LoginService} from "../../services/login.service";
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup
-  _toastMessage: string = ''
-  _showToast: boolean = false
-  _errorTimeOut = 0
 
   constructor(
     private loginService: LoginService,
-    public lf: FormBuilder
+    public form: FormBuilder,
+    public toastService: ToastService
   ) {
-    this.loginForm = this.lf.group({
+    this.loginForm = this.form.group({
       username: '',
       password: '',
       remember: false
@@ -29,18 +28,25 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    if(this.formValidate())
+      return;
+
     this.loginService.doLogin(this.loginForm.value).subscribe(
       (result) => console.log(result),
       (error) => {
-        if(this._showToast) {
-          clearTimeout(this._errorTimeOut)
-        }
-        this._toastMessage = error.error.message
-        this._showToast = true
-        this._errorTimeOut = setTimeout(() => {
-          this._showToast = false
-        }, 10000)
+        this.toastService.toast(error.error.message)
       }
     )
+  }
+
+  formValidate() {
+    for(const key in this.loginForm.value) {
+      if(this.loginForm.value[key] === '') {
+        this.toastService.toast(`Please enter a ${key}.`)
+        return true;
+      }
+    }
+
+    return false;
   }
 }

@@ -9,7 +9,7 @@ import {UserStore} from "./store/user.store";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
+  title = 'TradingBook';
 
   constructor(private loginService: AuthService) {
   }

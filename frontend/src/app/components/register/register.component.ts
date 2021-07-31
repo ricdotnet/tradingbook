@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {UserStore} from "../../store/user.store";
+import {ToastService} from "../../services/toast/toast.service";
 
 @Component({
   selector: 'app-register',
@@ -8,15 +8,16 @@ import {UserStore} from "../../store/user.store";
 })
 export class RegisterComponent implements OnInit {
 
-  form: FormGroup
+  registerForm: FormGroup
 
   constructor(
-    public registerForm: FormBuilder,
-    private userStore: UserStore
+    public form: FormBuilder,
+    public toastService: ToastService
   ) {
-    this.form = this.registerForm.group({
+    this.registerForm = this.form.group({
       username: '',
       password: '',
+      passwordRepeat: '',
       email: ''
     })
   }
@@ -25,7 +26,29 @@ export class RegisterComponent implements OnInit {
   }
 
   submit() {
-    // console.log(this.form.value)
+    if (this.formValidate()) return;
+
+    if (this.passwordsValidate()) return;
+  }
+
+  formValidate() {
+    for (const key in this.registerForm.value) {
+      if (this.registerForm.value[key] === '') {
+        this.toastService.toast((key === 'passwordRepeat') ? 'Please verify your password.' : `Please enter ${(key === 'email') ? 'an' : 'a'} ${key}`)
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  passwordsValidate() {
+    if (this.registerForm.value.password !== this.registerForm.value.passwordRepeat) {
+      this.toastService.toast('The passwords do not match.');
+      return true;
+    }
+
+    return false;
   }
 
 }
