@@ -2,6 +2,8 @@ import {Response, NextFunction} from "express";
 import {getConnection} from "typeorm";
 import {RequestInterface} from "../interface/request.interface";
 import {User} from "../entity/User";
+import {Trade} from "../entity/Trade";
+import {StatsInterface} from "../interface/stats.interface";
 
 const user = new User()
 
@@ -84,6 +86,44 @@ export async function loginExistingUser(req: RequestInterface, res: Response, ne
     return res.status(400).send({message: 'Wrong password.'})
 
   req.userId = curUser.userId
+
+  next()
+}
+
+export async function userStats(req: RequestInterface, res: Response, next: NextFunction) {
+  let userId: string = req.decoded?.userId
+  let resBody: StatsInterface = {
+    user: {},
+    trades: {
+      count: 0,
+      topPair: '',
+      pipsWon: 0,
+      pipsLost: 0
+    }
+  }
+
+  if (!userId) {
+    return res.status(400).send({message: 'No user identification present in this token.'})
+  }
+
+  let userDetails = await getConnection()
+    .getRepository(User)
+    .createQueryBuilder()
+    .select(['username', 'email', 'firstName', 'lastName', 'createdAt'])
+    .where('userId = :id', {id: userId})
+    .getRawOne()
+
+  resBody.user = userDetails
+
+  let tradesCount = await getConnection()
+    .getRepository(Trade)
+    .createQueryBuilder()
+    .where('userId = :userId', {userId: userId})
+    .getCount()
+
+  resBody.trades.count = tradesCount
+
+  req.resBody = resBody
 
   next()
 }

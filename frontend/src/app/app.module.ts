@@ -4,12 +4,19 @@ import { HttpClientModule } from "@angular/common/http";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {LoginComponent} from './login/login.component';
-import {RegisterComponent} from './register/register.component';
-import {HomeComponent} from './home/home.component';
-import {NavComponent} from './nav/nav.component';
+import {LoginComponent} from './components/login/login.component';
+import {RegisterComponent} from './components/register/register.component';
+import {HomeComponent} from './components/home/home.component';
+import {NavComponent} from './components/nav/nav.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {LogoutComponent} from "./components/logout/logout.component";
 import {UserIcon} from "./icons/user.icon";
+import {AuthGuard} from "./auth/auth.guard";
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TradesComponent } from './components/trades/trades.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ToastComponent } from './components/toast/toast.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -18,15 +25,21 @@ import {UserIcon} from "./icons/user.icon";
     RegisterComponent,
     HomeComponent,
     NavComponent,
-    UserIcon
+    UserIcon,
+    LogoutComponent,
+    DashboardComponent,
+    TradesComponent,
+    NotFoundComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

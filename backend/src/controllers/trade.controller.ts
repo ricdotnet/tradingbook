@@ -16,12 +16,7 @@ export async function getAll(req: RequestInterface, res: Response) {
     .orderBy('createdAt', 'DESC')
     .getMany()
 
-  return res.status(200).send({
-    trades: {
-      count: trades.length,
-      list: trades
-    }
-  })
+  return res.status(200).send(trades)
 }
 
 export async function getOne(req: RequestInterface, res: Response) {

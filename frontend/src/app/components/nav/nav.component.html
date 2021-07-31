@@ -1,0 +1,25 @@
+<div class="w-40 h-screen bg-blue-800 float-left text-white text-center space-y-2">
+
+  <a class="" routerLink="">Home</a>
+
+  <ul class="space-y-2" *ngIf="!isLogged">
+    <li>
+      <a routerLink="login">Login</a>
+    </li>
+    <li>
+      <a routerLink="register">Register</a>
+    </li>
+  </ul>
+
+  <ul class="space-y-2" *ngIf="isLogged">
+    <li>
+      <a routerLink="dashboard">Dashboard</a>
+    </li>
+    <li>
+      <a routerLink="trades">Trades</a>
+    </li>
+    <li>
+      <a routerLink="logout">Logout</a>
+    </li>
+  </ul>
+</div>
