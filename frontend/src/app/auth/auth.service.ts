@@ -26,4 +26,12 @@ export class AuthService {
       catchError(err => Array(err))
     );
   }
+
+  deAuth(): any {
+    if(localStorage.getItem('auth'))
+      localStorage.removeItem('auth')
+
+    this.router.navigate(['']).then(() => window.location.reload())
+  }
+
 }

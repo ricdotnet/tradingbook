@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, RoutesRecognized } from '@angular/router';
 
 import { AuthService } from "./auth/auth.service";
 import { UserStore } from './store/user.store';
@@ -11,17 +12,32 @@ import { UserStore } from './store/user.store';
 export class AppComponent implements OnInit {
   title = 'TradingBook';
 
-  constructor(private loginService: AuthService, private userStore: UserStore) {
+  constructor(
+    private loginService: AuthService,
+    private userStore: UserStore,
+    private router: Router
+  ) {
+    
   }
 
   ngOnInit() {
     if (localStorage.getItem('auth')) {
       this.loginService.authenticate().subscribe(
-        () => {
-          this.userStore.loggedIn = true
-          console.log(this.userStore.loggedIn)
+        (res) => {
+          if(res.status === 401 || res.status === 400) {
+            localStorage.removeItem('auth')
+            this.router.navigate(['']).then(() => {
+              window.location.reload()
+            })
+          }
+          this.userStore.loggedIn = true;
         },
-        (error) => console.log(error)
+        (err) => {
+          localStorage.removeItem('auth')
+            this.router.navigate(['']).then(() => {
+              window.location.reload()
+            })
+        }
       );
     }
   }

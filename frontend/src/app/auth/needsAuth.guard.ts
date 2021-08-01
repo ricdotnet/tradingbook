@@ -9,19 +9,17 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class NeedsAuthGuard implements CanActivate {
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> {
-    if (!this.userStore.loggedIn) {
-      this.router.navigate(['']);
-      return of(false);
-    }
-    return of(true);
-  }
-
   constructor(
     private router: Router,
     private userStore: UserStore
   ) { }
 
+  async canActivate(route: ActivatedRouteSnapshot): Promise<any> {
+    if (!localStorage.getItem('auth')) {
+      this.router.navigate(['/notfound'])
+      return false;
+    }
+
+    return this.userStore.loggedIn;
+  }
 }

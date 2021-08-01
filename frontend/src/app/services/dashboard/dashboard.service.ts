@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -10,7 +11,8 @@ import { environment } from 'src/environments/environment';
 export class DashboardService {
 
   constructor(
-    private _http: HttpClient
+    private _http: HttpClient,
+    private router: Router
   ) { }
 
   getStats(): Observable<any> {
@@ -20,8 +22,15 @@ export class DashboardService {
       }
     }).pipe(
       tap(_ => _),
-      catchError(error => of(error))
+      catchError(() => this.doLogout())
     )
+  }
+
+  doLogout(): any {
+    if(localStorage.getItem('auth'))
+      localStorage.removeItem('auth')
+
+    this.router.navigate(['']).then(() => window.location.reload())
   }
 
 }

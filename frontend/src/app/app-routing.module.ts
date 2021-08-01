@@ -16,20 +16,20 @@ import { AuthService } from './auth/auth.service';
 import { UserStore } from './store/user.store';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', component: HomeComponent },
 
   /*
   auth and register routes
    */
-  { path: 'login', component: LoginComponent, /*canActivate: [AuthGuard]*/ },
-  { path: 'register', component: RegisterComponent, /*canActivate: [AuthGuard]*/ },
-  { path: 'logout', component: LogoutComponent, /*canActivate: [NeedsAuthGuard]*/ },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
+  { path: 'logout', component: LogoutComponent, canActivate: [NeedsAuthGuard] },
 
   /*
   user routes
    */
-  { path: 'dashboard', component: DashboardComponent, /*canActivate: [NeedsAuthGuard]*/ },
-  { path: 'trades', component: TradesComponent, /*canActivate: [NeedsAuthGuard]*/ },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [NeedsAuthGuard] },
+  { path: 'trades', component: TradesComponent, canActivate: [NeedsAuthGuard] },
 
   /*
   404 path

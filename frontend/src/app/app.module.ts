@@ -41,7 +41,6 @@ import { SpinnerIcon } from './icons/spinner.icon';
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
