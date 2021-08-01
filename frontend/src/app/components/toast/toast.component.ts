@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'app-toast',
@@ -17,6 +18,11 @@ import {animate, style, transition, trigger} from "@angular/animations";
   ]
 })
 export class ToastComponent{
+
+  constructor(
+    public toastService: ToastService
+  ) {}
+
   private _message: string = ''
   private _show: boolean = false
 
@@ -34,5 +40,9 @@ export class ToastComponent{
   }
   set show(show: boolean) {
     this._show = show
+  }
+
+  close() {
+    this.toastService.clearToast()
   }
 }

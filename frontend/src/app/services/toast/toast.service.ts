@@ -22,4 +22,9 @@ export class ToastService {
       this._toastMessage = ''
     }, 10000)
   }
+
+  clearToast() {
+    this._showToast = false
+    this._toastMessage = ''
+  }
 }

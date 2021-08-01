@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from "@angular/forms";
 
-import {LoginService} from "../../services/login/login.service";
-import {ToastService} from "../../services/toast/toast.service";
+import { LoginService } from "../../services/login/login.service";
+import { ToastService } from "../../services/toast/toast.service";
+import { SpinnerIcon } from 'src/app/icons/spinner.icon';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import {ToastService} from "../../services/toast/toast.service";
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup
+  loginForm: FormGroup;
+  _loading: boolean = false;
 
   constructor(
     private loginService: LoginService,
@@ -21,28 +23,35 @@ export class LoginComponent implements OnInit {
       username: '',
       password: '',
       remember: false
-    })
+    });
   }
 
   ngOnInit(): void {
   }
 
   submit() {
-    if(this.formValidate())
+    this._loading = true;
+    if (this.formValidate()) {
+      this._loading = false;
       return;
+    }
 
     this.loginService.doLogin(this.loginForm.value).subscribe(
-      (result) => console.log(result),
+      (result) => {
+        this.toastService.toast(result.message);
+        this._loading = false;
+      },
       (error) => {
-        this.toastService.toast(error.error.message)
+        this.toastService.toast(error.error.message);
+        this._loading = false;
       }
-    )
+    );
   }
 
   formValidate() {
-    for(const key in this.loginForm.value) {
-      if(this.loginForm.value[key] === '') {
-        this.toastService.toast(`Please enter a ${key}.`)
+    for (const key in this.loginForm.value) {
+      if (this.loginForm.value[key] === '') {
+        this.toastService.toast(`Please enter a ${key}.`);
         return true;
       }
     }

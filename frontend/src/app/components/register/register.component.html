@@ -1,20 +1,17 @@
 <div class="make-middle p-5 bg-white rounded-sm shadow-sm w-96">
+	<app-toast [message]="toastService._toastMessage" [show]="toastService._showToast"></app-toast>
 
-  <app-toast [message]="toastService._toastMessage" [show]="toastService._showToast"></app-toast>
-
-  <div class="text-2xl mb-5 flex flex-row items-center">
-    <user-icon></user-icon>
-    Register
-  </div>
-  <form (submit)="$event.preventDefault()" [formGroup]="registerForm">
-    <input type="text" formControlName="username"
-           class="input" placeholder="Username">
-    <input type="password" formControlName="password"
-           class="input" placeholder="Password">
-    <input type="password" formControlName="passwordRepeat"
-           class="input" placeholder="Repeat Password">
-    <input type="text" formControlName="email"
-           class="input" placeholder="Email Address">
-    <button (click)="submit()" class="btn-submit">Register</button>
-  </form>
+	<div class="text-2xl mb-5 flex flex-row items-center">
+		<user-icon></user-icon>
+		Register
+	</div>
+	<form (submit)="$event.preventDefault()" [formGroup]="registerForm">
+		<input type="text" formControlName="username" class="input" placeholder="Username">
+		<input type="password" formControlName="password" class="input" placeholder="Password">
+		<input type="password" formControlName="passwordRepeat" class="input" placeholder="Repeat Password">
+		<input type="text" formControlName="email" class="input" placeholder="Email Address">
+		<button (click)="submit()" class="btn-submit flex items-center">
+			Register <spinner-icon class="w-5 ml-2" *ngIf="_loading"></spinner-icon>
+		</button>
+	</form>
 </div>

@@ -1,10 +1,11 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
-import {Router} from "@angular/router";
-import {Observable} from "rxjs";
-import {tap} from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../environments/environment";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
+import { ErrorService } from "../error/error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private route: Router
+    private route: Router,
+    private errorService: ErrorService
   ) {
   }
 
@@ -22,12 +24,12 @@ export class LoginService {
       responseType: "json"
     }).pipe(
       tap(_ => this.loginHandler(_))
-    )
+    );
   }
 
   loginHandler(response: Object) {
-    localStorage.setItem('auth', JSON.stringify(response))
-    this.route.navigate(['']).then(() => window.location.reload())
+    localStorage.setItem('auth', JSON.stringify(response));
+    this.route.navigate(['']).then(() => window.location.reload());
   }
 
 }
