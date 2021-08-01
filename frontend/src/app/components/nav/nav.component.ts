@@ -1,21 +1,14 @@
-import {Component, AfterContentInit} from '@angular/core';
-import {AuthService} from "../../auth/auth.service";
+import { Component } from '@angular/core';
+import { UserStore } from 'src/app/store/user.store';
+import { AuthService } from "../../auth/auth.service";
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html'
 })
-export class NavComponent implements AfterContentInit {
+export class NavComponent {
 
-  isLogged: boolean = false
-
-  constructor(public authService: AuthService) {
-    this.authService.isAuthed.subscribe(value => {
-      this.isLogged = value
-    })
-  }
-
-  ngAfterContentInit(): void {
+  constructor(public authService: AuthService, public userStore: UserStore) {
   }
 
 }

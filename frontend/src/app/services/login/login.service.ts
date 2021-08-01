@@ -14,8 +14,7 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private route: Router,
-    private errorService: ErrorService
+    private route: Router
   ) {
   }
 

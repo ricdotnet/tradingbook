@@ -2,7 +2,7 @@
 
   <a class="" routerLink="">Home</a>
 
-  <ul class="space-y-2" *ngIf="!isLogged">
+  <ul class="space-y-2" *ngIf="!userStore.loggedIn">
     <li>
       <a routerLink="login">Login</a>
     </li>
@@ -11,7 +11,7 @@
     </li>
   </ul>
 
-  <ul class="space-y-2" *ngIf="isLogged">
+  <ul class="space-y-2" *ngIf="userStore.loggedIn">
     <li>
       <a routerLink="dashboard">Dashboard</a>
     </li>

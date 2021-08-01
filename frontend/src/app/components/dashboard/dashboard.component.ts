@@ -15,15 +15,18 @@ import { User } from 'src/app/interfaces/user.interface';
 export class DashboardComponent implements OnInit {
 
   _registered: any = ''
+  _loading: boolean = false
 
   constructor(
     public userStore: UserStore,
     public dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+    this._loading = true;
     this.dashboardService.getStats().subscribe(
       (result) => {
         this.setUser(result.user)
+        this._loading = false;
       },
       (error) => console.log(error)
     )

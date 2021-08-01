@@ -1,3 +1,8 @@
-<p>{{userStore.userId}}</p> <br>
+<div class="w-10 make-middle" *ngIf="_loading">
+  <spinner-icon></spinner-icon>
+</div>
+<div *ngIf="!_loading">
+  <p>{{userStore.userId}}</p> <br>
 
-{{_registered}}
+  {{_registered}}
+</div>

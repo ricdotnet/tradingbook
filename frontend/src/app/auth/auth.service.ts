@@ -1,38 +1,29 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 
-import { HttpClient} from "@angular/common/http";
-import {BehaviorSubject} from "rxjs";
-import {environment} from "../../environments/environment";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, Observable } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
+import { environment } from "../../environments/environment";
 
-import {UserStore} from "../store/user.store";
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  isAuthed = new BehaviorSubject(false)
+  isAuthed = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient, private userStore: UserStore, private router: Router) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
-  async authenticate() {
-    let token = JSON.parse(<string>localStorage.getItem('auth'))
-    if (token) {
-      await this.http.post(`${environment.apiUrl}user/authenticate`, {}, {
-        headers: {
-          'authorization': `Bearer ${token.token}`
-        }
-      }).subscribe(
-        (response: any) => {
-          this.userStore.userId = response.userId
-          this.isAuthed.next(true)
-        },
-        () => {
-          localStorage.removeItem('auth')
-          this.router.navigate(['']).then(() => window.location.reload())
-        }
-      )
-    }
+  authenticate(): Observable<any> {
+    return this.http.post(`${environment.apiUrl}user/authenticate`, {}, {
+      headers: {
+        'authorization': `Bearer ${JSON.parse(<string>localStorage.getItem('auth')).token}`
+      }
+    }).pipe(
+      tap(_ => _),
+      catchError(err => Array(err))
+    );
   }
 }

@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {AuthService} from "./auth/auth.service";
-import {UserStore} from "./store/user.store";
+import { AuthService } from "./auth/auth.service";
+import { UserStore } from './store/user.store';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +11,18 @@ import {UserStore} from "./store/user.store";
 export class AppComponent implements OnInit {
   title = 'TradingBook';
 
-  constructor(private loginService: AuthService) {
+  constructor(private loginService: AuthService, private userStore: UserStore) {
   }
 
   ngOnInit() {
-    this.loginService.authenticate().then(() => console.log('authed...'))
+    if (localStorage.getItem('auth')) {
+      this.loginService.authenticate().subscribe(
+        () => {
+          this.userStore.loggedIn = true
+          console.log(this.userStore.loggedIn)
+        },
+        (error) => console.log(error)
+      );
+    }
   }
 }

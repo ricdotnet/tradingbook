@@ -12,22 +12,24 @@ import { TradesComponent } from "./components/trades/trades.component";
 import { NeedsAuthGuard } from "./auth/needsAuth.guard";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { ToastService } from './services/toast/toast.service';
+import { AuthService } from './auth/auth.service';
+import { UserStore } from './store/user.store';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, pathMatch: 'full' },
 
   /*
   auth and register routes
    */
-  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
-  { path: 'logout', component: LogoutComponent, canActivate: [NeedsAuthGuard] },
+  { path: 'login', component: LoginComponent, /*canActivate: [AuthGuard]*/ },
+  { path: 'register', component: RegisterComponent, /*canActivate: [AuthGuard]*/ },
+  { path: 'logout', component: LogoutComponent, /*canActivate: [NeedsAuthGuard]*/ },
 
   /*
   user routes
    */
-  { path: 'dashboard', component: DashboardComponent, canActivate: [NeedsAuthGuard] },
-  { path: 'trades', component: TradesComponent, canActivate: [NeedsAuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, /*canActivate: [NeedsAuthGuard]*/ },
+  { path: 'trades', component: TradesComponent, /*canActivate: [NeedsAuthGuard]*/ },
 
   /*
   404 path
@@ -44,11 +46,15 @@ const routes: Routes = [
 export class AppRoutingModule {
   constructor(
     private router: Router,
-    public toastService: ToastService
+    public toastService: ToastService,
+    private authService: AuthService,
+    private userStore: UserStore
   ) {
     router.events.subscribe(() => {
       this.resetToast();
     });
+    
+    
   }
 
   //reset the toast message on route change
