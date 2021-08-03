@@ -109,7 +109,7 @@ export async function userStats(req: RequestInterface, res: Response, next: Next
   let userDetails = await getConnection()
     .getRepository(User)
     .createQueryBuilder()
-    .select(['username', 'email', 'firstName', 'lastName', 'createdAt'])
+    .select(['userId', 'username', 'email', 'firstName', 'lastName', 'createdAt'])
     .where('userId = :id', {id: userId})
     .getRawOne()
 
