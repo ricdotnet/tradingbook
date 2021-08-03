@@ -2,7 +2,19 @@
   <spinner-icon></spinner-icon>
 </div>
 <div *ngIf="!_loading">
-  <p>{{userStore.userId}}</p> <br>
+  <h4 class="text-2xl mb-5">User info</h4>
+  <p>{{userStore.userId}}</p>
+  <p>{{userStore.loggedIn}}</p>
+  <p>{{userStore.username}}</p>
+  <p>{{userStore.email}}</p>
+  <p>{{(!userStore.firstName) ? 'no first name' : userStore.firstName}}</p>
+  <p>{{(!userStore.lastName) ? 'no last name' : userStore.lastName}}</p>
+  <p>{{this._registered}}</p>
 
-  {{_registered}}
+  <br>
+
+  <p>{{statsStore.count}}</p>
+  <p>{{statsStore.topPair}}</p>
+  <p>{{statsStore.pipsWon}}</p>
+  <p>{{statsStore.pipsLost}}</p>
 </div>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from "./auth/auth.guard";
+import { NoAuthGuard } from "./auth/noAuth.guard";
 
 import { HomeComponent } from "./components/home/home.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -21,8 +21,8 @@ const routes: Routes = [
   /*
   auth and register routes
    */
-  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
   { path: 'logout', component: LogoutComponent, canActivate: [NeedsAuthGuard] },
 
   /*
@@ -38,17 +38,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: "reload"})],
   exports: [RouterModule],
-  providers: [AuthGuard, NeedsAuthGuard]
+  providers: []
 })
 
 export class AppRoutingModule {
   constructor(
     private router: Router,
-    public toastService: ToastService,
-    private authService: AuthService,
-    private userStore: UserStore
+    public toastService: ToastService
   ) {
     router.events.subscribe(() => {
       this.resetToast();

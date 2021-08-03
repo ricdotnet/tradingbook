@@ -11,13 +11,15 @@ import { NavComponent } from './components/nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LogoutComponent } from "./components/logout/logout.component";
 import { UserIcon } from "./icons/user.icon";
-import { AuthGuard } from "./auth/auth.guard";
+import { NoAuthGuard } from "./auth/noAuth.guard";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TradesComponent } from './components/trades/trades.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SpinnerIcon } from './icons/spinner.icon';
+import {UserStore} from "./store/user.store";
+import {NeedsAuthGuard} from "./auth/needsAuth.guard";
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { SpinnerIcon } from './icons/spinner.icon';
     HttpClientModule,
     BrowserAnimationsModule
   ],
+  providers: [NoAuthGuard, NeedsAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

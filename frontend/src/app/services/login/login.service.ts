@@ -28,7 +28,9 @@ export class LoginService {
 
   loginHandler(response: Object) {
     localStorage.setItem('auth', JSON.stringify(response));
-    this.route.navigate(['']).then(() => window.location.reload());
+    this.route.navigate(['']).then(() => {
+      window.location.reload()
+    });
   }
 
 }

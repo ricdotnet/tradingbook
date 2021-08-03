@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 
-import { UserStore } from "../store/user.store";
-import { AuthService } from './auth.service';
+import {AuthService} from "./auth.service";
+import {HttpClient} from "@angular/common/http";
+import {UserStore} from "../store/user.store";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,11 @@ import { AuthService } from './auth.service';
 export class NeedsAuthGuard implements CanActivate {
   constructor(
     private router: Router,
+    private http: HttpClient,
+    private authService: AuthService,
     private userStore: UserStore
-  ) { }
+  ) {
+  }
 
   async canActivate(route: ActivatedRouteSnapshot): Promise<any> {
     if (!localStorage.getItem('auth')) {
@@ -20,6 +23,15 @@ export class NeedsAuthGuard implements CanActivate {
       return false;
     }
 
-    return this.userStore.loggedIn;
+    this.authService.authenticate().subscribe(
+      (_) => {
+        return true;
+      },
+      () => {
+        return false;
+      }
+    )
+
+    return true;
   }
 }

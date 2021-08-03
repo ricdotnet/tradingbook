@@ -6,6 +6,8 @@ import { catchError, tap } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 
 import { Router } from "@angular/router";
+import {UserStore} from "../store/user.store";
+import {User} from "../interfaces/user.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +15,22 @@ import { Router } from "@angular/router";
 export class AuthService {
   isAuthed = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private userStore: UserStore) {
   }
 
   authenticate(): Observable<any> {
-    return this.http.post(`${environment.apiUrl}user/authenticate`, {}, {
+    return this.http.post<User>(`${environment.apiUrl}user/authenticate`, {}, {
       headers: {
         'authorization': `Bearer ${JSON.parse(<string>localStorage.getItem('auth')).token}`
       }
     }).pipe(
-      tap(_ => _),
+      tap(_ => {
+        this.userStore.loggedIn = true
+        this.userStore.userId = _.userId
+      }),
       catchError(err => Array(err))
     );
   }
