@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,7 +13,8 @@ export class DashboardService {
 
   constructor(
     private _http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   getStats(): Observable<any> {
@@ -22,15 +24,8 @@ export class DashboardService {
       }
     }).pipe(
       tap(_ => _),
-      catchError(() => this.doLogout())
+      catchError(() => this.authService.deAuth())
     )
-  }
-
-  doLogout(): any {
-    if(localStorage.getItem('auth'))
-      localStorage.removeItem('auth')
-
-    this.router.navigate(['']).then(() => window.location.reload())
   }
 
 }
