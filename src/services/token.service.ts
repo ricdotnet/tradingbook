@@ -3,7 +3,7 @@ import {DecodedInterface} from "../interface/decoded.interface";
 
 export function encode(userId: string, remember: boolean): string {
   return jwt.sign({userId: userId}, process.env.SECRET!, {
-    expiresIn: (remember) ? 3600 * 24 * 365 : 60 * 1, //15,
+    expiresIn: (remember) ? 3600 * 24 * 365 : 60 * 15,
     algorithm: "HS256"
   });
 }
