@@ -19,6 +19,13 @@ global buttons style
     @apply px-5 py-2 rounded-sm bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-medium uppercase shadow
 }
 
-.input {
+/**
+forms styling
+ */
+.input-auth { /* login and register forms */
     @apply w-full rounded-none border-b border-black focus:outline-none mb-4 py-2 px-5 bg-gray-100
+}
+
+.input-general {
+    @apply w-full rounded-sm bg-gray-100 py-4 px-5
 }

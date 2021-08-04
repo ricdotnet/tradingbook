@@ -26,6 +26,10 @@ export class ToastComponent{
   private _message: string = ''
   private _show: boolean = false
 
+  typeError = 'bg-red-400 border-red-500'
+  typeSuccess = 'bg-green-400 border-green-500'
+  @Input() type = ''
+
   @Input()
   get message(): string {
     return this._message

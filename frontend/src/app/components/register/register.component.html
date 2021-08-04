@@ -6,10 +6,11 @@
 		Register
 	</div>
 	<form (submit)="$event.preventDefault()" [formGroup]="registerForm">
-		<input type="text" formControlName="username" class="input" placeholder="Username">
-		<input type="password" formControlName="password" class="input" placeholder="Password">
-		<input type="password" formControlName="passwordRepeat" class="input" placeholder="Repeat Password">
-		<input type="text" formControlName="email" class="input" placeholder="Email Address">
+		<input type="text" formControlName="username" class="input-auth" placeholder="Username">
+		<input type="password" formControlName="password" class="input-auth" placeholder="Password">
+		<input type="password" formControlName="passwordRepeat" class="input-auth"
+					 placeholder="Repeat Password">
+		<input type="text" formControlName="email" class="input-auth" placeholder="Email Address">
 		<button (click)="submit()" class="btn-submit flex items-center">
 			Register <spinner-icon class="w-5 ml-2" *ngIf="_loading"></spinner-icon>
 		</button>

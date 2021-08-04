@@ -3,6 +3,7 @@ import { Router, RoutesRecognized } from '@angular/router';
 
 import { AuthService } from "./auth/auth.service";
 import { UserStore } from './store/user.store';
+import {DashboardService} from "./services/dashboard/dashboard.service";
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent {
   constructor(
     private loginService: AuthService,
     private userStore: UserStore,
+    private dashboardService: DashboardService,
     private router: Router
   ) {
     if (localStorage.getItem('auth')) {
@@ -24,7 +26,8 @@ export class AppComponent {
               window.location.reload()
             })
           }
-            this.userStore.loggedIn = true;
+          this.dashboardService.getStats().subscribe()
+          this.userStore.loggedIn = true;
         },
         (err) => {
           localStorage.removeItem('auth')

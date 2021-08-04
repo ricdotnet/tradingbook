@@ -7,15 +7,17 @@ export class ToastService {
 
   _showToast: boolean = false
   _toastMessage: string = ''
+  _toastType: string = ''
   _toastTimeOut: any
 
   constructor() { }
 
-  toast(message: string) {
+  toast(message: string, type: string) {
     if(this._showToast)
       clearTimeout(this._toastTimeOut)
 
     this._toastMessage = message
+    this._toastType = type
     this._showToast = true
     this._toastTimeOut = setTimeout(() => {
       this._showToast = false
@@ -26,5 +28,6 @@ export class ToastService {
   clearToast() {
     this._showToast = false
     this._toastMessage = ''
+    this._toastType = ''
   }
 }

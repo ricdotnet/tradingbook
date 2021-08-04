@@ -1,5 +1,6 @@
 <div @openToast *ngIf="show"
-     class="w-full text-center py-2 bg-red-400 border border-red-600 text-white font-medium mb-4 rounded-sm">
+     class="w-full text-center py-2 border text-white font-medium mb-4 rounded-sm"
+    [class]="(type === 'error') ? typeError : typeSuccess">
   {{message}}
   <div (click)="close()" class="float-right pr-4 cursor-pointer">X</div>
 </div>

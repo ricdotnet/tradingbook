@@ -7,8 +7,10 @@
     Login
   </div>
   <form (submit)="$event.preventDefault()" [formGroup]="loginForm">
-    <input name="username" type="text" formControlName="username" class="input" placeholder="Username">
-    <input name="password" type="password" formControlName="password" class="input" placeholder="password">
+    <input name="username" type="text" formControlName="username" class="input-auth"
+           placeholder="Username">
+    <input name="password" type="password" formControlName="password" class="input-auth"
+           placeholder="password">
     <div class="flex items-center mb-4">
       <label for="remember" class="mr-5">Remember me.</label>
       <input id="remember" type="checkbox" formControlName="remember">

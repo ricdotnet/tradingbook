@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SpinnerIcon } from './icons/spinner.icon';
 import {UserStore} from "./store/user.store";
 import {NeedsAuthGuard} from "./auth/needsAuth.guard";
+import { UserComponent } from './components/dashboard/user/user.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {NeedsAuthGuard} from "./auth/needsAuth.guard";
     TradesComponent,
     NotFoundComponent,
     ToastComponent,
-    SpinnerIcon
+    SpinnerIcon,
+    UserComponent
   ],
   imports: [
     BrowserModule,

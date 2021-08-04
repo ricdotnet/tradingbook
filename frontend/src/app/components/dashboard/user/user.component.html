@@ -1,0 +1,15 @@
+<div class="p-5 bg-white rounded-sm shadow-sm w-96 mx-auto">
+
+  <app-toast [message]="toastService._toastMessage" [type]="toastService._toastType"
+             [show]="toastService._showToast"></app-toast>
+
+  <form (ngSubmit)="$event.preventDefault()" (keydown)="modified = true">
+    <input value="{{currentUser._username}}" class="input-general mb-4">
+    <input value="{{currentUser._email}}" class="input-general mb-4">
+    <input value="{{currentUser._firstName}}" class="input-general mb-4" placeholder="First Name">
+    <input value="{{currentUser._lastName}}" class="input-general" placeholder="Last Name">
+
+    <button (click)="saveNewDetails()" class="btn-submit mt-4" *ngIf="modified">Save</button>
+  </form>
+
+</div>
