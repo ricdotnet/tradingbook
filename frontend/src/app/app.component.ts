@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, RoutesRecognized } from '@angular/router';
+import {Component} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 
-import { AuthService } from "./auth/auth.service";
-import { UserStore } from './store/user.store';
+import {AuthService} from "./auth/auth.service";
+import {UserStore} from './store/user.store';
 import {DashboardService} from "./services/dashboard/dashboard.service";
+import {GlobalStore} from "./store/global.store";
 
 @Component({
   selector: 'app-root',
@@ -15,12 +16,13 @@ export class AppComponent {
     private loginService: AuthService,
     private userStore: UserStore,
     private dashboardService: DashboardService,
+    private globalStore: GlobalStore,
     private router: Router
   ) {
     if (localStorage.getItem('auth')) {
       this.loginService.authenticate().subscribe(
         (res) => {
-          if(res.status === 401 || res.status === 400) {
+          if (res.status === 401 || res.status === 400) {
             localStorage.removeItem('auth')
             this.router.navigate(['']).then(() => {
               window.location.reload()

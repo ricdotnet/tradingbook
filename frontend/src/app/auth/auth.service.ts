@@ -13,7 +13,6 @@ import {User} from "../interfaces/user.interface";
   providedIn: 'root'
 })
 export class AuthService {
-  isAuthed = new BehaviorSubject(false);
 
   constructor(
     private http: HttpClient,

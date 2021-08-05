@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from "@angular/forms";
 
-import { LoginService } from "../../services/login/login.service";
-import { ToastService } from "../../services/toast/toast.service";
-import { SpinnerIcon } from 'src/app/icons/spinner.icon';
+import {LoginService} from "../../services/login/login.service";
+import {ToastService} from "../../services/toast/toast.service";
+import {SpinnerIcon} from 'src/app/icons/spinner.icon';
+import {ActivatedRoute} from "@angular/router";
+import {GlobalStore} from "../../store/global.store";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     public form: FormBuilder,
-    public toastService: ToastService
+    public toastService: ToastService,
+    private activatedRoute: ActivatedRoute,
+    private globalStore: GlobalStore
   ) {
     this.loginForm = this.form.group({
       username: '',
@@ -27,6 +31,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.url.subscribe(
+      url => {
+        this.globalStore.currentActiveUrl = url[0].path
+      }
+    )
   }
 
   submit() {

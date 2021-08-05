@@ -1,4 +1,5 @@
-<div class="w-60 h-screen bg-gray-900 float-left text-white text-center space-y-2 p-3">
+<div
+  class="sm:hidden md:block w-60 h-screen bg-gray-900 float-left text-white text-center space-y-2 p-3">
 
   <div class="text-xl mt-2 mb-5 border-b border-gray-800 pb-5 flex-col" *ngIf="userStore.loggedIn">
     <div class="w-20 mx-auto"><img
@@ -8,23 +9,25 @@
   </div>
 
   <div class="flex flex-col items-stretch">
-    <a routerLink="">Home</a>
+    <div class="py-3" [class.bg-gray-800]="globalStore.activeUrl === '' || globalStore.activeUrl === '/'">
+      <a routerLink="">Home</a>
+    </div>
     <div *ngIf="!userStore.loggedIn">
-      <div>
+      <div class="py-3" [class.bg-gray-800]="globalStore.activeUrl === 'login'">
         <a routerLink="login">Login</a>
       </div>
-      <div>
+      <div class="py-3" [class.bg-gray-800]="globalStore.activeUrl === 'register'">
         <a routerLink="register">Register</a>
       </div>
     </div>
     <div *ngIf="userStore.loggedIn">
-      <div>
+      <div class="py-3" [class.bg-gray-800]="globalStore.currentActiveUrl === 'dashboard'">
         <a routerLink="dashboard">Dashboard</a>
       </div>
-      <div>
+      <div class="py-3" [class.bg-gray-800]="globalStore.activeUrl === 'trades'">
         <a routerLink="trades">Trades</a>
       </div>
-      <div>
+      <div class="py-3" [class.bg-gray-800]="globalStore.activeUrl === 'logout'">
         <a routerLink="logout">Logout</a>
       </div>
     </div>

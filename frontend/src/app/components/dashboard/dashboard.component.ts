@@ -5,6 +5,9 @@ import {UserStore} from "../../store/user.store";
 import * as dayjs from 'dayjs';
 import * as relativeTime from 'dayjs/plugin/relativeTime'
 import {StatsStore} from "../../store/stats.store";
+import {ActivatedRoute} from "@angular/router";
+import {GlobalStore} from "../../store/global.store";
+import {SubscribeService} from "../../services/subscribe/subscribe.service";
 
 dayjs.extend(relativeTime)
 
@@ -21,19 +24,25 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     public userStore: UserStore,
-    public statsStore: StatsStore,
-    public dashboardService: DashboardService) {
-  }
+    public dashboardService: DashboardService,
+    private activatedRoute: ActivatedRoute,
+    private globalStore: GlobalStore
+  ) { }
 
   ngOnInit(): void {
     this._loading = true;
     this.dashboardService.getStats().subscribe(
       () => {
-        console.log('user data fetched,')
         this._registered = dayjs(this.userStore.createdAt).fromNow()
         this._loading = false;
       },
       (error) => console.log(error)
+    )
+
+    this.activatedRoute.url.subscribe(
+      url => {
+        this.globalStore.currentActiveUrl = url[0].path
+      }
     )
   }
 

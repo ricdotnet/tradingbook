@@ -21,6 +21,7 @@ import { SpinnerIcon } from './icons/spinner.icon';
 import {UserStore} from "./store/user.store";
 import {NeedsAuthGuard} from "./auth/needsAuth.guard";
 import { UserComponent } from './components/dashboard/user/user.component';
+import {SubscribeService} from "./services/subscribe/subscribe.service";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import { UserComponent } from './components/dashboard/user/user.component';
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [NoAuthGuard, NeedsAuthGuard],
+  providers: [NoAuthGuard, NeedsAuthGuard, SubscribeService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

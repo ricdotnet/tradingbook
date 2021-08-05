@@ -3,7 +3,8 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {ToastService} from "../../services/toast/toast.service";
 
 import {RegisterService} from "../../services/register/register.service";
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {GlobalStore} from "../../store/global.store";
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,9 @@ export class RegisterComponent implements OnInit {
     public form: FormBuilder,
     public toastService: ToastService,
     public registerService: RegisterService,
-    public router: Router
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    private globalStore: GlobalStore
   ) {
     this.registerForm = this.form.group({
       username: '',
@@ -29,6 +32,11 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.url.subscribe(
+      url => {
+        this.globalStore.currentActiveUrl = url[0].path
+      }
+    )
   }
 
   submit() {

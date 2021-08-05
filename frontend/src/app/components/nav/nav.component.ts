@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { UserStore } from 'src/app/store/user.store';
-import { AuthService } from "../../auth/auth.service";
+import {Component} from '@angular/core';
+import {UserStore} from 'src/app/store/user.store';
+import {GlobalStore} from "../../store/global.store";
 
 @Component({
   selector: 'app-nav',
@@ -8,7 +8,7 @@ import { AuthService } from "../../auth/auth.service";
 })
 export class NavComponent {
 
-  constructor(public authService: AuthService, public userStore: UserStore) {
+  constructor(public userStore: UserStore, public globalStore: GlobalStore) {
   }
 
 }
