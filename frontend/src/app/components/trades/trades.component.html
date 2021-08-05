@@ -1,7 +1,30 @@
-<div>
-  <ul>
-    <li *ngFor="let trade of trades">
-      {{trade.pairName}} {{trade.entry}} {{trade.exit}}
-    </li>
-  </ul>
+<div class="w-10 make-middle" *ngIf="_loading">
+  <spinner-icon></spinner-icon>
+</div>
+<div *ngIf="!_loading" class="w-1/2 mx-auto mt-10">
+
+  <div class="mb-20">
+    <form (submit)="$event.preventDefault()" [formGroup]="tradeForm">
+      <input type="text" formControlName="pairName" class="py-2 px-2 focus:outline-none mr-2"/>
+      <input type="number" formControlName="entry" class="py-2 px-2 focus:outline-none mr-2"/>
+      <input type="number" formControlName="exit" class="py-2 px-2 focus:outline-none mr-2"/>
+
+      <button type="submit" class="btn-submit" (click)="addTrade()">Add Trade</button>
+    </form>
+  </div>
+
+  <table>
+    <tr>
+      <td>Pair</td>
+      <td>Entry</td>
+      <td>Exit</td>
+    </tr>
+
+    <tr *ngFor="let trade of trades">
+      <td>{{trade.pairName}}</td>
+      <td>{{trade.entry}}</td>
+      <td>{{trade.exit}}</td>
+    </tr>
+  </table>
+
 </div>

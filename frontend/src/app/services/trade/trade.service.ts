@@ -29,4 +29,17 @@ export class TradeService {
     );
   }
 
+  addTrade(body: Object): Observable<any> {
+    return this.http.post(`${environment.apiUrl}trade/add`, body, {
+      headers: {
+        'authorization': `Bearer ${JSON.parse(<string>localStorage.getItem('auth')).token}`
+      }
+    }).pipe(
+      tap(_ => _),
+      catchError(err => {
+        throw err
+      })
+    )
+  }
+
 }
