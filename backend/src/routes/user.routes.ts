@@ -1,6 +1,11 @@
 import express, {Response} from "express";
 import {encode} from '../services/token.service'
-import {createNewUser, loginExistingUser, userStats} from '../controllers/user.controller'
+import {
+  createNewUser,
+  getUserDetails,
+  loginExistingUser,
+  userStats
+} from '../controllers/user.controller'
 import {auth} from "../services/auth.service";
 
 import {RequestInterface} from "../interface/request.interface";
@@ -19,17 +24,20 @@ userRoutes.post('/register', createNewUser, (req: RequestInterface, res: Respons
    * Any necessary last checks before ending the request
    */
 
-  res.status(200).send({message: 'Account registered successfully.'})
+  res.status(200).send({status: 200, message: 'Account registered successfully.'})
+})
+
+userRoutes.get('/details', auth, getUserDetails, (req: RequestInterface, res: Response) => {
+  res.status(200).send({status: 200, body: req.body})
 })
 
 userRoutes.get('/stats', auth, userStats, (req: RequestInterface, res: Response) => {
-
-  res.status(200).send(req.resBody)
+  res.status(200).send({status: 200, body: req.body})
 })
 
 userRoutes.post('/authenticate', auth, (req: RequestInterface, res: Response) => {
 
-  if(req.decoded) {
-    res.status(200).send(req.decoded)
+  if (req.decoded) {
+    res.status(200).send({status: 200, body: req.decoded})
   }
 })

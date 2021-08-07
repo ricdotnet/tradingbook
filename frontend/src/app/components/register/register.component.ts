@@ -47,12 +47,12 @@ export class RegisterComponent implements OnInit {
 
     this.registerService.registerAccount(this.registerForm.value).subscribe(
       (result) => {
-        this.toastService.toast(result.message, 'success');
+        this.toastService.toast(result.message, 'success', 10000);
         this.router.navigate(['login']).then(() => window.location.reload());
         this._loading = false;
       },
       (error) => {
-        this.toastService.toast(error.error.message, 'error');
+        this.toastService.toast(error.error.message, 'error', 10000);
         this._loading = false;
       }
     );
@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
   formValidate() {
     for (const key in this.registerForm.value) {
       if (this.registerForm.value[key] === '') {
-        this.toastService.toast((key === 'passwordRepeat') ? 'Please verify your password.' : `Please enter ${(key === 'email') ? 'an' : 'a'} ${key}`, 'error');
+        this.toastService.toast((key === 'passwordRepeat') ? 'Please verify your password.' : `Please enter ${(key === 'email') ? 'an' : 'a'} ${key}`, 'error', 10000);
         this._loading = false;
         return true;
       }
@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
 
   passwordsValidate() {
     if (this.registerForm.value.password !== this.registerForm.value.passwordRepeat) {
-      this.toastService.toast('The passwords do not match.', 'error');
+      this.toastService.toast('The passwords do not match.', 'error', 10000);
       this._loading = false;
       return true;
     }

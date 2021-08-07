@@ -3,7 +3,7 @@ import {getConnection} from "typeorm";
 import {RequestInterface} from "../interface/request.interface";
 import {User} from "../entity/User";
 import {Trade} from "../entity/Trade";
-import {StatsInterface} from "../interface/stats.interface";
+import * as _ from 'lodash'
 
 const user = new User()
 
@@ -90,40 +90,85 @@ export async function loginExistingUser(req: RequestInterface, res: Response, ne
   next()
 }
 
-export async function userStats(req: RequestInterface, res: Response, next: NextFunction) {
+export async function getUserDetails(req: RequestInterface, res: Response, next: NextFunction) {
   let userId: string = req.decoded?.userId
-  let resBody: StatsInterface = {
-    user: {},
-    trades: {
-      count: 0,
-      topPair: '',
-      pipsWon: 0,
-      pipsLost: 0
-    }
-  }
 
   if (!userId) {
     return res.status(400).send({message: 'No user identification present in this token.'})
   }
 
-  let userDetails = await getConnection()
+  req.body = await getConnection()
     .getRepository(User)
     .createQueryBuilder()
-    .select(['username', 'email', 'firstName', 'lastName', 'createdAt'])
+    .select(['userId', 'username', 'email', 'firstName', 'lastName', 'createdAt'])
     .where('userId = :id', {id: userId})
     .getRawOne()
 
-  resBody.user = userDetails
+  next()
+}
 
-  let tradesCount = await getConnection()
+export async function userStats(req: RequestInterface, res: Response, next: NextFunction) {
+  let userId: string = req.decoded?.userId
+
+  if (!userId) {
+    return res.status(400).send({message: 'No user identification present in this token.'})
+  }
+
+  // let tradesCount = await getConnection()
+  //   .getRepository(Trade)
+  //   .createQueryBuilder()
+  //   .where('userId = :id', {id: userId})
+  //   .getCount()
+
+  let trades = await getConnection()
     .getRepository(Trade)
     .createQueryBuilder()
-    .where('userId = :userId', {userId: userId})
-    .getCount()
+    .select(['*'])
+    .where('userId = :id', {id: userId})
+    .orderBy('createdAt', 'DESC')
+    .getRawMany()
 
-  resBody.trades.count = tradesCount
+  let pipsLost = _.reduce(trades, (acc, count) => {
+    let entry = count.entry;
+    let exit = count.exit;
 
-  req.resBody = resBody
+    if(entry > exit)
+      acc += (entry-exit)*10000
+
+    return acc;
+  }, 0)
+
+  let pipsWon = _.reduce(trades, (acc, count) => {
+    let entry = count.entry;
+    let exit = count.exit;
+
+    if(entry < exit)
+      acc += (exit-entry)*10000
+
+    return acc;
+  }, 0)
+
+  let pairsCount = _.countBy(trades, 'pairName')
+  let topPair = () => {
+    let tempCount
+    let tempPair
+    for(const [key, value] of Object.entries(pairsCount)) {
+      tempCount = value
+      tempPair = key
+      if(value > tempCount) {
+        tempCount = value;
+        tempPair = key
+      }
+    }
+
+    return {pair: tempPair, count: tempCount} as Object;
+  }
+
+  req.body = {
+    topPair: topPair(),
+    pipsWon: Math.round(pipsWon),
+    pipsLost: Math.round(pipsLost)
+  }
 
   next()
 }

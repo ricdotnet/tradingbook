@@ -47,11 +47,11 @@ export class LoginComponent implements OnInit {
 
     this.loginService.doLogin(this.loginForm.value).subscribe(
       (result) => {
-        this.toastService.toast(result.message, 'success');
+        this.toastService.toast(result.message, 'success', 10000);
         this._loading = false;
       },
       (error) => {
-        this.toastService.toast(error.error.message, 'error');
+        this.toastService.toast(error.error.message, 'error', 10000);
         this._loading = false;
       }
     );
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
   formValidate() {
     for (const key in this.loginForm.value) {
       if (this.loginForm.value[key] === '') {
-        this.toastService.toast(`Please enter a ${key}.`, 'error');
+        this.toastService.toast(`Please enter a ${key}.`, 'error', 10000);
         return true;
       }
     }

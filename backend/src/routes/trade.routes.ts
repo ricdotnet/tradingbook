@@ -23,13 +23,13 @@ tradeRoutes.get('/t/:id', getOne)
  */
 tradeRoutes.post('/add', addOne, (req: RequestInterface, res: Response) => {
 
-  res.status(200).send({message: 'Trade added.'})
+  res.status(200).send({status: 200, message: 'Trade added.'})
 })
 tradeRoutes.patch('/update', (req: RequestInterface, res: Response) => {
 
-  res.status(200).send({message: 'updating a trade...'})
+  res.status(200).send({status: 200, message: 'updating a trade...'})
 })
 tradeRoutes.delete('/delete', deleteOne, (req: RequestInterface, res: Response) => {
 
-  res.status(200).send({message: 'Trade deleted.'})
+  res.status(200).send({status: 200, message: 'Trade deleted.'})
 })

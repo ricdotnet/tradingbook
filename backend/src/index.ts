@@ -27,7 +27,9 @@ const APP: express.Express = express()
 // APP.use(bodyParser.json())
 APP.use(express.json())
 APP.use(helmet())
-APP.use(cors())
+APP.use(cors({
+  origin: 'http://localhost:4200'
+}))
 
 APP.use(routes)
 

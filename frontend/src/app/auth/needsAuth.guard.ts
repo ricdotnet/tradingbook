@@ -32,7 +32,7 @@ export class NeedsAuthGuard implements CanActivate {
       (_) => {
 
         this.router.navigate(['login']).then(() => {
-          this.toastService.toast('Login token expired. Please login again.', 'error')
+          this.toastService.toast('Login token expired. Please login again.', 'error', 1000000)
           this.userStore.loggedIn = false
           localStorage.removeItem('auth')
         })

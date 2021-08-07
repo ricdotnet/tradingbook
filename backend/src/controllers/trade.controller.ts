@@ -16,7 +16,7 @@ export async function getAll(req: RequestInterface, res: Response) {
     .orderBy('createdAt', 'DESC')
     .getMany()
 
-  return res.status(200).send(trades)
+  return res.status(200).send({status: 200, trades})
 }
 
 export async function getOne(req: RequestInterface, res: Response) {
@@ -30,7 +30,7 @@ export async function getOne(req: RequestInterface, res: Response) {
       }
     })
 
-  return res.status(200).send(single)
+  return res.status(200).send({status: 200, single})
 }
 
 export async function addOne(req: RequestInterface, res: Response, next: NextFunction) {

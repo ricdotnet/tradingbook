@@ -12,7 +12,7 @@ export class ToastService {
 
   constructor() { }
 
-  toast(message: string, type: string) {
+  toast(message: string, type: string, timeout: number) {
     if(this._showToast)
       clearTimeout(this._toastTimeOut)
 
@@ -22,7 +22,7 @@ export class ToastService {
     this._toastTimeOut = setTimeout(() => {
       this._showToast = false
       this._toastMessage = ''
-    }, 1000000)
+    }, timeout)
   }
 
   clearToast() {
