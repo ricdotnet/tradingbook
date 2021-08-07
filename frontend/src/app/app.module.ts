@@ -22,6 +22,7 @@ import {UserStore} from "./store/user.store";
 import {NeedsAuthGuard} from "./auth/needsAuth.guard";
 import { UserComponent } from './components/dashboard/user/user.component';
 import {SubscribeService} from "./services/subscribe/subscribe.service";
+import {UserService} from "./services/user/user.service";
 
 @NgModule({
   declarations: [
@@ -49,5 +50,4 @@ import {SubscribeService} from "./services/subscribe/subscribe.service";
   providers: [NoAuthGuard, NeedsAuthGuard, SubscribeService],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

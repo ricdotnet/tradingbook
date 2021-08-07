@@ -5,6 +5,8 @@ import {AuthService} from "./auth/auth.service";
 import {UserStore} from './store/user.store';
 import {DashboardService} from "./services/dashboard/dashboard.service";
 import {GlobalStore} from "./store/global.store";
+import {UserService} from "./services/user/user.service";
+import {SubscribeService} from "./services/subscribe/subscribe.service";
 
 @Component({
   selector: 'app-root',
@@ -12,32 +14,20 @@ import {GlobalStore} from "./store/global.store";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   constructor(
-    private loginService: AuthService,
+    private authService: AuthService,
     private userStore: UserStore,
     private dashboardService: DashboardService,
-    private globalStore: GlobalStore,
-    private router: Router
+    private userService: UserService,
+    public globalStore: GlobalStore,
+    private router: Router,
+
+    private subscribeService: SubscribeService
   ) {
+
     if (localStorage.getItem('auth')) {
-      this.loginService.authenticate().subscribe(
-        (res) => {
-          if (res.status === 401 || res.status === 400) {
-            localStorage.removeItem('auth')
-            this.router.navigate(['']).then(() => {
-              window.location.reload()
-            })
-          }
-          this.dashboardService.getStats().subscribe()
-          this.userStore.loggedIn = true;
-        },
-        (err) => {
-          localStorage.removeItem('auth')
-          this.router.navigate(['']).then(() => {
-            window.location.reload()
-          })
-        }
-      );
+      this.globalStore.isLoading = true
     }
   }
 }

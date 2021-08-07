@@ -8,6 +8,7 @@ import {StatsStore} from "../../store/stats.store";
 import {ActivatedRoute} from "@angular/router";
 import {GlobalStore} from "../../store/global.store";
 import {SubscribeService} from "../../services/subscribe/subscribe.service";
+import {UserService} from "../../services/user/user.service";
 
 dayjs.extend(relativeTime)
 
@@ -20,30 +21,27 @@ export class DashboardComponent implements OnInit {
   _loading: boolean = false
 
   //format the createdAt data to show how long ago was the registration
+  // _registered: string =this.userStore.createdAt //dayjs(<string>this.userStore.createdAt).fromNow()
   _registered: string = ''
 
   constructor(
     public userStore: UserStore,
-    public dashboardService: DashboardService,
+    // public dashboardService: DashboardService,
     private activatedRoute: ActivatedRoute,
     private globalStore: GlobalStore
   ) { }
 
   ngOnInit(): void {
     this._loading = true;
-    this.dashboardService.getStats().subscribe(
-      () => {
-        this._registered = dayjs(this.userStore.createdAt).fromNow()
-        this._loading = false;
-      },
-      (error) => console.log(error)
-    )
+    this._registered = dayjs(<string>this.userStore.createdAt).fromNow()
 
     this.activatedRoute.url.subscribe(
       url => {
         this.globalStore.currentActiveUrl = url[0].path
       }
     )
+
+    this._loading = false
   }
 
 }

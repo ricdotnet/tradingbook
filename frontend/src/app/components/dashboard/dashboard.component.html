@@ -3,6 +3,8 @@
 </div>
 <div *ngIf="!_loading">
   <app-user [user]="userStore" class="make-middle"></app-user>
+
+  {{_registered}}
   <!--  <p>{{userStore.userId}}</p>-->
   <!--  <p>{{userStore.loggedIn}}</p>-->
   <!--  <p>{{userStore.username}}</p>-->

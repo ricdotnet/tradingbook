@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
 
-import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable } from "rxjs";
-import { catchError, tap } from "rxjs/operators";
-import { environment } from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
+import {BehaviorSubject, Observable, OperatorFunction} from "rxjs";
+import {catchError, tap} from "rxjs/operators";
+import {environment} from "../../environments/environment";
 
-import { Router } from "@angular/router";
+import {Router} from "@angular/router";
 import {UserStore} from "../store/user.store";
 import {User} from "../interfaces/user.interface";
 
@@ -30,12 +30,12 @@ export class AuthService {
         this.userStore.loggedIn = true
         this.userStore.userId = _.userId
       }),
-      catchError(err => Array(err))
+      catchError(err => err)
     );
   }
 
   deAuth(): any {
-    if(localStorage.getItem('auth'))
+    if (localStorage.getItem('auth'))
       localStorage.removeItem('auth')
 
     this.router.navigate(['']).then(() => window.location.reload())

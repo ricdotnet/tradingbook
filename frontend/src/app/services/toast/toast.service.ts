@@ -22,7 +22,7 @@ export class ToastService {
     this._toastTimeOut = setTimeout(() => {
       this._showToast = false
       this._toastMessage = ''
-    }, 10000)
+    }, 1000000)
   }
 
   clearToast() {

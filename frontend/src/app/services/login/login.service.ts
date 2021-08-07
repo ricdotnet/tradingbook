@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import { ErrorService } from "../error/error.service";
+import {UserService} from "../user/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ export class LoginService {
 
   loginHandler(response: Object) {
     localStorage.setItem('auth', JSON.stringify(response));
+
     this.route.navigate(['']).then(() => {
       window.location.reload()
     });

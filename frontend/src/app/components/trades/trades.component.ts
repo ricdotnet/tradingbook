@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TradeService} from "../../services/trade/trade.service";
 import {TradeInterface} from "../../interfaces/trade.interface";
 import {ActivatedRoute} from "@angular/router";
@@ -41,16 +41,18 @@ export class TradesComponent implements OnInit {
   }
 
   getTrades() {
-    this.tradeService.getTrades().subscribe(result => {
-      this.trades = result
-      this._loading = false
-    })
+    this.tradeService.getTrades().subscribe(
+      (result) => {
+        this.trades = result.trades
+        this._loading = false
+      },
+      () => {}
+    )
   }
 
   addTrade() {
     this.tradeService.addTrade(this.tradeForm.value).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
+      (res) => console.log(res)
     )
   }
 

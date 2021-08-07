@@ -11,14 +11,14 @@ export class UserStore {
   private _email: string
   private _firstName?: string
   private _lastName?: string
-  private _createdAt: number
+  private _createdAt: any
   constructor() {
     this._userId = ''
     this._username = ''
     this._email = ''
     this._firstName = ''
     this._lastName = ''
-    this._createdAt = 0
+    this._createdAt = ''
   }
 
   set loggedIn(loggedIn: boolean) {
@@ -69,7 +69,7 @@ export class UserStore {
     return ''
   }
 
-  set createdAt(createdAt: number) {
+  set createdAt(createdAt: any) {
     this._createdAt = createdAt
   }
   get createdAt() {

@@ -13,9 +13,7 @@ import { AuthService } from "src/app/auth/auth.service";
 export class TradeService {
 
   constructor(
-    private http: HttpClient,
-    private router: Router,
-    private authService: AuthService
+    private http: HttpClient
   ) { }
 
   getTrades(): Observable<any> {
@@ -24,8 +22,7 @@ export class TradeService {
         'authorization': `Bearer ${JSON.parse(<string>localStorage.getItem('auth')).token}`
       }
     }).pipe(
-      tap(_ => _),
-      catchError(() => this.authService.deAuth())
+      tap(_ => _)
     );
   }
 

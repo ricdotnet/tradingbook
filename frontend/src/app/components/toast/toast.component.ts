@@ -25,10 +25,18 @@ export class ToastComponent{
 
   private _message: string = ''
   private _show: boolean = false
+  private _type: string = ''
 
   typeError = 'bg-red-400 border-red-500'
   typeSuccess = 'bg-green-400 border-green-500'
-  @Input() type = ''
+
+  @Input()
+  get type(): string {
+    return this._type
+  }
+  set type(type: string) {
+    this._type = type
+  }
 
   @Input()
   get message(): string {
