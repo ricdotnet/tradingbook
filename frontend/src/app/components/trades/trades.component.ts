@@ -25,7 +25,8 @@ export class TradesComponent implements OnInit {
     this.tradeForm = tf.group({
       pairName: <string>'',
       entry: <number>0,
-      exit: <number>0
+      exit: <number>0,
+      type: <string>'Long'
     })
   }
 
@@ -52,7 +53,7 @@ export class TradesComponent implements OnInit {
 
   addTrade() {
     this.tradeService.addTrade(this.tradeForm.value).subscribe(
-      (res) => console.log(res)
+      () => this.getTrades()
     )
   }
 

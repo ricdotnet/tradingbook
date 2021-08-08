@@ -38,6 +38,7 @@ export async function addOne(req: RequestInterface, res: Response, next: NextFun
   trade.pairName = req.body.pairName.toLowerCase()
   trade.entry = req.body.entry
   trade.exit = req.body.exit
+  trade.type = req.body.type
 
   if (!trade.userId)
     return res.status(400).send({message: 'User id not provided.'})
@@ -78,7 +79,8 @@ export async function addOne(req: RequestInterface, res: Response, next: NextFun
       pairName: trade.pairName,
       entry: trade.entry,
       exit: trade.exit,
-      userId: trade.userId
+      userId: trade.userId,
+      type: trade.type
     })
     .execute()
 

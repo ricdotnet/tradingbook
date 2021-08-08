@@ -18,6 +18,9 @@ export class Trade {
   @Column({type: 'float', precision: 6})
   exit?: number
 
+  @Column({default: 'Long'})
+  type?: string
+
   // auto added
   @CreateDateColumn()
   createdAt?: string

@@ -6,6 +6,5 @@ export interface TradeInterface {
   createdAt: bigint
   entryImg?: string
   exitImg?: string
-  [key: string]: any
-  trades: any
+  type: string
 }
