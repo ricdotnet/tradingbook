@@ -24,7 +24,6 @@ export class AppComponent {
     private router: Router,
     private subscribeService: SubscribeService
   ) {
-
     if (localStorage.getItem('auth')) {
       this.globalStore.isLoading = true
     }

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://tradingbookapi.herokuapp.com/'
+  // apiUrl: 'https://tradingbookapi.herokuapp.com/',
+  apiUrl: 'http://localhost:3000/'
 };
 
 /*

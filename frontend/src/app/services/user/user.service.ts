@@ -6,7 +6,6 @@ import {Config} from "../../utils/config";
 import {catchError, tap} from "rxjs/operators";
 import {UserStore} from "../../store/user.store";
 import {User} from "../../interfaces/user.interface";
-import {AuthService} from "../auth/auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +14,13 @@ export class UserService {
 
   constructor(
     private _http: HttpClient,
-    private userStore: UserStore,
-    private authService: AuthService
+    private userStore: UserStore
   ) { }
 
   getUserDetails(): Observable<any> {
     return this._http.get<User>(`${environment.apiUrl}user/details`, {
       headers: {
-        'authorization': `Bearer ${JSON.parse(<string>localStorage.getItem('auth')).token}`
+        'authorization': `Bearer ${Config.currentUserToken}`
       }
     }).pipe(
       tap(_ => {

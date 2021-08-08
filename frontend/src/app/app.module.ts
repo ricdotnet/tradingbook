@@ -23,6 +23,7 @@ import {NeedsAuthGuard} from "./guards/needsAuth.guard";
 import { UserComponent } from './components/dashboard/user/user.component';
 import {SubscribeService} from "./services/subscribe/subscribe.service";
 import {UserService} from "./services/user/user.service";
+import {Config} from "./utils/config";
 
 @NgModule({
   declarations: [

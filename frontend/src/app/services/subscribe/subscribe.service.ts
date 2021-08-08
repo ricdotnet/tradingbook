@@ -25,7 +25,10 @@ export class SubscribeService {
         () => {
 
           this.userService.getUserDetails().subscribe(
-            () => this.globalStore.isLoading = false,
+            () => {
+              this.globalStore.isLoading = false
+              //more user subscribe methods...
+            },
             () => console.log('error......')
           )
           this.userStore.loggedIn = true;
