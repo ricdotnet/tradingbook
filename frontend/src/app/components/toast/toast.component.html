@@ -1,6 +1,12 @@
+<!--<div @openToast *ngIf="tempShow"-->
+<!--     class="w-full text-center py-2 border text-white font-medium mb-4 rounded-sm"-->
+<!--    [class]="(type === 'error') ? typeError : typeSuccess">-->
+<!--  {{message}}-->
+<!--  <div (click)="close()" class="float-right pr-4 cursor-pointer">X</div>-->
+<!--</div>-->
+
 <div @openToast *ngIf="show"
-     class="w-full text-center py-2 border text-white font-medium mb-4 rounded-sm"
-    [class]="(type === 'error') ? typeError : typeSuccess">
+     class="w-auto py-2 px-5 border text-white font-medium mb-4 rounded-sm absolute top-10 right-10 max-w-2xl z-50 cursor-pointer"
+     [class]="(type === 'error') ? typeError : typeSuccess" (click)="close()">
   {{message}}
-  <div (click)="close()" class="float-right pr-4 cursor-pointer">X</div>
 </div>

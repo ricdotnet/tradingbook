@@ -7,6 +7,7 @@ import {DashboardService} from "./services/dashboard/dashboard.service";
 import {GlobalStore} from "./store/global.store";
 import {UserService} from "./services/user/user.service";
 import {SubscribeService} from "./services/subscribe/subscribe.service";
+import {ToastService} from "./services/toast/toast.service";
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent {
     private userService: UserService,
     public globalStore: GlobalStore,
     private router: Router,
-    private subscribeService: SubscribeService
+    private subscribeService: SubscribeService,
+    public toastService: ToastService
   ) {
     if (localStorage.getItem('auth')) {
       this.globalStore.isLoading = true

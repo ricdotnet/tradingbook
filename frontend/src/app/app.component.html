@@ -1,5 +1,8 @@
 <div class="flex">
 
+  <app-toast [message]="toastService._toastMessage" [type]="toastService._toastType"
+             [show]="toastService._showToast"></app-toast>
+
   <div class="min-h-screen">
     <app-nav></app-nav>
   </div>

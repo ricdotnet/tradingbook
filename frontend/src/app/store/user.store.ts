@@ -9,8 +9,8 @@ export class UserStore {
   private _userId: string
   private _username: string
   private _email: string
-  private _firstName?: string
-  private _lastName?: string
+  private _firstName: string
+  private _lastName: string
   private _createdAt: any
   constructor() {
     this._userId = ''
@@ -53,20 +53,14 @@ export class UserStore {
     this._firstName = firstName
   }
   get firstName() {
-    if(this._firstName)
-      return this.firstName
-
-    return ''
+    return this._firstName
   }
 
   set lastName(lastName: string) {
     this._lastName = lastName
   }
   get lastName() {
-    if(this._lastName)
-      return this._lastName
-
-    return ''
+    return this._lastName
   }
 
   set createdAt(createdAt: any) {

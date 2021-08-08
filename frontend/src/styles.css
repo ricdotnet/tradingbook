@@ -7,6 +7,9 @@
 body {
     @apply bg-gray-300
 }
+input:disabled {
+    @apply text-gray-500
+}
 
 .make-middle {
     @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
@@ -27,5 +30,5 @@ forms styling
 }
 
 .input-general {
-    @apply w-full rounded-sm bg-gray-100 py-4 px-5
+    @apply rounded-sm bg-gray-100 py-3 px-4
 }

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
-import { ToastService } from 'src/app/services/toast/toast.service';
+import {ToastService} from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'app-toast',
@@ -8,24 +8,27 @@ import { ToastService } from 'src/app/services/toast/toast.service';
   animations: [
     trigger('openToast', [
       transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
+        style({opacity: 0}),
+        animate('300ms', style({opacity: 1})),
       ]),
       transition(':leave', [
-        animate('300ms', style({ opacity: 0 }))
+        animate('300ms', style({opacity: 0}))
       ])
     ])
   ]
 })
-export class ToastComponent{
+export class ToastComponent {
 
   constructor(
     public toastService: ToastService
-  ) {}
+  ) {
+  }
 
   private _message: string = ''
   private _show: boolean = false
   private _type: string = ''
+
+  tempShow = false
 
   typeError = 'bg-red-400 border-red-500'
   typeSuccess = 'bg-green-400 border-green-500'
@@ -34,6 +37,7 @@ export class ToastComponent{
   get type(): string {
     return this._type
   }
+
   set type(type: string) {
     this._type = type
   }
@@ -42,6 +46,7 @@ export class ToastComponent{
   get message(): string {
     return this._message
   }
+
   set message(message: string) {
     this._message = message
   }
@@ -50,6 +55,7 @@ export class ToastComponent{
   get show(): boolean {
     return this._show
   }
+
   set show(show: boolean) {
     this._show = show
   }

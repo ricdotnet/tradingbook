@@ -91,7 +91,7 @@ export async function loginExistingUser(req: RequestInterface, res: Response, ne
 }
 
 export async function getUserDetails(req: RequestInterface, res: Response, next: NextFunction) {
-  let userId: string = req.decoded?.userId
+  let userId: string = req.decoded!.userId
 
   if (!userId) {
     return res.status(400).send({message: 'No user identification present in this token.'})
@@ -132,8 +132,8 @@ export async function userStats(req: RequestInterface, res: Response, next: Next
     let entry = count.entry;
     let exit = count.exit;
 
-    if(entry > exit)
-      acc += (entry-exit)*10000
+    if (entry > exit)
+      acc += (entry - exit) * 10000
 
     return acc;
   }, 0)
@@ -142,8 +142,8 @@ export async function userStats(req: RequestInterface, res: Response, next: Next
     let entry = count.entry;
     let exit = count.exit;
 
-    if(entry < exit)
-      acc += (exit-entry)*10000
+    if (entry < exit)
+      acc += (exit - entry) * 10000
 
     return acc;
   }, 0)
@@ -152,10 +152,10 @@ export async function userStats(req: RequestInterface, res: Response, next: Next
   let topPair = () => {
     let tempCount
     let tempPair
-    for(const [key, value] of Object.entries(pairsCount)) {
+    for (const [key, value] of Object.entries(pairsCount)) {
       tempCount = value
       tempPair = key
-      if(value > tempCount) {
+      if (value > tempCount) {
         tempCount = value;
         tempPair = key
       }
@@ -169,6 +169,29 @@ export async function userStats(req: RequestInterface, res: Response, next: Next
     pipsWon: Math.round(pipsWon),
     pipsLost: Math.round(pipsLost)
   }
+
+  next()
+}
+
+export async function saveUserDetails(req: RequestInterface, res: Response, next: NextFunction) {
+  let userId: string = req.decoded!.userId
+
+  if (!userId) {
+    return res.status(400).send({message: 'No user identification present in this token.'})
+  }
+
+  let firstName: string = req.body.firstName
+  let lastName: string = req.body.lastName
+
+  let update = await getConnection()
+    .createQueryBuilder()
+    .update(User)
+    .set({
+      firstName: firstName,
+      lastName: lastName
+    })
+    .where('userId = :id', {id: userId})
+    .execute()
 
   next()
 }
