@@ -1,29 +1,31 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from "@angular/common/http";
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from "@angular/common/http";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { HomeComponent } from './components/home/home.component';
-import { NavComponent } from './components/nav/nav.component';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { LogoutComponent } from "./components/logout/logout.component";
-import { UserIcon } from "./icons/user.icon";
-import { NoAuthGuard } from "./guards/noAuth.guard";
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { TradesComponent } from './components/trades/trades.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ToastComponent } from './components/toast/toast.component';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { SpinnerIcon } from './icons/spinner.icon';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {LoginComponent} from './components/login/login.component';
+import {RegisterComponent} from './components/register/register.component';
+import {HomeComponent} from './components/home/home.component';
+import {NavComponent} from './components/nav/nav.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {LogoutComponent} from "./components/logout/logout.component";
+import {UserIcon} from "./icons/user.icon";
+import {NoAuthGuard} from "./guards/noAuth.guard";
+import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {TradesComponent} from './components/trades/trades.component';
+import {NotFoundComponent} from './components/not-found/not-found.component';
+import {ToastComponent} from './components/toast/toast.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {SpinnerIcon} from './icons/spinner.icon';
 import {UserStore} from "./store/user.store";
 import {NeedsAuthGuard} from "./guards/needsAuth.guard";
-import { UserComponent } from './components/dashboard/user/user.component';
+import {UserComponent} from './components/dashboard/user/user.component';
 import {SubscribeService} from "./services/subscribe/subscribe.service";
 import {UserService} from "./services/user/user.service";
 import {Config} from "./utils/config";
+import {TradeService} from "./services/trade/trade.service";
+import {StatsService} from "./services/stats/stats.service";
 
 @NgModule({
   declarations: [
@@ -48,7 +50,14 @@ import {Config} from "./utils/config";
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [NoAuthGuard, NeedsAuthGuard, SubscribeService],
+  providers: [
+    NoAuthGuard,
+    NeedsAuthGuard,
+    SubscribeService,
+    TradeService,
+    StatsService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 
 import {AuthService} from "./services/auth/auth.service";
 import {UserStore} from './store/user.store';
-import {DashboardService} from "./services/dashboard/dashboard.service";
 import {GlobalStore} from "./store/global.store";
 import {UserService} from "./services/user/user.service";
 import {SubscribeService} from "./services/subscribe/subscribe.service";
@@ -19,7 +18,6 @@ export class AppComponent {
   constructor(
     private authService: AuthService,
     private userStore: UserStore,
-    private dashboardService: DashboardService,
     private userService: UserService,
     public globalStore: GlobalStore,
     private router: Router,

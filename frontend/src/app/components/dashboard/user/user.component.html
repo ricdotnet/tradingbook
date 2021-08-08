@@ -1,5 +1,7 @@
 <div class="p-5 bg-white rounded-sm shadow-sm w-2/4 mx-auto mt-20">
 
+  <h2 class="text-xl mb-4 ml-5">User Details</h2>
+
   <form (ngSubmit)="$event.preventDefault()" (keyup)="assignNewDetails()" class="space-y-4"
         [formGroup]="detailsForm" autocomplete="off">
     <div class="flex w-full space-x-4">

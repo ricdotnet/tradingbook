@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {GlobalStore} from "../../store/global.store";
-import {DashboardService} from "../dashboard/dashboard.service";
 import {UserService} from "../user/user.service";
 import {UserStore} from "../../store/user.store";
 import {Config} from "../../utils/config";
@@ -14,7 +13,6 @@ export class SubscribeService {
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private globalStore: GlobalStore,
-    private dashboardService: DashboardService,
     private userService: UserService,
     private userStore: UserStore,
     private router: Router

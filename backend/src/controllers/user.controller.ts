@@ -144,11 +144,9 @@ export async function userStats(req: RequestInterface, res: Response, next: Next
 
   let pairsCount = _.countBy(trades, 'pairName')
   let topPair = () => {
-    let tempCount
+    let tempCount = 0
     let tempPair
-    for (const [key, value] of Object.entries(pairsCount)) {
-      tempCount = value
-      tempPair = key
+    for (let [key, value] of Object.entries(pairsCount)) {
       if (value > tempCount) {
         tempCount = value;
         tempPair = key
