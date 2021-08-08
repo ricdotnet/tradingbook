@@ -5,23 +5,23 @@ import {Injectable} from "@angular/core";
 })
 export class StatsStore {
 
-  private _count: number
+  private _trades: number
   private _topPair: string
   private _pipsWon: number
   private _pipsLost: number
 
   constructor() {
-    this._count = 0
+    this._trades = 0
     this._topPair = ''
     this._pipsWon = 0
     this._pipsLost = 0
   }
 
-  set count(count: number) {
-    this._count = count
+  set trades(trades: number) {
+    this._trades = trades
   }
   get count() {
-    return this._count
+    return this._trades
   }
 
   set topPair(topPair: string) {

@@ -27,8 +27,8 @@ export class UserService {
         this.userStore.userId = _.body.userId
         this.userStore.email = _.body.email
         this.userStore.username = _.body.username
-        this.userStore.firstName = _.body.firstName
-        this.userStore.lastName = _.body.lastName
+        this.userStore.firstName = _.body.firstName || ''
+        this.userStore.lastName = _.body.lastName || ''
         this.userStore.createdAt = _.body.createdAt
       }),
       catchError(_ => _)
@@ -36,8 +36,8 @@ export class UserService {
   }
 
   saveUserDetails(body: User): Observable<any> {
-    this.userStore.firstName = body.firstName
-    this.userStore.lastName = body.lastName
+    this.userStore.firstName = body.firstName!
+    this.userStore.lastName = body.lastName!
 
     return this._http.post(`${environment.apiUrl}user/details/save`, body, {
       headers: {

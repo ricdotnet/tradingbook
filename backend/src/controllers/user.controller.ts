@@ -114,12 +114,6 @@ export async function userStats(req: RequestInterface, res: Response, next: Next
     return res.status(400).send({message: 'No user identification present in this token.'})
   }
 
-  // let tradesCount = await getConnection()
-  //   .getRepository(Trade)
-  //   .createQueryBuilder()
-  //   .where('userId = :id', {id: userId})
-  //   .getCount()
-
   let trades = await getConnection()
     .getRepository(Trade)
     .createQueryBuilder()
@@ -165,6 +159,7 @@ export async function userStats(req: RequestInterface, res: Response, next: Next
   }
 
   req.body = {
+    trades: trades.length,
     topPair: topPair(),
     pipsWon: Math.round(pipsWon),
     pipsLost: Math.round(pipsLost)

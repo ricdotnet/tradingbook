@@ -23,23 +23,17 @@ export class DashboardService {
   }
 
   getStats(): Observable<any> {
-    return this._http.get<User & Stats>(`${environment.apiUrl}user/stats`, {
+    return this._http.get<Stats>(`${environment.apiUrl}user/stats`, {
       headers: {
         'authorization': `Bearer ${Config.currentUserToken}`
       }
     }).pipe(
       tap(_ => {
-        //set user details
-        this.userStore.userId = _.userId
-        this.userStore.email = _.email
-        this.userStore.username = _.username
-        this.userStore.createdAt = _.createdAt
-
         //set user stats
-        // this.statsStore.count = _.trades.count
-        // this.statsStore.topPair = _.trades.topPair
-        // this.statsStore.pipsWon = _.trades.pipsWon
-        // this.statsStore.pipsLost = _.trades.pipsLost
+        this.statsStore.trades = _.body.trades
+        this.statsStore.topPair = _.topPair
+        this.statsStore.pipsWon = _.pipsWon
+        this.statsStore.pipsLost = _.pipsLost
       }),
       catchError((err) => Array(err))
     )
