@@ -6,7 +6,7 @@ import {Config} from "../../utils/config";
 import {catchError, tap} from "rxjs/operators";
 import {UserStore} from "../../store/user.store";
 import {User} from "../../interfaces/user.interface";
-import {AuthService} from "../../auth/auth.service";
+import {AuthService} from "../auth/auth.service";
 
 @Injectable({
   providedIn: 'root'

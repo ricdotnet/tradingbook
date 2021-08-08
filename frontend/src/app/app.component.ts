@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
-import {AuthService} from "./auth/auth.service";
+import {AuthService} from "./services/auth/auth.service";
 import {UserStore} from './store/user.store';
 import {DashboardService} from "./services/dashboard/dashboard.service";
 import {GlobalStore} from "./store/global.store";
@@ -22,7 +22,6 @@ export class AppComponent {
     private userService: UserService,
     public globalStore: GlobalStore,
     private router: Router,
-
     private subscribeService: SubscribeService
   ) {
 

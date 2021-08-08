@@ -5,7 +5,7 @@ import {DashboardService} from "../dashboard/dashboard.service";
 import {UserService} from "../user/user.service";
 import {UserStore} from "../../store/user.store";
 import {Config} from "../../utils/config";
-import {AuthService} from "../../auth/auth.service";
+import {AuthService} from "../auth/auth.service";
 
 @Injectable()
 export class SubscribeService {

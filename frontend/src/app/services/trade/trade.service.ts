@@ -5,7 +5,7 @@ import { TradeInterface } from "../../interfaces/trade.interface";
 import { catchError, tap } from "rxjs/operators";
 import { Observable, of } from "rxjs";
 import { Router } from "@angular/router";
-import { AuthService } from "src/app/auth/auth.service";
+import { AuthService } from "src/app/services/auth/auth.service";
 
 @Injectable({
   providedIn: 'root'

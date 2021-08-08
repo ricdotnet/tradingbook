@@ -1,13 +1,13 @@
 import {Injectable} from "@angular/core";
 
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable, OperatorFunction} from "rxjs";
+import {Observable} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 
 import {Router} from "@angular/router";
-import {UserStore} from "../store/user.store";
-import {User} from "../interfaces/user.interface";
+import {UserStore} from "../../store/user.store";
+import {User} from "../../interfaces/user.interface";
 
 @Injectable({
   providedIn: 'root'

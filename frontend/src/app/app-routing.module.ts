@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Router, RouterModule, Routes} from '@angular/router';
 
-import {NoAuthGuard} from "./auth/noAuth.guard";
+import {NoAuthGuard} from "./guards/noAuth.guard";
 
 import {HomeComponent} from "./components/home/home.component";
 import {LoginComponent} from "./components/login/login.component";
@@ -9,7 +9,7 @@ import {RegisterComponent} from "./components/register/register.component";
 import {LogoutComponent} from "./components/logout/logout.component";
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {TradesComponent} from "./components/trades/trades.component";
-import {NeedsAuthGuard} from "./auth/needsAuth.guard";
+import {NeedsAuthGuard} from "./guards/needsAuth.guard";
 import {NotFoundComponent} from "./components/not-found/not-found.component";
 import {ToastService} from './services/toast/toast.service';
 
@@ -17,7 +17,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
 
   /*
-  auth and register routes
+  guards and register routes
    */
   {path: 'login', component: LoginComponent, canActivate: [NoAuthGuard]},
   {path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard]},

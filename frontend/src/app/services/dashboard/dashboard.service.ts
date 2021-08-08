@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {AuthService} from 'src/app/auth/auth.service';
+import {AuthService} from 'src/app/services/auth/auth.service';
 import {environment} from 'src/environments/environment';
 import {UserStore} from "../../store/user.store";
 import {Stats, User} from "../../interfaces/user.interface";
