@@ -3,7 +3,7 @@ import {encode} from '../services/token.service'
 import {
   createNewUser,
   getUserDetails,
-  loginExistingUser,
+  loginExistingUser, saveUserDetails,
   userStats
 } from '../controllers/user.controller'
 import {auth} from "../services/auth.service";
@@ -29,6 +29,11 @@ userRoutes.post('/register', createNewUser, (req: RequestInterface, res: Respons
 
 userRoutes.get('/details', auth, getUserDetails, (req: RequestInterface, res: Response) => {
   res.status(200).send({status: 200, body: req.body})
+})
+
+userRoutes.post('/details/save', auth, saveUserDetails, (req: RequestInterface, res: Response) => {
+
+  res.status(200).send({status: 200, message: 'Details updated.'})
 })
 
 userRoutes.get('/stats', auth, userStats, (req: RequestInterface, res: Response) => {
