@@ -23,9 +23,11 @@ import {UserComponent} from './components/dashboard/user/user.component';
 import {SubscribeService} from "./services/subscribe/subscribe.service";
 import {TradeService} from "./services/trade/trade.service";
 import {StatsService} from "./services/stats/stats.service";
-import { ModalComponent } from './components/modal/modal.component';
-import { NewtradeComponent } from './components/trades/newtrade/newtrade.component';
+import {ModalComponent} from './components/modal/modal.component';
+import {NewtradeComponent} from './components/trades/newtrade/newtrade.component';
 import {Listeners} from "./utils/listeners";
+import {GlobalStore} from "./store/global.store";
+import {AuthService} from "./services/auth/auth.service";
 
 @NgModule({
   declarations: [
@@ -53,12 +55,18 @@ import {Listeners} from "./utils/listeners";
     BrowserAnimationsModule
   ],
   providers: [
+    /* Auth Providers */
+    AuthService,
     NoAuthGuard,
     NeedsAuthGuard,
-    SubscribeService,
+
+    /* User Related Providers */
     TradeService,
     StatsService,
-    Listeners
+
+    SubscribeService,
+    Listeners,
+    GlobalStore
   ],
   bootstrap: [AppComponent]
 })
