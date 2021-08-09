@@ -35,7 +35,7 @@ export class TradesComponent implements OnInit {
     listeners.useDOMEvent({
       event: 'keyup',
       func: (e: KeyboardEvent) => {
-        if(e.key === 'Escape') {
+        if(e.key === 'Escape' && this._newTrade){
           this.closeModal()
         }
       }

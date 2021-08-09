@@ -1,12 +1,11 @@
-// export type KeyEvents = {
-//   [key in keyof WindowEventMap]: EventListenerOrEventListenerObject
-// }
+interface EventListener {
+  [key: string]: any
+}
 
 export class Listeners {
 
-  useDOMEvent(events: any) {
-    window.addEventListener(events.event, events.func)
+  useDOMEvent(events: EventListener) {
+    window.addEventListener(events.event, events.func, false)
   }
-
 
 }
