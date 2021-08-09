@@ -27,6 +27,7 @@ import {NewtradeComponent} from './components/trades/newtrade/newtrade.component
 import {Listeners} from "./utils/listeners";
 import {GlobalStore} from "./store/global.store";
 import {AuthService} from "./services/auth/auth.service";
+import {ToastService} from "./services/toast/toast.service";
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {AuthService} from "./services/auth/auth.service";
 
     SubscribeService,
     Listeners,
-    GlobalStore
+    GlobalStore,
+    ToastService
   ],
   bootstrap: [AppComponent]
 })

@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {Listeners} from "../../utils/listeners";
 import {HttpHeaders} from "@angular/common/http";
 import {Config} from "../../utils/config";
+import {ToastService} from "../../services/toast/toast.service";
 
 @Component({
   selector: 'app-trades',
@@ -23,7 +24,8 @@ export class TradesComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private globalStore: GlobalStore,
     private tf: FormBuilder,
-    private listeners: Listeners
+    private listeners: Listeners,
+    private toastService: ToastService
   ) {
     this.tradeForm = tf.group({
       pairName: <string>'',
@@ -35,7 +37,7 @@ export class TradesComponent implements OnInit {
     listeners.useDOMEvent({
       event: 'keyup',
       func: (e: KeyboardEvent) => {
-        if(e.key === 'Escape' && this._newTrade){
+        if (e.key === 'Escape' && this._newTrade) {
           this.closeModal()
         }
       }
@@ -61,11 +63,21 @@ export class TradesComponent implements OnInit {
       (_: any) => {
         this.trades = _.trades
         this._loading = false
+      },
+      (err) => {
+        this.toastService.toast(err.error.message, 'error', 10000)
       }
     )
   }
 
   addTrade() {
+
+    if (!this.tradeForm.value.pairName.trim())
+      return this.toastService.toast('Please enter a pair.', 'error', 10000)
+
+    if (!this.tradeForm.value.entry)
+      return this.toastService.toast('Your trade needs to have an entry value.', 'error', 10000)
+
     this.listeners.post({
       uri: 'trade/add',
       body: this.tradeForm.value,
@@ -73,9 +85,13 @@ export class TradesComponent implements OnInit {
     }).subscribe(
       _ => {
         this.getTrades()
+      },
+      (err) => {
+        this.toastService.toast(err.error.message, 'error', 10000)
       }
     )
   }
+
 
   openModal() {
     this._newTrade = true

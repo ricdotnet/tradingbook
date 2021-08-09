@@ -28,4 +28,5 @@ export class AppComponent {
       this.globalStore.isLoading = true
     }
   }
+
 }

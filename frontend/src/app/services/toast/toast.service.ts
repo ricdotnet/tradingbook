@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ToastService {
 
   _showToast: boolean = false
@@ -10,7 +8,8 @@ export class ToastService {
   _toastType: string = ''
   _toastTimeOut: any
 
-  constructor() { }
+  constructor() {
+  }
 
   toast(message: string, type: string, timeout: number) {
     if(this._showToast)
