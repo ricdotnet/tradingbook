@@ -21,7 +21,6 @@ import {SpinnerIcon} from './icons/spinner.icon';
 import {NeedsAuthGuard} from "./guards/needsAuth.guard";
 import {UserComponent} from './components/dashboard/user/user.component';
 import {SubscribeService} from "./services/subscribe/subscribe.service";
-import {TradeService} from "./services/trade/trade.service";
 import {StatsService} from "./services/stats/stats.service";
 import {ModalComponent} from './components/modal/modal.component';
 import {NewtradeComponent} from './components/trades/newtrade/newtrade.component';
@@ -61,7 +60,6 @@ import {AuthService} from "./services/auth/auth.service";
     NeedsAuthGuard,
 
     /* User Related Providers */
-    TradeService,
     StatsService,
 
     SubscribeService,

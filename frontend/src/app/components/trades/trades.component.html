@@ -7,19 +7,19 @@
   </app-modal>
 
   <div *ngIf="!_loading" class="w-1/2 mx-auto mt-10">
-    <!--  <div class="mb-20">-->
-    <!--    <form (submit)="$event.preventDefault()" [formGroup]="tradeForm">-->
-    <!--      <input type="text" formControlName="pairName" class="py-2 px-2 focus:outline-none mr-2"/>-->
-    <!--      <input type="number" formControlName="entry" class="py-2 px-2 focus:outline-none mr-2"/>-->
-    <!--      <input type="number" formControlName="exit" class="py-2 px-2 focus:outline-none mr-2"/>-->
-    <!--      <select formControlName="type" class="py-2 px-2 focus:outline-none mr-2">-->
-    <!--        <option>Long</option>-->
-    <!--        <option>Short</option>-->
-    <!--      </select>-->
+      <div class="mb-20">
+        <form (submit)="$event.preventDefault()" [formGroup]="tradeForm">
+          <input type="text" formControlName="pairName" class="py-2 px-2 focus:outline-none mr-2"/>
+          <input type="number" formControlName="entry" class="py-2 px-2 focus:outline-none mr-2"/>
+          <input type="number" formControlName="exit" class="py-2 px-2 focus:outline-none mr-2"/>
+          <select formControlName="type" class="py-2 px-2 focus:outline-none mr-2">
+            <option>Long</option>
+            <option>Short</option>
+          </select>
 
-    <!--      <button type="submit" class="btn-submit" (click)="addTrade()">Add Trade</button>-->
-    <!--    </form>-->
-    <!--  </div>-->
+          <button type="submit" class="btn-submit" (click)="addTrade()">Add Trade</button>
+        </form>
+      </div>
 
     <button (click)="openModal()" class="btn-submit focus:outline-none">Show</button>
 

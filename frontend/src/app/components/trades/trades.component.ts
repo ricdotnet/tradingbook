@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {TradeService} from "../../services/trade/trade.service";
 import {TradeInterface} from "../../interfaces/trade.interface";
 import {ActivatedRoute} from "@angular/router";
 import {GlobalStore} from "../../store/global.store";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Listeners} from "../../utils/listeners";
+import {HttpHeaders} from "@angular/common/http";
+import {Config} from "../../utils/config";
 
 @Component({
   selector: 'app-trades',
@@ -19,7 +20,6 @@ export class TradesComponent implements OnInit {
   tradeForm: FormGroup
 
   constructor(
-    private tradeService: TradeService,
     private activatedRoute: ActivatedRoute,
     private globalStore: GlobalStore,
     private tf: FormBuilder,
@@ -54,19 +54,26 @@ export class TradesComponent implements OnInit {
   }
 
   getTrades() {
-    this.tradeService.getTrades().subscribe(
-      (result) => {
-        this.trades = result.trades
+    this.listeners.get({
+      uri: 'trade/all',
+      headers: new HttpHeaders({'authorization': `Bearer ${Config.currentUserToken}`})
+    }).subscribe(
+      (_: any) => {
+        this.trades = _.trades
         this._loading = false
-      },
-      () => {
       }
     )
   }
 
   addTrade() {
-    this.tradeService.addTrade(this.tradeForm.value).subscribe(
-      () => this.getTrades()
+    this.listeners.post({
+      uri: 'trade/add',
+      body: this.tradeForm.value,
+      headers: new HttpHeaders({'authorization': `Bearer ${Config.currentUserToken}`}),
+    }).subscribe(
+      _ => {
+        this.getTrades()
+      }
     )
   }
 
