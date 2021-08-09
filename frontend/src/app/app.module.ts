@@ -18,14 +18,14 @@ import {NotFoundComponent} from './components/not-found/not-found.component';
 import {ToastComponent} from './components/toast/toast.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {SpinnerIcon} from './icons/spinner.icon';
-import {UserStore} from "./store/user.store";
 import {NeedsAuthGuard} from "./guards/needsAuth.guard";
 import {UserComponent} from './components/dashboard/user/user.component';
 import {SubscribeService} from "./services/subscribe/subscribe.service";
-import {UserService} from "./services/user/user.service";
-import {Config} from "./utils/config";
 import {TradeService} from "./services/trade/trade.service";
 import {StatsService} from "./services/stats/stats.service";
+import { ModalComponent } from './components/modal/modal.component';
+import { NewtradeComponent } from './components/trades/newtrade/newtrade.component';
+import {Listeners} from "./utils/listeners";
 
 @NgModule({
   declarations: [
@@ -41,7 +41,9 @@ import {StatsService} from "./services/stats/stats.service";
     NotFoundComponent,
     ToastComponent,
     SpinnerIcon,
-    UserComponent
+    UserComponent,
+    ModalComponent,
+    NewtradeComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ import {StatsService} from "./services/stats/stats.service";
     NeedsAuthGuard,
     SubscribeService,
     TradeService,
-    StatsService
+    StatsService,
+    Listeners
   ],
   bootstrap: [AppComponent]
 })

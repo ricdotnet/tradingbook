@@ -1,36 +1,43 @@
 <div class="w-10 make-middle" *ngIf="_loading">
   <spinner-icon></spinner-icon>
 </div>
-<div *ngIf="!_loading" class="w-1/2 mx-auto mt-10">
+<div>
+  <app-modal [_show]="_newTrade">
+    <app-newtrade></app-newtrade>
+  </app-modal>
 
-  <div class="mb-20">
-    <form (submit)="$event.preventDefault()" [formGroup]="tradeForm">
-      <input type="text" formControlName="pairName" class="py-2 px-2 focus:outline-none mr-2"/>
-      <input type="number" formControlName="entry" class="py-2 px-2 focus:outline-none mr-2"/>
-      <input type="number" formControlName="exit" class="py-2 px-2 focus:outline-none mr-2"/>
-      <select formControlName="type" class="py-2 px-2 focus:outline-none mr-2">
-        <option>Long</option>
-        <option>Short</option>
-      </select>
+  <div *ngIf="!_loading" class="w-1/2 mx-auto mt-10">
+    <!--  <div class="mb-20">-->
+    <!--    <form (submit)="$event.preventDefault()" [formGroup]="tradeForm">-->
+    <!--      <input type="text" formControlName="pairName" class="py-2 px-2 focus:outline-none mr-2"/>-->
+    <!--      <input type="number" formControlName="entry" class="py-2 px-2 focus:outline-none mr-2"/>-->
+    <!--      <input type="number" formControlName="exit" class="py-2 px-2 focus:outline-none mr-2"/>-->
+    <!--      <select formControlName="type" class="py-2 px-2 focus:outline-none mr-2">-->
+    <!--        <option>Long</option>-->
+    <!--        <option>Short</option>-->
+    <!--      </select>-->
 
-      <button type="submit" class="btn-submit" (click)="addTrade()">Add Trade</button>
-    </form>
+    <!--      <button type="submit" class="btn-submit" (click)="addTrade()">Add Trade</button>-->
+    <!--    </form>-->
+    <!--  </div>-->
+
+    <button (click)="openModal()" class="btn-submit focus:outline-none">Show</button>
+
+    <table>
+      <tr>
+        <td>Pair</td>
+        <td>Entry</td>
+        <td>Exit</td>
+        <td>Type</td>
+      </tr>
+
+      <tr *ngFor="let trade of trades">
+        <td>{{trade.pairName}}</td>
+        <td>{{trade.entry}}</td>
+        <td>{{trade.exit}}</td>
+        <td>{{trade.type}}</td>
+      </tr>
+    </table>
+
   </div>
-
-  <table>
-    <tr>
-      <td>Pair</td>
-      <td>Entry</td>
-      <td>Exit</td>
-      <td>Type</td>
-    </tr>
-
-    <tr *ngFor="let trade of trades">
-      <td>{{trade.pairName}}</td>
-      <td>{{trade.entry}}</td>
-      <td>{{trade.exit}}</td>
-      <td>{{trade.type}}</td>
-    </tr>
-  </table>
-
 </div>

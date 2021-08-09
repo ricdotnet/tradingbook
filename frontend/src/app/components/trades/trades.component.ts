@@ -4,6 +4,7 @@ import {TradeInterface} from "../../interfaces/trade.interface";
 import {ActivatedRoute} from "@angular/router";
 import {GlobalStore} from "../../store/global.store";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {Listeners} from "../../utils/listeners";
 
 @Component({
   selector: 'app-trades',
@@ -14,13 +15,15 @@ export class TradesComponent implements OnInit {
   trades: TradeInterface[] = []
 
   _loading: boolean = false
+  _newTrade: boolean = false
   tradeForm: FormGroup
 
   constructor(
     private tradeService: TradeService,
     private activatedRoute: ActivatedRoute,
     private globalStore: GlobalStore,
-    private tf: FormBuilder
+    private tf: FormBuilder,
+    private listeners: Listeners
   ) {
     this.tradeForm = tf.group({
       pairName: <string>'',
@@ -28,6 +31,15 @@ export class TradesComponent implements OnInit {
       exit: <number>0,
       type: <string>'Long'
     })
+
+    listeners.useDOMEvent({
+      event: 'keyup',
+      func: (e: KeyboardEvent) => {
+        if(e.key === 'Escape') {
+          this.closeModal()
+        }
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -47,7 +59,8 @@ export class TradesComponent implements OnInit {
         this.trades = result.trades
         this._loading = false
       },
-      () => {}
+      () => {
+      }
     )
   }
 
@@ -55,6 +68,14 @@ export class TradesComponent implements OnInit {
     this.tradeService.addTrade(this.tradeForm.value).subscribe(
       () => this.getTrades()
     )
+  }
+
+  openModal() {
+    this._newTrade = true
+  }
+
+  closeModal() {
+    this._newTrade = false
   }
 
 }
