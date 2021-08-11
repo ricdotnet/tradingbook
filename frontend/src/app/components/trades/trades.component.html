@@ -30,9 +30,12 @@
         <option>15</option>
         <option>20</option>
       </select>
+
+      <input (keyup)="setSearchTerm()" formControlName="search">
     </form>
 
-    <table>
+    <div *ngIf="_tableLoading">loading results...</div>
+    <table *ngIf="!_tableLoading">
       <tr>
         <td>Pair</td>
         <td>Entry</td>

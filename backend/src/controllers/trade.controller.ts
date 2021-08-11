@@ -1,6 +1,6 @@
 import {NextFunction, Response} from "express";
 import {RequestInterface} from "../interface/request.interface";
-import {getConnection} from "typeorm";
+import {getConnection, Like} from "typeorm";
 import {Trade} from "../entity/Trade";
 import {Pair} from '../entity/Pair'
 
@@ -13,6 +13,8 @@ export async function getAll(req: RequestInterface, res: Response) {
   let take = req.query.take || 1
   let skip: number
 
+  let searchTerm = req.query.pair
+
   if(pageNumber === 'undefined' || pageNumber === '1') {
     skip = 0
   } else {
@@ -22,7 +24,7 @@ export async function getAll(req: RequestInterface, res: Response) {
   let [trades, count] = await getConnection()
     .getRepository(Trade)
     .createQueryBuilder()
-    .where('userId = :id', {id: trade.userId})
+    .where(`userId = :id ${(searchTerm) ? 'and pairName like :pair' : ''}`, {id: trade.userId, pair: searchTerm})
     .orderBy('createdAt', 'DESC')
     .skip(skip)
     .take(<number>take)

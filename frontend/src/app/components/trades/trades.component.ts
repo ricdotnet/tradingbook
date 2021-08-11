@@ -7,6 +7,7 @@ import {Listeners} from "../../utils/listeners";
 import {HttpHeaders} from "@angular/common/http";
 import {Config} from "../../utils/config";
 import {ToastService} from "../../services/toast/toast.service";
+import * as _ from "lodash"
 
 @Component({
   selector: 'app-trades',
@@ -17,10 +18,13 @@ export class TradesComponent implements OnInit {
   trades: TradeInterface[] = []
 
   _loading: boolean = false
+  _tableLoading: boolean = false
+
   _newTrade: boolean = false
   _pageNumber: number = 1
   _pages: number = 1
   _take: number = 10
+  _search: string = ''
   tradeForm: FormGroup
   filtersForm: FormGroup
 
@@ -40,7 +44,8 @@ export class TradesComponent implements OnInit {
     })
 
     this.filtersForm = tf.group({
-      take: <number>10
+      take: <number>10,
+      search: <string>''
     })
 
     listeners.useDOMEvent({
@@ -69,12 +74,12 @@ export class TradesComponent implements OnInit {
   getTrades() {
     this.getPageNumber()
     this.listeners.get({
-      uri: `trade/all?page=${this._pageNumber}&take=${this._take}`,
+      uri: `trade/all?page=${this._pageNumber}&take=${this._take}&pair=${this._search}`,
       headers: new HttpHeaders({'authorization': `Bearer ${Config.currentUserToken}`})
     }).subscribe(
       (_: any) => {
         this.trades = _.trades
-        this._pages = Math.ceil(_.count/this._take)
+        this._pages = Math.ceil(_.count / this._take)
         this._loading = false
       },
       (err) => {
@@ -126,7 +131,7 @@ export class TradesComponent implements OnInit {
       this._pageNumber = parseInt(event)
     }
 
-    if(this._pageNumber <= 1 || isNaN(this._pageNumber)) {
+    if (this._pageNumber <= 1 || isNaN(this._pageNumber)) {
       this.resetPage()
     } else {
       this.router.navigate([this.globalStore.currentActiveUrl], {queryParams: {page: this._pageNumber}})
@@ -144,7 +149,7 @@ export class TradesComponent implements OnInit {
     // if(this._pageNumber < 0)
     //   this.resetPage()
 
-    if(this._pageNumber <=1 || !this._pageNumber)
+    if (this._pageNumber <= 1 || !this._pageNumber)
       this._pageNumber = 1
 
     // if(this._pageNumber > this._pages)
@@ -163,6 +168,28 @@ export class TradesComponent implements OnInit {
   setTake() {
     this._take = this.filtersForm.value.take
     this.getTrades()
+  }
+
+  private debouncing: boolean = false
+  setSearchTerm() {
+    // _.debounce(this.getTrades, 500)
+
+
+    if (!this.debouncing) {
+
+      if(!this.filtersForm.value.search || this.filtersForm.value.search === '')
+        return;
+
+      this._tableLoading = true
+      this.debouncing = true
+      setTimeout(() => {
+        this._search = this.filtersForm.value.search
+        this.getTrades()
+        this.debouncing = false
+        this._tableLoading = false
+        this.resetPage()
+      }, 500)
+    }
   }
 
 }
