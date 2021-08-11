@@ -7,4 +7,5 @@ export interface TradeInterface {
   entryImg?: string
   exitImg?: string
   type: string
+  [key: string]: any
 }

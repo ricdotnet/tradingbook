@@ -36,10 +36,12 @@
         <td>{{trade.entry}}</td>
         <td>{{trade.exit}}</td>
         <td>{{trade.type}}</td>
+        <td>{{trade.number}}</td>
       </tr>
     </table>
 
-    <app-pagination [pages]="10" [currentPage]="_pageNumber" (navigateTo)="navigateTo($event)"></app-pagination>
+    <app-pagination [pages]="_pages" [currentPage]="_pageNumber"
+                    (navigateTo)="navigateTo($event)"></app-pagination>
 
   </div>
 </div>

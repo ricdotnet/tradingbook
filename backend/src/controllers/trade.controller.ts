@@ -9,18 +9,26 @@ const trade = new Trade();
 export async function getAll(req: RequestInterface, res: Response) {
   trade.userId = req.decoded?.userId
 
-  console.log(req.query)
+  let pageNumber = req.query.page || 1
+  let take = req.query.take || 10
+  let skip: number
 
-  let trades = await getConnection()
+  if(pageNumber === 'undefined' || pageNumber === '1') {
+    skip = 0
+  } else {
+    skip = (<number>pageNumber - 1) * <number>take
+  }
+
+  let [trades, count] = await getConnection()
     .getRepository(Trade)
     .createQueryBuilder()
     .where('userId = :id', {id: trade.userId})
     .orderBy('createdAt', 'DESC')
-    .limit(10)
-    .offset(10)
-    .getMany()
+    .skip(skip)
+    .take(<number>take)
+    .getManyAndCount()
 
-  return res.status(200).send({status: 200, trades})
+  return res.status(200).send({status: 200, trades, count})
 }
 
 export async function getOne(req: RequestInterface, res: Response) {

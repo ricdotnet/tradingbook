@@ -19,6 +19,7 @@ export class TradesComponent implements OnInit {
   _loading: boolean = false
   _newTrade: boolean = false
   _pageNumber: number = 1
+  _pages: number = 1
   tradeForm: FormGroup
 
   constructor(
@@ -49,25 +50,25 @@ export class TradesComponent implements OnInit {
   ngOnInit(): void {
     this._loading = true
     this.getTrades()
+
     this.activatedRoute.url.subscribe(
       url => {
         this.globalStore.currentActiveUrl = url[0].path
       }
     )
 
-    this._pageNumber = 1
+    this.getPageNumber()
   }
 
   getTrades() {
-    this.activatedRoute.queryParams.subscribe(
-      _ => this._pageNumber = _.page
-    )
+    this.getPageNumber()
     this.listeners.get({
       uri: `trade/all?page=${this._pageNumber}`,
       headers: new HttpHeaders({'authorization': `Bearer ${Config.currentUserToken}`})
     }).subscribe(
       (_: any) => {
         this.trades = _.trades
+        this._pages = Math.ceil(_.count/10)
         this._loading = false
       },
       (err) => {
@@ -108,16 +109,9 @@ export class TradesComponent implements OnInit {
   }
 
   /**
-   * Pagination
+   * Pagination Helpers
    */
   navigateTo(event: string) {
-
-    // somehow _pageNumber is not getting set on init?
-    // initiated on OnInit() and works like a charm. cheers
-    // if(!this._pageNumber)
-    //   this._pageNumber = 1
-
-
     if (event === 'increase') {
       this._pageNumber++
     } else if (event === 'decrease') {
@@ -127,19 +121,37 @@ export class TradesComponent implements OnInit {
     }
 
     if(this._pageNumber <= 1 || isNaN(this._pageNumber)) {
-      this.router.navigate([this.globalStore.currentActiveUrl]).then(() => {
-        this.getTrades()
-
-        // reset the page number to 1
-        // temp quick fix
-        this._pageNumber = 1
-      })
+      this.resetPage()
     } else {
       this.router.navigate([this.globalStore.currentActiveUrl], {queryParams: {page: this._pageNumber}})
         .then(() => {
           this.getTrades()
         })
     }
+  }
+
+  getPageNumber() {
+    this.activatedRoute.queryParams.subscribe(
+      _ => this._pageNumber = _.page
+    )
+
+    // if(this._pageNumber < 0)
+    //   this.resetPage()
+
+    if(this._pageNumber <=1 || !this._pageNumber)
+      this._pageNumber = 1
+
+    // if(this._pageNumber > this._pages)
+    //   this.resetPage()
+  }
+
+  resetPage() {
+    this.router.navigate([this.globalStore.currentActiveUrl]).then(() => {
+      // reset the page number to 1
+      // temp quick fix
+      this._pageNumber = 1
+      this.getTrades()
+    })
   }
 
 }

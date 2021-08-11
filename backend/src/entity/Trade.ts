@@ -28,4 +28,7 @@ export class Trade {
   @ManyToOne(() => User, user => user.userId)
   @Column('uuid')
   userId?: string
+
+  // @Column({primary: false, generated: "increment"})
+  // number?: number
 }
