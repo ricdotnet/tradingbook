@@ -25,3 +25,8 @@ testRoutes.post('/', async (req: RequestInterface, res: Response) => {
 
   res.status(200).send({send: number})
 })
+
+testRoutes.get('/hey', (req: RequestInterface, res: Response) => {
+  console.log(req.query)
+  res.end()
+})

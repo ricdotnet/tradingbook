@@ -1,0 +1,27 @@
+<div class="w-full mt-20" *ngIf="pages >= 2">
+
+  <div class="flex justify-center">
+
+    <button
+      class="px-4 py-2 border-l border-t border-b border-gray-300 rounded-l-md bg-gray-200 cursor-pointer
+        hover:bg-[#dfe1e6] disabled:text-gray-400 disabled:cursor-default"
+      (click)="previous()" [disabled]="currentPage <= 1 || !currentPage">
+      Prev.
+    </button>
+
+    <div *ngFor="let i of _pages">
+      <button
+        class="px-4 py-2 border-l border-t border-b border-gray-300 bg-gray-200 cursor-pointer hover:bg-[#dfe1e6]"
+        (click)="custom(i)" [class.bg-gray-300]="currentPage == i || (i === 1 && !currentPage)">{{i}}</button>
+    </div>
+
+    <button
+      class="px-4 py-2 border border-gray-300 rounded-r-md bg-gray-200 cursor-pointer hover:bg-[#dfe1e6]
+        disabled:text-gray-400 disabled:cursor-default"
+      (click)="next()" [disabled]="currentPage == pages">
+      Next
+    </button>
+
+  </div>
+
+</div>

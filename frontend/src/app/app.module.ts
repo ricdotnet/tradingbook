@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule, HttpParams} from "@angular/common/http";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -28,6 +28,8 @@ import {Listeners} from "./utils/listeners";
 import {GlobalStore} from "./store/global.store";
 import {AuthService} from "./services/auth/auth.service";
 import {ToastService} from "./services/toast/toast.service";
+import { PaginationComponent } from './components/pagination/pagination.component';
+import {ActivatedRouteSnapshot} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -45,14 +47,15 @@ import {ToastService} from "./services/toast/toast.service";
     SpinnerIcon,
     UserComponent,
     ModalComponent,
-    NewtradeComponent
+    NewtradeComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [
     /* Auth Providers */

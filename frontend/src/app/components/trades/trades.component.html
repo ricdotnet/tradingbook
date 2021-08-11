@@ -39,5 +39,7 @@
       </tr>
     </table>
 
+    <app-pagination [pages]="10" [currentPage]="_pageNumber" (navigateTo)="navigateTo($event)"></app-pagination>
+
   </div>
 </div>

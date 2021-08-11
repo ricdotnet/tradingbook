@@ -5,7 +5,7 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 
 import * as dotenv from 'dotenv'
-import express from 'express'
+import express, {query} from 'express'
 import bodyParser from "body-parser";
 import cors from 'cors'
 import helmet from 'helmet'

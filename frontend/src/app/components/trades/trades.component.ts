@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TradeInterface} from "../../interfaces/trade.interface";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {GlobalStore} from "../../store/global.store";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Listeners} from "../../utils/listeners";
@@ -18,10 +18,12 @@ export class TradesComponent implements OnInit {
 
   _loading: boolean = false
   _newTrade: boolean = false
+  _pageNumber: number = 1
   tradeForm: FormGroup
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private globalStore: GlobalStore,
     private tf: FormBuilder,
     private listeners: Listeners,
@@ -47,17 +49,21 @@ export class TradesComponent implements OnInit {
   ngOnInit(): void {
     this._loading = true
     this.getTrades()
-
     this.activatedRoute.url.subscribe(
       url => {
         this.globalStore.currentActiveUrl = url[0].path
       }
     )
+
+    this._pageNumber = 1
   }
 
   getTrades() {
+    this.activatedRoute.queryParams.subscribe(
+      _ => this._pageNumber = _.page
+    )
     this.listeners.get({
-      uri: 'trade/all',
+      uri: `trade/all?page=${this._pageNumber}`,
       headers: new HttpHeaders({'authorization': `Bearer ${Config.currentUserToken}`})
     }).subscribe(
       (_: any) => {
@@ -99,6 +105,41 @@ export class TradesComponent implements OnInit {
 
   closeModal() {
     this._newTrade = false
+  }
+
+  /**
+   * Pagination
+   */
+  navigateTo(event: string) {
+
+    // somehow _pageNumber is not getting set on init?
+    // initiated on OnInit() and works like a charm. cheers
+    // if(!this._pageNumber)
+    //   this._pageNumber = 1
+
+
+    if (event === 'increase') {
+      this._pageNumber++
+    } else if (event === 'decrease') {
+      this._pageNumber--
+    } else {
+      this._pageNumber = parseInt(event)
+    }
+
+    if(this._pageNumber <= 1 || isNaN(this._pageNumber)) {
+      this.router.navigate([this.globalStore.currentActiveUrl]).then(() => {
+        this.getTrades()
+
+        // reset the page number to 1
+        // temp quick fix
+        this._pageNumber = 1
+      })
+    } else {
+      this.router.navigate([this.globalStore.currentActiveUrl], {queryParams: {page: this._pageNumber}})
+        .then(() => {
+          this.getTrades()
+        })
+    }
   }
 
 }
