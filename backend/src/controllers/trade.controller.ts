@@ -10,7 +10,7 @@ export async function getAll(req: RequestInterface, res: Response) {
   trade.userId = req.decoded?.userId
 
   let pageNumber = req.query.page || 1
-  let take = req.query.take || 10
+  let take = req.query.take || 1
   let skip: number
 
   if(pageNumber === 'undefined' || pageNumber === '1') {

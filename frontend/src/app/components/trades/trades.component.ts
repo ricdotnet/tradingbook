@@ -20,7 +20,9 @@ export class TradesComponent implements OnInit {
   _newTrade: boolean = false
   _pageNumber: number = 1
   _pages: number = 1
+  _take: number = 10
   tradeForm: FormGroup
+  filtersForm: FormGroup
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -35,6 +37,10 @@ export class TradesComponent implements OnInit {
       entry: <number>0,
       exit: <number>0,
       type: <string>'Long'
+    })
+
+    this.filtersForm = tf.group({
+      take: <number>10
     })
 
     listeners.useDOMEvent({
@@ -63,12 +69,12 @@ export class TradesComponent implements OnInit {
   getTrades() {
     this.getPageNumber()
     this.listeners.get({
-      uri: `trade/all?page=${this._pageNumber}`,
+      uri: `trade/all?page=${this._pageNumber}&take=${this._take}`,
       headers: new HttpHeaders({'authorization': `Bearer ${Config.currentUserToken}`})
     }).subscribe(
       (_: any) => {
         this.trades = _.trades
-        this._pages = Math.ceil(_.count/10)
+        this._pages = Math.ceil(_.count/this._take)
         this._loading = false
       },
       (err) => {
@@ -152,6 +158,11 @@ export class TradesComponent implements OnInit {
       this._pageNumber = 1
       this.getTrades()
     })
+  }
+
+  setTake() {
+    this._take = this.filtersForm.value.take
+    this.getTrades()
   }
 
 }

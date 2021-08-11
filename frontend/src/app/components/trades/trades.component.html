@@ -21,7 +21,16 @@
         </form>
       </div>
 
-    <button (click)="openModal()" class="btn-submit focus:outline-none">Show</button>
+<!--    <button (click)="openModal()" class="btn-submit focus:outline-none">Show</button>-->
+
+    <form [formGroup]="filtersForm">
+      <select (change)="setTake()" formControlName="take">
+        <option>5</option>
+        <option>10</option>
+        <option>15</option>
+        <option>20</option>
+      </select>
+    </form>
 
     <table>
       <tr>
