@@ -7,7 +7,6 @@ import {Listeners} from "../../utils/listeners";
 import {HttpHeaders} from "@angular/common/http";
 import {Config} from "../../utils/config";
 import {ToastService} from "../../services/toast/toast.service";
-import * as _ from "lodash"
 
 @Component({
   selector: 'app-trades',
@@ -172,13 +171,8 @@ export class TradesComponent implements OnInit {
 
   private debouncing: boolean = false
   setSearchTerm() {
-    // _.debounce(this.getTrades, 500)
-
 
     if (!this.debouncing) {
-
-      if(!this.filtersForm.value.search || this.filtersForm.value.search === '')
-        return;
 
       this._tableLoading = true
       this.debouncing = true
