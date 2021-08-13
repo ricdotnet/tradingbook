@@ -31,6 +31,7 @@ import {ToastService} from "./services/toast/toast.service";
 import { PaginationComponent } from './components/pagination/pagination.component';
 import {ActivatedRouteSnapshot} from "@angular/router";
 import {Helpers} from "./utils/helpers";
+import { UploadComponent } from './components/upload/upload.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {Helpers} from "./utils/helpers";
     UserComponent,
     ModalComponent,
     NewtradeComponent,
-    PaginationComponent
+    PaginationComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,

@@ -17,4 +17,7 @@ export class HomeComponent implements OnInit {
     this.globalStore.currentActiveUrl = ''
   }
 
+  handleFile(file: any) {
+    console.log(file.name)
+  }
 }
