@@ -35,20 +35,21 @@
     </form>
 
     <div *ngIf="_tableLoading">loading results...</div>
-    <table *ngIf="!_tableLoading">
+    <table *ngIf="!_tableLoading" class="w-full text-center">
       <tr>
-        <td>Pair</td>
-        <td>Entry</td>
-        <td>Exit</td>
-        <td>Type</td>
+        <td class="border border-gray-800">Pair</td>
+        <td class="border border-gray-800">Entry</td>
+        <td class="border border-gray-800">Exit</td>
+        <td class="border border-gray-800">Type</td>
+        <td class="border border-gray-800">Outcome</td>
       </tr>
 
       <tr *ngFor="let trade of trades">
-        <td>{{trade.pairName}}</td>
-        <td>{{trade.entry}}</td>
-        <td>{{trade.exit}}</td>
-        <td>{{trade.type}}</td>
-        <td>{{trade.number}}</td>
+        <td class="border border-gray-800">{{trade.pairName}}</td>
+        <td class="border border-gray-800">{{trade.entry}}</td>
+        <td class="border border-gray-800">{{trade.exit}}</td>
+        <td class="border border-gray-800">{{trade.type}}</td>
+        <td class="border border-gray-800">{{tradeStatus(trade.type, trade.entry, (trade.exit) ? trade.exit : 0)}}</td>
       </tr>
     </table>
 

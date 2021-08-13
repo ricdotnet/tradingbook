@@ -30,6 +30,7 @@ import {AuthService} from "./services/auth/auth.service";
 import {ToastService} from "./services/toast/toast.service";
 import { PaginationComponent } from './components/pagination/pagination.component';
 import {ActivatedRouteSnapshot} from "@angular/router";
+import {Helpers} from "./utils/helpers";
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import {ActivatedRouteSnapshot} from "@angular/router";
     SubscribeService,
     Listeners,
     GlobalStore,
-    ToastService
+    ToastService,
+    Helpers
   ],
   bootstrap: [AppComponent]
 })

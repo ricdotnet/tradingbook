@@ -7,6 +7,7 @@ import {Listeners} from "../../utils/listeners";
 import {HttpHeaders} from "@angular/common/http";
 import {Config} from "../../utils/config";
 import {ToastService} from "../../services/toast/toast.service";
+import {Helpers} from '../../utils/helpers'
 
 @Component({
   selector: 'app-trades',
@@ -33,7 +34,8 @@ export class TradesComponent implements OnInit {
     private globalStore: GlobalStore,
     private tf: FormBuilder,
     private listeners: Listeners,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private helpers: Helpers
   ) {
     this.tradeForm = tf.group({
       pairName: <string>'',
@@ -184,6 +186,10 @@ export class TradesComponent implements OnInit {
         this.resetPage()
       }, 500)
     }
+  }
+
+  tradeStatus(type: string, entry: number, exit?: number) {
+    return this.helpers.tradeStatus(type, entry, exit)
   }
 
 }
