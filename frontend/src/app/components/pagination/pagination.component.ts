@@ -6,7 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 })
 export class PaginationComponent implements OnInit, OnChanges {
 
-  @Input() currentPage: number = 0
+  @Input() currentPage: number = 1
   @Input() pages: number = 0
   _pages: number[] = []
 

@@ -6,20 +6,36 @@
       class="px-4 py-2 border-l border-t border-b border-gray-300 rounded-l-md bg-gray-200 cursor-pointer
         hover:bg-[#dfe1e6] disabled:text-gray-400 disabled:cursor-default"
       (click)="previous()" [disabled]="currentPage <= 1 || !currentPage">
-      Prev.
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11 17l-5-5m0 0l5-5m-5 5h12"/>
+      </svg>
     </button>
 
     <div *ngFor="let i of _pages">
+<!--      <button-->
+<!--        class="px-4 py-2 border-l border-t border-b border-gray-300 bg-gray-200 cursor-pointer hover:bg-[#dfe1e6]"-->
+<!--        (click)="custom(i)" [class.bg-gray-300]="currentPage == i || (i === 1 && !currentPage)"-->
+<!--        *ngIf="i == currentPage"-->
+<!--      >{{i}} / {{pages}}</button>-->
       <button
         class="px-4 py-2 border-l border-t border-b border-gray-300 bg-gray-200 cursor-pointer hover:bg-[#dfe1e6]"
-        (click)="custom(i)" [class.bg-gray-300]="currentPage == i || (i === 1 && !currentPage)">{{i}}</button>
+        (click)="custom(i)"
+        [class.bg-gray-300]="currentPage == i || (i === 1 && !currentPage)"
+        *ngIf="(i >= currentPage-2 && i <= +currentPage+2)"
+      >{{i}}</button>
     </div>
 
     <button
       class="px-4 py-2 border border-gray-300 rounded-r-md bg-gray-200 cursor-pointer hover:bg-[#dfe1e6]
         disabled:text-gray-400 disabled:cursor-default"
       (click)="next()" [disabled]="currentPage == pages">
-      Next
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+      </svg>
     </button>
 
   </div>

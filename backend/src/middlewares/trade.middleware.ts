@@ -14,7 +14,7 @@ export async function getTrades(this: any, req: RequestInterface, res: Response,
   if (pageNumber === 'undefined' || pageNumber === 1) {
     skip = 0
   } else {
-    skip = (<number>pageNumber - 1) * <number>take
+    skip = (+pageNumber - 1) * +take
   }
 
   let result = {
@@ -30,7 +30,7 @@ export async function getTrades(this: any, req: RequestInterface, res: Response,
       .andWhere(`pairName like '%${searchTerm}%'`)
       .orderBy('createdAt', 'DESC')
       .skip(skip)
-      .take(<number>take)
+      .take(+take)
       .getManyAndCount()
   } else {
     [result.trades, result.count]= await getConnection()
