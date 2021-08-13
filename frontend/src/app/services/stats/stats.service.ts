@@ -29,6 +29,9 @@ export class StatsService {
         this.statsStore.topPairCount = _.body.topPair.count
         this.statsStore.pipsWon = _.body.pipsWon
         this.statsStore.pipsLost = _.body.pipsLost
+        this.statsStore.wins = _.body.results.wins
+        this.statsStore.losses = _.body.results.losses
+        this.statsStore.open = _.body.results.open
       }),
       catchError((err) => Array(err))
     )

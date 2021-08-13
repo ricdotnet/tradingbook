@@ -9,10 +9,11 @@
     <h2 class="text-xl mb-4 ml-5">User Stats</h2>
 
     trades placed: {{statsStore.trades}}<br>
-    trades closed: {{statsStore.trades}}<bR>
+    trades closed: {{statsStore.trades - statsStore.open}}<bR>
     top pair: {{statsStore.topPair}} traded {{statsStore.topPairCount}} times<br>
-    wins: 20 <br>
-    losses: 100 <br>
+    wins: {{statsStore.wins}} <br>
+    losses: {{statsStore.losses}} <br>
+    open: {{statsStore.open}} <br>
     pips won: {{statsStore.pipsWon}}<br>
     pips lost: {{statsStore.pipsLost}}
   </div>

@@ -114,13 +114,7 @@ export async function userStats(req: RequestInterface, res: Response, next: Next
     return res.status(400).send({message: 'No user identification present in this token.'})
   }
 
-  let trades = await getConnection()
-    .getRepository(Trade)
-    .createQueryBuilder()
-    .select(['*'])
-    .where('userId = :id', {id: userId})
-    .orderBy('createdAt', 'DESC')
-    .getRawMany()
+  let trades = req.result.trades
 
   let pipsLost = _.reduce(trades, (acc, count) => {
     let entry = count.entry;
@@ -156,11 +150,28 @@ export async function userStats(req: RequestInterface, res: Response, next: Next
     return {pair: tempPair, count: tempCount} as Object;
   }
 
+  let results = {
+    wins: 0,
+    losses: 0,
+    open: 0
+  }
+
+  trades.map((el: { entry: number; exit: number; type: string; }) => {
+    if(((el.entry < el.exit && el.type === 'Long') || (el.entry > el.exit && el.type === 'Short')) && el.exit > 0) {
+      results.wins++;
+    } else if(el.exit > 0) {
+      results.losses++;
+    } else {
+      results.open++;
+    }
+  })
+
   req.body = {
     trades: trades.length,
     topPair: topPair(),
     pipsWon: Math.round(pipsWon),
-    pipsLost: Math.round(pipsLost)
+    pipsLost: Math.round(pipsLost),
+    results: results
   }
 
   next()

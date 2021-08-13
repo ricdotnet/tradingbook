@@ -22,5 +22,10 @@ export interface Stats extends BodyInterface<Stats> {
   } //most traded pair
   pipsWon: number //pips won to date
   pipsLost: number //pips lost to date
-  pair: string
+  pair: string,
+  results: {
+    wins: number,
+    losses: number,
+    open: number
+  }
 }

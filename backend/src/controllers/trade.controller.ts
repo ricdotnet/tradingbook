@@ -7,33 +7,8 @@ import {Pair} from '../entity/Pair'
 const trade = new Trade();
 
 export async function getAll(req: RequestInterface, res: Response) {
-  trade.userId = req.decoded?.userId
-
-  let pageNumber = req.query.page || 1
-  let take = req.query.take || 1
-  let skip: number
-
-  let searchTerm = req.query.pair
-
-  if (pageNumber === 'undefined' || pageNumber === '1') {
-    skip = 0
-  } else {
-    skip = (<number>pageNumber - 1) * <number>take
-  }
-
-  // find a way to sanitize the search term to avoid any kind of sql injection.
-  // a good option is to read at request time and reject if it is not a proper word
-  let [trades, count] = await getConnection()
-    .getRepository(Trade)
-    .createQueryBuilder()
-    .where(`userId = :id`, {
-      id: trade.userId
-    })
-    .andWhere(`pairName like '%${searchTerm}%'`)
-    .orderBy('createdAt', 'DESC')
-    .skip(skip)
-    .take(<number>take)
-    .getManyAndCount()
+  let trades = req.result.trades
+  let count = req.result.count
 
   return res.status(200).send({status: 200, trades, count})
 }

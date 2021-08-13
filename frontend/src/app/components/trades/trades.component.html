@@ -7,50 +7,55 @@
   </app-modal>
 
   <div *ngIf="!_loading" class="w-1/2 mx-auto mt-10">
-      <div class="mb-20">
-        <form (submit)="$event.preventDefault()" [formGroup]="tradeForm">
-          <input type="text" formControlName="pairName" class="py-2 px-2 focus:outline-none mr-2"/>
-          <input type="number" formControlName="entry" class="py-2 px-2 focus:outline-none mr-2"/>
-          <input type="number" formControlName="exit" class="py-2 px-2 focus:outline-none mr-2"/>
-          <select formControlName="type" class="py-2 px-2 focus:outline-none mr-2">
-            <option>Long</option>
-            <option>Short</option>
-          </select>
+    <div class="mb-20">
+      <form (submit)="$event.preventDefault()" [formGroup]="tradeForm">
+        <input type="text" formControlName="pairName" class="py-2 px-2 focus:outline-none mr-2"/>
+        <input type="number" formControlName="entry" class="py-2 px-2 focus:outline-none mr-2"/>
+        <input type="number" formControlName="exit" class="py-2 px-2 focus:outline-none mr-2"/>
+        <select formControlName="type" class="py-2 px-2 focus:outline-none mr-2">
+          <option>Long</option>
+          <option>Short</option>
+        </select>
 
-          <button type="submit" class="btn-submit" (click)="addTrade()">Add Trade</button>
-        </form>
-      </div>
+        <button type="submit" class="btn-submit" (click)="addTrade()">Add Trade</button>
+      </form>
+    </div>
 
-<!--    <button (click)="openModal()" class="btn-submit focus:outline-none">Show</button>-->
+    <!--    <button (click)="openModal()" class="btn-submit focus:outline-none">Show</button>-->
+    <table class="w-full text-center">
+      <tr class="border border-gray-800">
+        <th colspan="5" class="p-5">
+          <form [formGroup]="filtersForm">
+            <select (change)="setTake()" formControlName="take">
+              <option>5</option>
+              <option>10</option>
+              <option>15</option>
+              <option>20</option>
+            </select>
 
-    <form [formGroup]="filtersForm">
-      <select (change)="setTake()" formControlName="take">
-        <option>5</option>
-        <option>10</option>
-        <option>15</option>
-        <option>20</option>
-      </select>
-
-      <input (keyup)="setSearchTerm()" formControlName="search">
-    </form>
-
-    <div *ngIf="_tableLoading">loading results...</div>
-    <table *ngIf="!_tableLoading" class="w-full text-center">
+            <input (keyup)="setSearchTerm()" formControlName="search">
+          </form>
+        </th>
+      </tr>
       <tr>
-        <td class="border border-gray-800">Pair</td>
-        <td class="border border-gray-800">Entry</td>
-        <td class="border border-gray-800">Exit</td>
-        <td class="border border-gray-800">Type</td>
-        <td class="border border-gray-800">Outcome</td>
+        <th class="border border-gray-800">Pair</th>
+        <th class="border border-gray-800">Entry</th>
+        <th class="border border-gray-800">Exit</th>
+        <th class="border border-gray-800">Type</th>
+        <th class="border border-gray-800">Outcome</th>
       </tr>
 
-      <tr *ngFor="let trade of trades">
-        <td class="border border-gray-800">{{trade.pairName}}</td>
-        <td class="border border-gray-800">{{trade.entry}}</td>
-        <td class="border border-gray-800">{{trade.exit}}</td>
-        <td class="border border-gray-800">{{trade.type}}</td>
-        <td class="border border-gray-800">{{tradeStatus(trade.type, trade.entry, (trade.exit) ? trade.exit : 0)}}</td>
-      </tr>
+      <tbody *ngIf="_tableLoading">... loading ...</tbody>
+      <tbody *ngIf="!_tableLoading">
+        <tr *ngFor="let trade of trades">
+          <td class="border border-gray-800">{{trade.pairName}}</td>
+          <td class="border border-gray-800">{{trade.entry}}</td>
+          <td class="border border-gray-800">{{trade.exit}}</td>
+          <td class="border border-gray-800">{{trade.type}}</td>
+          <td
+            class="border border-gray-800">{{tradeStatus(trade.type, trade.entry, (trade.exit) ? trade.exit : 0)}}</td>
+        </tr>
+      </tbody>
     </table>
 
     <app-pagination [pages]="_pages" [currentPage]="_pageNumber"

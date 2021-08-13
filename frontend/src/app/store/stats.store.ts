@@ -10,6 +10,9 @@ export class StatsStore {
   private _topPairCount: number
   private _pipsWon: number
   private _pipsLost: number
+  private _wins: number
+  private _losses: number
+  private _open: number
 
   constructor() {
     this._trades = 0
@@ -17,6 +20,9 @@ export class StatsStore {
     this._topPairCount = 0
     this._pipsWon = 0
     this._pipsLost = 0
+    this._wins = 0
+    this._losses = 0
+    this._open = 0
   }
 
   set trades(trades: number) {
@@ -52,5 +58,26 @@ export class StatsStore {
   }
   get pipsLost() {
     return this._pipsLost
+  }
+
+  set wins(wins: number) {
+    this._wins = wins
+  }
+  get wins() {
+    return this._wins
+  }
+
+  set losses(losses: number) {
+    this._losses = losses
+  }
+  get losses() {
+    return this._losses
+  }
+
+  set open(open: number) {
+    this._open = open
+  }
+  get open() {
+    return this._open
   }
 }
