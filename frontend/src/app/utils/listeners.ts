@@ -11,7 +11,9 @@ interface RequestOptions<RequestBody> {
   uri: string
   parameters?: HttpParams
   body?: RequestBody
-  headers?: HttpHeaders
+  headers?: HttpHeaders,
+  reportProgress?: boolean,
+  observe?: any
 }
 
 @Injectable()
@@ -28,7 +30,7 @@ export class Listeners {
 
   post<RequestBody>(options: RequestOptions<RequestBody>) {
     let post = this._http.post(`${environment.apiUrl}${options.uri}`, options.body,
-      {params: options.parameters, headers: options.headers})
+      {params: options.parameters, headers: options.headers, reportProgress: options.reportProgress, observe: options.observe})
       .pipe(share())
 
     return post

@@ -1,5 +1,9 @@
 import express, {Response} from 'express'
 import {RequestInterface} from "../interface/request.interface";
+import multer from "multer";
+let upload = multer({
+  dest: 'uploads/'
+})
 
 import {getConnection} from "typeorm";
 import {Test} from "../entity/Test";
@@ -29,4 +33,11 @@ testRoutes.post('/', async (req: RequestInterface, res: Response) => {
 testRoutes.get('/hey', (req: RequestInterface, res: Response) => {
   console.log(req.query)
   res.end()
+})
+
+testRoutes.post('/upload', upload.single('photo'), (req: RequestInterface, res: Response) => {
+
+  console.log(req.file)
+
+  res.status(200).send({code: 200, message: 'uploaded.'})
 })

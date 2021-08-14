@@ -19,7 +19,6 @@ routes.use('/trade', auth, tradeRoutes)
 routes.use('/pair', pairRoutes)
 
 
-
 import {testRoutes} from "./test.routes";
 routes.use('/test', testRoutes)
 

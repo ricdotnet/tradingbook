@@ -2,7 +2,6 @@ import {Response, NextFunction} from "express";
 import {getConnection} from "typeorm";
 import {RequestInterface} from "../interface/request.interface";
 import {User} from "../entity/User";
-import {Trade} from "../entity/Trade";
 import * as _ from 'lodash'
 
 const user = new User()
