@@ -22,6 +22,13 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   @Output() navigateTo = new EventEmitter<string>();
 
+  first() {
+    this.navigateTo.emit('first')
+  }
+  last() {
+    this.navigateTo.emit('last')
+  }
+
   previous() {
     this.navigateTo.emit('decrease')
   }

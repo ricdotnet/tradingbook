@@ -24,7 +24,7 @@ export class TradesComponent implements OnInit {
   _pageNumber: number = 1
   _pages: number = 1
   _take: number = 10
-  _search: string = ''
+  _search: string | undefined
   tradeForm: FormGroup
   filtersForm: FormGroup
 
@@ -74,13 +74,17 @@ export class TradesComponent implements OnInit {
 
   getTrades() {
     this.getPageNumber()
+
+    // I want this to be on the request uri only when there is a pair being looked up
+    let pair = (this._search) ? `&pair=${this._search}` : '';
+
     this.listeners.get({
-      uri: `trade/all?page=${this._pageNumber}&take=${this._take}&pair=${this._search}`,
+      uri: `trade/all?page=${this._pageNumber}&take=${this._take}${pair}`,
       headers: new HttpHeaders({'authorization': `Bearer ${Config.currentUserToken}`})
     }).subscribe(
       (_: any) => {
         this.trades = _.trades
-        this._pages = Math.ceil(_.count / this._take)
+        this._pages = Math.ceil(_.count / this._take!)
         this._loading = false
       },
       (err) => {
@@ -124,12 +128,22 @@ export class TradesComponent implements OnInit {
    * Pagination Helpers
    */
   navigateTo(event: string) {
-    if (event === 'increase') {
-      this._pageNumber++
-    } else if (event === 'decrease') {
-      this._pageNumber--
-    } else {
-      this._pageNumber = parseInt(event)
+
+    switch (event) {
+      case 'first':
+        this._pageNumber = 1
+        break;
+      case 'last':
+        this._pageNumber = this._pages
+        break;
+      case 'increase':
+        this._pageNumber++
+        break;
+      case 'decrease':
+        this._pageNumber--;
+        break;
+      default:
+        this._pageNumber = +event;
     }
 
     if (this._pageNumber <= 1 || isNaN(this._pageNumber)) {
@@ -172,6 +186,7 @@ export class TradesComponent implements OnInit {
   }
 
   private debouncing: boolean = false
+
   setSearchTerm() {
 
     if (!this.debouncing) {

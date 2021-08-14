@@ -32,6 +32,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import {ActivatedRouteSnapshot} from "@angular/router";
 import {Helpers} from "./utils/helpers";
 import { UploadComponent } from './components/upload/upload.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { UploadComponent } from './components/upload/upload.component';
     ModalComponent,
     NewtradeComponent,
     PaginationComponent,
-    UploadComponent
+    UploadComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

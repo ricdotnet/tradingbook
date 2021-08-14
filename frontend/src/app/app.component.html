@@ -6,14 +6,17 @@
   <div class="min-h-screen">
     <app-nav></app-nav>
   </div>
-  <div class="w-full md:ml-60">
+
+  <div class="w-full md:ml-60 relative">
     <div class="w-10 make-middle" *ngIf="globalStore.isLoading">
       <spinner-icon></spinner-icon>
     </div>
 
-    <div *ngIf="!globalStore.isLoading">
+    <div *ngIf="!globalStore.isLoading" class="mb-44">
       <router-outlet></router-outlet>
     </div>
+
+    <app-footer></app-footer>
   </div>
 
 </div>
