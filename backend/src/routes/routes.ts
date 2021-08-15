@@ -2,6 +2,11 @@ import express from "express";
 
 const routes: express.Router = express.Router();
 
+import multer from "multer";
+let formBody = multer({
+  dest: 'uploads/'
+})
+
 /**
  * Define routes imports
  */
@@ -14,7 +19,7 @@ import {auth} from "../services/auth.service";
 /**
  * Define main routes
  */
-routes.use('/user', userRoutes)
+routes.use('/user', formBody.any(), userRoutes)
 routes.use('/trade', auth, tradeRoutes)
 routes.use('/pair', pairRoutes)
 

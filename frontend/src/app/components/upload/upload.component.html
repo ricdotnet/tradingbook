@@ -1,3 +1,4 @@
 <div>
-  <input type="file" (change)="handleFile($event)">
+  <label for="file">{{label}}</label>
+  <input id="file" type="file" (change)="handleFile($event)" class="ml-5">
 </div>

@@ -59,7 +59,7 @@ export class UserStore {
   set lastName(lastName: string) {
     this._lastName = lastName
   }
-  get lastName() {
+  get lastName(): any {
     return this._lastName
   }
 

@@ -186,7 +186,7 @@ export async function saveUserDetails(req: RequestInterface, res: Response, next
   let firstName: string = req.body.firstName
   let lastName: string = req.body.lastName
 
-  let update = await getConnection()
+  await getConnection()
     .createQueryBuilder()
     .update(User)
     .set({

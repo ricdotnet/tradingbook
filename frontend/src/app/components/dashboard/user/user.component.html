@@ -3,7 +3,7 @@
   <h2 class="text-xl mb-4 ml-5">User Details</h2>
 
   <form (ngSubmit)="$event.preventDefault()" (keyup)="assignNewDetails()" class="space-y-4"
-        [formGroup]="detailsForm" autocomplete="off">
+        [formGroup]="detailsForm" autocomplete="off" enctype="multipart/form-data">
     <div class="flex w-full space-x-4">
       <div class="space-y-2 w-full">
         <label for="username" class="w-1/2 ml-5 text-sm">Username</label>
@@ -22,10 +22,15 @@
                formControlName="firstName">
       </div>
       <div class="space-y-2 w-full">
-        <label for="firstname" class="w-1/2 ml-5 text-sm">Last Name</label>
+        <label for="lastname" class="w-1/2 ml-5 text-sm">Last Name</label>
         <input class="input-general w-full" placeholder="Last Name" id="lastname"
                formControlName="lastName">
       </div>
+    </div>
+
+    <div class="mt-4 ml-5">
+      <app-upload label="Avatar"
+                  (change)="assignAvatar($event)"></app-upload>
     </div>
 
     <button (click)="saveNewDetails()" class="btn-submit mt-4 flex space-x-2 items-center"
@@ -36,7 +41,8 @@
   </form>
 
   <div class="ml-5 text-sm mt-4">
-    Registered since <time>{{_registered}}</time>
+    Registered since
+    <time>{{_registered}}</time>
   </div>
 
 </div>

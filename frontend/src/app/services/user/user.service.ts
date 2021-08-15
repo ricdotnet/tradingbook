@@ -1,11 +1,12 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {Config} from "../../utils/config";
 import {catchError, tap} from "rxjs/operators";
 import {UserStore} from "../../store/user.store";
 import {User} from "../../interfaces/user.interface";
+import {Listeners} from "../../utils/listeners";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class UserService {
 
   constructor(
     private _http: HttpClient,
-    private userStore: UserStore
+    private userStore: UserStore,
+    private listeners: Listeners
   ) { }
 
   getUserDetails(): Observable<any> {
@@ -35,14 +37,16 @@ export class UserService {
     )
   }
 
-  saveUserDetails(body: User): Observable<any> {
-    this.userStore.firstName = body.firstName!
-    this.userStore.lastName = body.lastName!
-
-    return this._http.post(`${environment.apiUrl}user/details/save`, body, {
-      headers: {
-        'authorization': `Bearer ${Config.currentUserToken}`
-      }
+  saveUserDetails(body: FormData) {
+    return this.listeners.post({
+      uri: 'user/details/save',
+      body: body,
+      headers: new HttpHeaders({
+        // 'Content-type': 'multipart/form-data',
+        Authorization: `Bearer ${Config.currentUserToken}`
+      }),
+      observe: 'events',
+      reportProgress: true
     })
   }
 

@@ -6,7 +6,8 @@ export interface User extends BodyInterface<User> {
   email: string
   firstName?: string
   lastName?: string
-  createdAt: string
+  createdAt: string,
+  avatar?: string
 }
 
 /*
