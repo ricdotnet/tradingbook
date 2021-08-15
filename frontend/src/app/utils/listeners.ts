@@ -30,17 +30,25 @@ export class Listeners {
 
   post<RequestBody>(options: RequestOptions<RequestBody>) {
     let post = this._http.post(`${environment.apiUrl}${options.uri}`, options.body,
-      {params: options.parameters, headers: options.headers, reportProgress: options.reportProgress, observe: options.observe})
+      {
+        params: options.parameters,
+        headers: options.headers,
+        reportProgress: options.reportProgress,
+        observe: options.observe
+      })
       .pipe(share())
 
     return post
   }
 
   get(options: RequestOptions<any>) {
-    let get = this._http.get(`${environment.apiUrl}${options.uri}`, {headers: options.headers})
-      .pipe(
-        tap(_ => _)
-      )
+    let get = this._http.get(`${environment.apiUrl}${options.uri}`, {
+      headers: options.headers,
+      params: options.parameters
+    })
+    .pipe(
+      tap(_ => _)
+    )
 
     return get
   }

@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {GlobalStore} from "../../store/global.store";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Listeners} from "../../utils/listeners";
-import {HttpHeaders} from "@angular/common/http";
+import {HttpHeaders, HttpParams} from "@angular/common/http";
 import {Config} from "../../utils/config";
 import {ToastService} from "../../services/toast/toast.service";
 import {Helpers} from '../../utils/helpers'
@@ -76,11 +76,21 @@ export class TradesComponent implements OnInit {
     this.getPageNumber()
 
     // I want this to be on the request uri only when there is a pair being looked up
-    let pair = (this._search) ? `&pair=${this._search}` : '';
+    // let pair = (this._search) ? `'pair', ${this._search}` : '';
+    // the above line got deprecated because I can use the HttpParams class
+
+    let params = new HttpParams()
+      .append('page', this._pageNumber)
+      .append('take', this._take)
+
+    if (this._search)
+      params = params.append('pair', this._search)
 
     this.listeners.get({
-      uri: `trade/all?page=${this._pageNumber}&take=${this._take}${pair}`,
-      headers: new HttpHeaders({'authorization': `Bearer ${Config.currentUserToken}`})
+      // uri: `trade/all?page=${this._pageNumber}&take=${this._take}${pair}`,
+      uri: `trade/all`,
+      headers: new HttpHeaders({'authorization': `Bearer ${Config.currentUserToken}`}),
+      parameters: params
     }).subscribe(
       (_: any) => {
         this.trades = _.trades
