@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule, HttpParams} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -10,14 +10,12 @@ import {HomeComponent} from './components/home/home.component';
 import {NavComponent} from './components/nav/nav.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LogoutComponent} from "./components/logout/logout.component";
-import {UserIcon} from "./icons/user.icon";
 import {NoAuthGuard} from "./guards/noAuth.guard";
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {TradesComponent} from './components/trades/trades.component';
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import {ToastComponent} from './components/toast/toast.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {SpinnerIcon} from './icons/spinner.icon';
 import {NeedsAuthGuard} from "./guards/needsAuth.guard";
 import {UserComponent} from './components/dashboard/user/user.component';
 import {SubscribeService} from "./services/subscribe/subscribe.service";
@@ -28,11 +26,11 @@ import {Listeners} from "./utils/listeners";
 import {GlobalStore} from "./store/global.store";
 import {AuthService} from "./services/auth/auth.service";
 import {ToastService} from "./services/toast/toast.service";
-import { PaginationComponent } from './components/pagination/pagination.component';
-import {ActivatedRouteSnapshot} from "@angular/router";
+import {PaginationComponent} from './components/pagination/pagination.component';
 import {Helpers} from "./utils/helpers";
-import { UploadComponent } from './components/upload/upload.component';
-import { FooterComponent } from './components/footer/footer.component';
+import {UploadComponent} from './components/upload/upload.component';
+import {FooterComponent} from './components/footer/footer.component';
+import {Icons} from './icons'
 
 @NgModule({
   declarations: [
@@ -41,13 +39,11 @@ import { FooterComponent } from './components/footer/footer.component';
     RegisterComponent,
     HomeComponent,
     NavComponent,
-    UserIcon,
     LogoutComponent,
     DashboardComponent,
     TradesComponent,
     NotFoundComponent,
     ToastComponent,
-    SpinnerIcon,
     UserComponent,
     ModalComponent,
     NewtradeComponent,
@@ -61,6 +57,7 @@ import { FooterComponent } from './components/footer/footer.component';
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    Icons
   ],
   providers: [
     /* Auth Providers */
