@@ -6,23 +6,24 @@ import {LeftIcon} from './left.icon'
 import {LeftDoubleIcon} from "./leftdouble.icon";
 import {RightIcon} from "./right.icon";
 import {RightDoubleIcon} from "./rightdouble.icon";
+import {DownDoubleIcon} from "./downdouble.icon";
+
+let exports = [
+  SpinnerIcon,
+  UserIcon,
+  LeftIcon,
+  LeftDoubleIcon,
+  RightIcon,
+  RightDoubleIcon,
+  DownDoubleIcon
+]
 
 @NgModule({
   declarations: [
-    SpinnerIcon,
-    UserIcon,
-    LeftIcon,
-    LeftDoubleIcon,
-    RightIcon,
-    RightDoubleIcon
+    ...exports
   ],
   exports: [
-    SpinnerIcon,
-    UserIcon,
-    LeftIcon,
-    LeftDoubleIcon,
-    RightIcon,
-    RightDoubleIcon
+    ...exports
   ]
 })
 export class Icons {

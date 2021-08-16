@@ -1,6 +1,11 @@
 <div class="p-5 bg-white rounded-sm shadow-sm w-2/4 mx-auto mt-20">
 
-  <h2 class="text-xl mb-4 ml-5">User Details</h2>
+  <div class="flex justify-between">
+    <h2 class="text-xl mb-4 ml-5">User Details</h2>
+    <div class="text-xl mr-5 cursor-pointer">
+      <downdouble-icon></downdouble-icon>
+    </div>
+  </div>
 
   <form (ngSubmit)="$event.preventDefault()" (keyup)="assignNewDetails()" class="space-y-4"
         [formGroup]="detailsForm" autocomplete="off" enctype="multipart/form-data">
