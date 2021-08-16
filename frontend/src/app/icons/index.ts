@@ -7,6 +7,7 @@ import {LeftDoubleIcon} from "./leftdouble.icon";
 import {RightIcon} from "./right.icon";
 import {RightDoubleIcon} from "./rightdouble.icon";
 import {DownDoubleIcon} from "./downdouble.icon";
+import {UpDoubleIcon} from "./updouble.icon";
 
 let exports = [
   SpinnerIcon,
@@ -15,7 +16,8 @@ let exports = [
   LeftDoubleIcon,
   RightIcon,
   RightDoubleIcon,
-  DownDoubleIcon
+  DownDoubleIcon,
+  UpDoubleIcon
 ]
 
 @NgModule({

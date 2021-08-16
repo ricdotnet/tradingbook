@@ -19,6 +19,8 @@ export class UserComponent implements OnInit {
   avatar?: File
   uploadProgress: number = 0
 
+  open: boolean = false
+
   _registered = dayjs(this.userStore.createdAt).format('DD-MM-YYYY')
 
   constructor(
@@ -92,6 +94,13 @@ export class UserComponent implements OnInit {
   isAvatarValid(type: string): boolean {
     let types = ['image/png', 'image/jpg', 'image/jpeg']
     return types.includes(type)
+  }
+
+  /**
+   * Helpers
+   */
+  openUserDetails() {
+    this.open = !this.open
   }
 
 }

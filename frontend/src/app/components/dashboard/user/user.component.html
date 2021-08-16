@@ -2,12 +2,14 @@
 
   <div class="flex justify-between">
     <h2 class="text-xl mb-4 ml-5">User Details</h2>
-    <div class="text-xl mr-5 cursor-pointer">
-      <downdouble-icon></downdouble-icon>
+    <div class="text-xl mr-5 cursor-pointer" (click)="openUserDetails()">
+      <downdouble-icon *ngIf="!open"></downdouble-icon>
+      <updouble-icon *ngIf="open"></updouble-icon>
     </div>
   </div>
 
-  <form (ngSubmit)="$event.preventDefault()" (keyup)="assignNewDetails()" class="space-y-4"
+  <form *ngIf="open" (ngSubmit)="$event.preventDefault()" (keyup)="assignNewDetails()"
+        class="space-y-4"
         [formGroup]="detailsForm" autocomplete="off" enctype="multipart/form-data">
     <div class="flex w-full space-x-4">
       <div class="space-y-2 w-full">
