@@ -32,6 +32,7 @@ export class UserService {
         this.userStore.firstName = _.body.firstName || ''
         this.userStore.lastName = _.body.lastName || ''
         this.userStore.createdAt = _.body.createdAt
+        this.userStore.avatar = _.body.avatar || ''
       }),
       catchError(_ => _)
     )

@@ -99,7 +99,7 @@ export async function getUserDetails(req: RequestInterface, res: Response, next:
   req.body = await getConnection()
     .getRepository(User)
     .createQueryBuilder()
-    .select(['userId', 'username', 'email', 'firstName', 'lastName', 'createdAt'])
+    .select(['userId', 'username', 'email', 'firstName', 'lastName', 'createdAt', 'avatar'])
     .where('userId = :id', {id: userId})
     .getRawOne()
 
@@ -185,13 +185,18 @@ export async function saveUserDetails(req: RequestInterface, res: Response, next
 
   let firstName: string = req.body.firstName
   let lastName: string = req.body.lastName
+  let avatar: string = ''
+
+  let files: any = req.files
+  files.map((el: any) => { avatar = el.filename })
 
   await getConnection()
     .createQueryBuilder()
     .update(User)
     .set({
       firstName: firstName,
-      lastName: lastName
+      lastName: lastName,
+      avatar: avatar
     })
     .where('userId = :id', {id: userId})
     .execute()

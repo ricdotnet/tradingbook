@@ -2,9 +2,13 @@
   class="hidden md:block fixed w-60 h-screen bg-gray-900 text-white text-center space-y-2 p-3 z-10">
 
   <div class="text-xl mt-2 mb-5 border-b border-gray-800 pb-5 flex-col" *ngIf="userStore.loggedIn">
-    <div class="w-20 mx-auto"><img
-      src="https://avatars.dicebear.com/api/bottts/{{userStore.username}}.svg"
-      alt="avatar"/></div>
+    <div class="w-20 mx-auto">
+      <img *ngIf="!userStore.avatar"
+           src="https://avatars.dicebear.com/api/bottts/{{userStore.username}}.svg"
+      alt="avatar"/>
+      <img *ngIf="userStore.avatar" src="{{api}}avatar/{{userStore.avatar}}"
+           alt="{{userStore.username}}'s avatar" class="w-20 h-20 rounded-full object-cover" />
+    </div>
     <div>Hello, {{(!userStore.firstName) ? userStore.username : userStore.firstName}}</div>
   </div>
 

@@ -3,7 +3,8 @@ import {encode} from '../services/token.service'
 import {
   createNewUser,
   getUserDetails,
-  loginExistingUser, saveUserDetails,
+  loginExistingUser,
+  saveUserDetails,
   userStats
 } from '../controllers/user.controller'
 import {auth} from "../services/auth.service";

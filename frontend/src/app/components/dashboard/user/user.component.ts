@@ -26,7 +26,7 @@ export class UserComponent implements OnInit {
     private router: Router,
     private df: FormBuilder,
     private userService: UserService,
-    public userStore: UserStore
+    public userStore: UserStore,
   ) {
     this.detailsForm = this.df.group({})
   }
@@ -67,7 +67,7 @@ export class UserComponent implements OnInit {
     formBody.append('lastName', this.detailsForm.value.lastName)
 
     if (this.avatar)
-      formBody.append('avatar', this.avatar, this.userStore.username)
+      formBody.append('avatar', this.avatar)
 
     this.userService.saveUserDetails(formBody).subscribe(
       event => {
@@ -79,6 +79,7 @@ export class UserComponent implements OnInit {
             this.toastService.toast('Details updated.', 'success', 10000)
             this.userStore.firstName = this.detailsForm.value.firstName
             this.userStore.lastName = this.detailsForm.value.lastName
+            this.userService.getUserDetails()
           }
         }
       }

@@ -12,6 +12,7 @@ export class UserStore {
   private _firstName: string
   private _lastName: string
   private _createdAt: any
+  private _avatar: string
   constructor() {
     this._userId = ''
     this._username = ''
@@ -19,6 +20,7 @@ export class UserStore {
     this._firstName = ''
     this._lastName = ''
     this._createdAt = ''
+    this._avatar = ''
   }
 
   set loggedIn(loggedIn: boolean) {
@@ -68,6 +70,13 @@ export class UserStore {
   }
   get createdAt() {
     return this._createdAt
+  }
+
+  set avatar(avatar: string) {
+    this._avatar = avatar
+  }
+  get avatar(): string {
+    return this._avatar
   }
 
 }

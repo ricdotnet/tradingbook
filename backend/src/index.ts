@@ -31,6 +31,8 @@ APP.use(helmet())
 APP.use(cors())
 APP.use(morgan('dev'))
 
+APP.use('/avatar', express.static('uploads/avatar'))
+APP.use('/trade/img', express.static('uploads/trades'))
 APP.use(routes)
 
 /**

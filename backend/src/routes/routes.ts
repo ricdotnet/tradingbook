@@ -2,10 +2,7 @@ import express from "express";
 
 const routes: express.Router = express.Router();
 
-import multer from "multer";
-let formBody = multer({
-  dest: 'uploads/'
-})
+import {formBody} from '../middlewares/multer.middleware'
 
 /**
  * Define routes imports
