@@ -3,12 +3,14 @@ import {encode} from '../services/token.service'
 import {
   createNewUser,
   getUserDetails,
-  loginExistingUser, saveUserDetails,
+  loginExistingUser,
+  saveUserDetails,
   userStats
 } from '../controllers/user.controller'
 import {auth} from "../services/auth.service";
 
 import {RequestInterface} from "../interface/request.interface";
+import {getTrades} from "../middlewares/trade.middleware";
 
 export const userRoutes = express.Router();
 
@@ -36,7 +38,7 @@ userRoutes.post('/details/save', auth, saveUserDetails, (req: RequestInterface, 
   res.status(200).send({status: 200, message: 'Details updated.'})
 })
 
-userRoutes.get('/stats', auth, userStats, (req: RequestInterface, res: Response) => {
+userRoutes.get('/stats', auth, getTrades, userStats, (req: RequestInterface, res: Response) => {
   res.status(200).send({status: 200, body: req.body})
 })
 

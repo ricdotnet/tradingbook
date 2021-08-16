@@ -2,13 +2,14 @@ import express, {Response} from "express";
 import {RequestInterface} from "../interface/request.interface";
 
 import {addOne, deleteOne, getAll, getOne} from "../controllers/trade.controller";
+import {getTrades} from "../middlewares/trade.middleware";
 
 export const tradeRoutes = express.Router()
 
 /**
  * Get all your trades
  */
-tradeRoutes.get('/all', getAll)
+tradeRoutes.get('/all', getTrades, getAll)
 
 /**
  * Get a single trade

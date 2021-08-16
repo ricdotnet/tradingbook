@@ -27,4 +27,9 @@ export class User {
 
   @CreateDateColumn()
   createdAt?: string
+
+  @Column({
+    nullable: true
+  })
+  avatar?: string
 }

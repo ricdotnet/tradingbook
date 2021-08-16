@@ -6,11 +6,12 @@ import {createConnection} from "typeorm";
 
 import * as dotenv from 'dotenv'
 import express from 'express'
-import bodyParser from "body-parser";
 import cors from 'cors'
 import helmet from 'helmet'
+import morgan from 'morgan'
 
 import {routes} from "./routes/routes";
+import {RequestInterface} from "./interface/request.interface";
 
 dotenv.config()
 
@@ -28,7 +29,10 @@ const APP: express.Express = express()
 APP.use(express.json())
 APP.use(helmet())
 APP.use(cors())
+APP.use(morgan('dev'))
 
+APP.use('/avatar', express.static('uploads/avatar'))
+APP.use('/trade/img', express.static('uploads/trades'))
 APP.use(routes)
 
 /**

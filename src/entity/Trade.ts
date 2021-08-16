@@ -18,6 +18,9 @@ export class Trade {
   @Column({type: 'float', precision: 6})
   exit?: number
 
+  @Column({default: 'Long'})
+  type?: string
+
   // auto added
   @CreateDateColumn()
   createdAt?: string
@@ -25,4 +28,7 @@ export class Trade {
   @ManyToOne(() => User, user => user.userId)
   @Column('uuid')
   userId?: string
+
+  // @Column({primary: false, generated: "increment"})
+  // number?: number
 }

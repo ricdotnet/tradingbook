@@ -1,22 +1,16 @@
 import {NextFunction, Response} from "express";
 import {RequestInterface} from "../interface/request.interface";
-import {getConnection} from "typeorm";
+import {getConnection, Like} from "typeorm";
 import {Trade} from "../entity/Trade";
 import {Pair} from '../entity/Pair'
 
 const trade = new Trade();
 
 export async function getAll(req: RequestInterface, res: Response) {
-  trade.userId = req.decoded?.userId
+  let trades = req.result.trades
+  let count = req.result.count
 
-  let trades = await getConnection()
-    .getRepository(Trade)
-    .createQueryBuilder()
-    .where('userId = :id', {id: trade.userId})
-    .orderBy('createdAt', 'DESC')
-    .getMany()
-
-  return res.status(200).send({status: 200, trades})
+  return res.status(200).send({status: 200, trades, count})
 }
 
 export async function getOne(req: RequestInterface, res: Response) {
@@ -38,6 +32,7 @@ export async function addOne(req: RequestInterface, res: Response, next: NextFun
   trade.pairName = req.body.pairName.toLowerCase()
   trade.entry = req.body.entry
   trade.exit = req.body.exit
+  trade.type = req.body.type
 
   if (!trade.userId)
     return res.status(400).send({message: 'User id not provided.'})
@@ -78,7 +73,8 @@ export async function addOne(req: RequestInterface, res: Response, next: NextFun
       pairName: trade.pairName,
       entry: trade.entry,
       exit: trade.exit,
-      userId: trade.userId
+      userId: trade.userId,
+      type: trade.type
     })
     .execute()
 
