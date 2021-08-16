@@ -36,8 +36,10 @@ export class Listeners {
         reportProgress: options.reportProgress,
         observe: options.observe
       })
-      .pipe(share())
-
+      // .pipe(share())
+      .pipe(
+        tap(_ => _)
+      )
     return post
   }
 
@@ -46,9 +48,9 @@ export class Listeners {
       headers: options.headers,
       params: options.parameters
     })
-    .pipe(
-      tap(_ => _)
-    )
+      .pipe(
+        tap(_ => _)
+      )
 
     return get
   }

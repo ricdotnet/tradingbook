@@ -30,7 +30,8 @@ import {PaginationComponent} from './components/pagination/pagination.component'
 import {Helpers} from "./utils/helpers";
 import {UploadComponent} from './components/upload/upload.component';
 import {FooterComponent} from './components/footer/footer.component';
-import {Icons} from './icons'
+import {Icons} from './icons';
+import { AvatarComponent } from './components/avatar/avatar.component'
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {Icons} from './icons'
     NewtradeComponent,
     PaginationComponent,
     UploadComponent,
-    FooterComponent
+    FooterComponent,
+    AvatarComponent
   ],
   imports: [
     BrowserModule,

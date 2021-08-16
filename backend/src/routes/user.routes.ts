@@ -5,7 +5,8 @@ import {
   getUserDetails,
   loginExistingUser,
   saveUserDetails,
-  userStats
+  userStats,
+  saveUserAvatar
 } from '../controllers/user.controller'
 import {auth} from "../services/auth.service";
 
@@ -36,6 +37,10 @@ userRoutes.get('/details', auth, getUserDetails, (req: RequestInterface, res: Re
 userRoutes.post('/details/save', auth, saveUserDetails, (req: RequestInterface, res: Response) => {
 
   res.status(200).send({status: 200, message: 'Details updated.'})
+})
+
+userRoutes.post('/details/save/avatar', auth, saveUserAvatar, (req: RequestInterface, res: Response) => {
+  res.status(200).send({status: 200, message: 'Avatar Updated.'})
 })
 
 userRoutes.get('/stats', auth, getTrades, userStats, (req: RequestInterface, res: Response) => {

@@ -1,10 +1,10 @@
-import {Response, NextFunction} from "express";
-import {getConnection} from "typeorm";
-import {RequestInterface} from "../interface/request.interface";
-import {User} from "../entity/User";
-import * as _ from 'lodash'
+import { Response, NextFunction } from "express";
+import { getConnection } from "typeorm";
+import { RequestInterface } from "../interface/request.interface";
+import { User } from "../entity/User";
+import * as _ from 'lodash';
 
-const user = new User()
+const user = new User();
 
 export async function createNewUser(req: RequestInterface, res: Response, next: NextFunction) {
 
@@ -13,32 +13,32 @@ export async function createNewUser(req: RequestInterface, res: Response, next: 
   user.email = req.body.email;
 
   if (!user.username)
-    return res.status(400).send({message: 'Please enter a username.'})
+    return res.status(400).send({ message: 'Please enter a username.' });
 
   if (!user.password)
-    return res.status(400).send({message: 'Please enter a password.'})
+    return res.status(400).send({ message: 'Please enter a password.' });
 
   if (!user.email)
-    return res.status(400).send({message: 'Please enter an email address.'})
+    return res.status(400).send({ message: 'Please enter an email address.' });
 
   let usernameExists: number = await getConnection()
     .getRepository(User)
     .createQueryBuilder('user')
-    .where('user.username = :username', {username: user.username})
-    .getCount()
+    .where('user.username = :username', { username: user.username })
+    .getCount();
 
   if (usernameExists > 0) {
-    return res.status(400).send({message: 'Username already registered.'})
+    return res.status(400).send({ message: 'Username already registered.' });
   }
 
   let emailExists: number = await getConnection()
     .getRepository(User)
     .createQueryBuilder('user')
-    .where('user.email = :email', {email: user.email})
-    .getCount()
+    .where('user.email = :email', { email: user.email })
+    .getCount();
 
   if (emailExists > 0) {
-    return res.status(400).send({message: 'Email already registered.'})
+    return res.status(400).send({ message: 'Email already registered.' });
   }
 
   await getConnection()
@@ -50,21 +50,21 @@ export async function createNewUser(req: RequestInterface, res: Response, next: 
       password: user.password,
       email: user.email
     })
-    .execute()
+    .execute();
 
-  next()
+  next();
 }
 
 export async function loginExistingUser(req: RequestInterface, res: Response, next: NextFunction) {
 
-  user.username = req.body.username
-  user.password = req.body.password
+  user.username = req.body.username;
+  user.password = req.body.password;
 
   if (!user.username)
-    return res.status(400).send({message: 'Please enter a username.'})
+    return res.status(400).send({ message: 'Please enter a username.' });
 
   if (!user.password)
-    return res.status(400).send({message: 'Please enter a password.'})
+    return res.status(400).send({ message: 'Please enter a password.' });
 
   /**
    * TODO
@@ -75,95 +75,95 @@ export async function loginExistingUser(req: RequestInterface, res: Response, ne
   let curUser = await getConnection()
     .getRepository(User)
     .createQueryBuilder()
-    .where('username = :username', {username: user.username})
-    .getOne()
+    .where('username = :username', { username: user.username })
+    .getOne();
 
   if (!curUser)
-    return res.status(400).send({message: 'No user found with those details.'})
+    return res.status(400).send({ message: 'No user found with those details.' });
 
   if (user.password !== curUser.password)
-    return res.status(400).send({message: 'Wrong password.'})
+    return res.status(400).send({ message: 'Wrong password.' });
 
-  req.userId = curUser.userId
+  req.userId = curUser.userId;
 
-  next()
+  next();
 }
 
 export async function getUserDetails(req: RequestInterface, res: Response, next: NextFunction) {
-  let userId: string = req.decoded!.userId
+  let userId: string = req.decoded!.userId;
 
   if (!userId) {
-    return res.status(400).send({message: 'No user identification present in this token.'})
+    return res.status(400).send({ message: 'No user identification present in this token.' });
   }
 
   req.body = await getConnection()
     .getRepository(User)
     .createQueryBuilder()
     .select(['userId', 'username', 'email', 'firstName', 'lastName', 'createdAt', 'avatar'])
-    .where('userId = :id', {id: userId})
-    .getRawOne()
+    .where('userId = :id', { id: userId })
+    .getRawOne();
 
-  next()
+  next();
 }
 
 export async function userStats(req: RequestInterface, res: Response, next: NextFunction) {
-  let userId: string = req.decoded?.userId
+  let userId: string = req.decoded?.userId;
 
   if (!userId) {
-    return res.status(400).send({message: 'No user identification present in this token.'})
+    return res.status(400).send({ message: 'No user identification present in this token.' });
   }
 
-  let trades = req.result.trades
+  let trades = req.result.trades;
 
   let pipsLost = _.reduce(trades, (acc, count) => {
     let entry = count.entry;
     let exit = count.exit;
 
     if (entry > exit)
-      acc += (entry - exit) * 10000
+      acc += (entry - exit) * 10000;
 
     return acc;
-  }, 0)
+  }, 0);
 
   let pipsWon = _.reduce(trades, (acc, count) => {
     let entry = count.entry;
     let exit = count.exit;
 
     if (entry < exit)
-      acc += (exit - entry) * 10000
+      acc += (exit - entry) * 10000;
 
     return acc;
-  }, 0)
+  }, 0);
 
-  let pairsCount = _.countBy(trades, 'pairName')
+  let pairsCount = _.countBy(trades, 'pairName');
   let topPair = () => {
-    let tempCount = 0
-    let tempPair
+    let tempCount = 0;
+    let tempPair;
     for (let [key, value] of Object.entries(pairsCount)) {
       if (value > tempCount) {
         tempCount = value;
-        tempPair = key
+        tempPair = key;
       }
     }
 
-    return {pair: tempPair, count: tempCount} as Object;
-  }
+    return { pair: tempPair, count: tempCount } as Object;
+  };
 
   let results = {
     wins: 0,
     losses: 0,
     open: 0
-  }
+  };
 
   trades.map((el: { entry: number; exit: number; type: string; }) => {
-    if(((el.entry < el.exit && el.type === 'Long') || (el.entry > el.exit && el.type === 'Short')) && el.exit > 0) {
+    if (((el.entry < el.exit && el.type === 'Long') || (el.entry > el.exit && el.type === 'Short')) && el.exit > 0) {
       results.wins++;
-    } else if(el.exit > 0) {
+    } else if (el.exit > 0) {
       results.losses++;
     } else {
       results.open++;
     }
-  })
+  });
 
   req.body = {
     trades: trades.length,
@@ -171,24 +171,24 @@ export async function userStats(req: RequestInterface, res: Response, next: Next
     pipsWon: Math.round(pipsWon),
     pipsLost: Math.round(pipsLost),
     results: results
-  }
+  };
 
-  next()
+  next();
 }
 
 export async function saveUserDetails(req: RequestInterface, res: Response, next: NextFunction) {
-  let userId: string = req.decoded!.userId
+  let userId: string = req.decoded!.userId;
 
   if (!userId) {
-    return res.status(400).send({message: 'No user identification present in this token.'})
+    return res.status(400).send({ message: 'No user identification present in this token.' });
   }
 
-  let firstName: string = req.body.firstName
-  let lastName: string = req.body.lastName
-  let avatar: string = ''
+  let firstName: string = req.body.firstName;
+  let lastName: string = req.body.lastName;
+  let avatar: string = '';
 
-  let files: any = req.files
-  files.map((el: any) => { avatar = el.filename })
+  let files: any = req.files;
+  files.map((el: any) => { avatar = el.filename; });
 
   await getConnection()
     .createQueryBuilder()
@@ -198,8 +198,33 @@ export async function saveUserDetails(req: RequestInterface, res: Response, next
       lastName: lastName,
       avatar: avatar
     })
-    .where('userId = :id', {id: userId})
-    .execute()
+    .where('userId = :id', { id: userId })
+    .execute();
 
-  next()
+  next();
+}
+
+export async function saveUserAvatar(req: RequestInterface, res: Response, next: NextFunction) {
+  let userId: string = req.decoded!.userId;
+
+  if (!userId) {
+    return res.status(400).send({ message: 'No user identification present in this token.' });
+  }
+
+  // TODO: refactor repeating code... use helper function
+  let avatar: string = '';
+
+  let files: any = req.files;
+  files.map((el: any) => { avatar = el.filename; });
+
+  await getConnection()
+    .createQueryBuilder()
+    .update(User)
+    .set({
+      avatar: avatar
+    })
+    .where('userId = :id', { id: userId })
+    .execute();
+
+  next();
 }
