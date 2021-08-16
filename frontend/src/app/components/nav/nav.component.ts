@@ -1,42 +1,42 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {UserStore} from 'src/app/store/user.store';
 import {GlobalStore} from "../../store/global.store";
 import {environment} from "../../../environments/environment";
-import {Listeners} from "../../utils/listeners";
 import {AvatarService} from "../../services/avatar/avatar.service";
+import {Subscription} from "rxjs";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html'
 })
-export class NavComponent {
+export class NavComponent implements OnInit, OnDestroy {
 
   api: string = ''
-  _newAvatar: boolean = false
+
+  subscription: Subscription | undefined;
+  avatarForm: FormGroup
 
   constructor(
     public userStore: UserStore,
     public globalStore: GlobalStore,
-    private listeners: Listeners,
-    public avatarService: AvatarService
+    public avatarService: AvatarService,
+    private form: FormBuilder
   ) {
     this.api = environment.apiUrl
-
-    listeners.useDOMEvent({
-      event: 'keyup',
-      func: (e: KeyboardEvent) => {
-        if (e.key === 'Escape' && this._newAvatar) {
-          this.closeModal()
-        }
-      }
-    });
+    this.avatarForm = form.group({
+      avatar: ''
+    })
   }
 
-  openModal() {
-    this._newAvatar = true
+  ngOnInit() {
+    this.subscription = this.avatarService.avatar$.subscribe(
+      _ => {this.avatarForm.reset()}
+    )
   }
-  closeModal() {
-    this._newAvatar = false
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe()
   }
 
 }

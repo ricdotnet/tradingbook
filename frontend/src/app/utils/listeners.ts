@@ -2,6 +2,7 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 import {catchError, share, tap} from "rxjs/operators";
+import {Observable} from "rxjs";
 
 interface EventListener {
   [key: string]: any
@@ -28,7 +29,7 @@ export class Listeners {
     window.addEventListener(events.event, events.func, false)
   }
 
-  post<RequestBody>(options: RequestOptions<RequestBody>) {
+  post<RequestBody>(options: RequestOptions<RequestBody>): Observable<any> {
     let post = this._http.post(`${environment.apiUrl}${options.uri}`, options.body,
       {
         params: options.parameters,

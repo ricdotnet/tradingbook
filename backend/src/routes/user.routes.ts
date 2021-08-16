@@ -13,6 +13,8 @@ import {auth} from "../services/auth.service";
 import {RequestInterface} from "../interface/request.interface";
 import {getTrades} from "../middlewares/trade.middleware";
 
+import fs from 'fs'
+
 export const userRoutes = express.Router();
 
 userRoutes.post('/login', loginExistingUser, (req: RequestInterface, res: Response) => {
@@ -40,7 +42,17 @@ userRoutes.post('/details/save', auth, saveUserDetails, (req: RequestInterface, 
 })
 
 userRoutes.post('/details/save/avatar', auth, saveUserAvatar, (req: RequestInterface, res: Response) => {
-  res.status(200).send({status: 200, message: 'Avatar Updated.'})
+
+  let {newAvatar, oldAvatar} = req.avatar
+
+  if(oldAvatar) {
+    fs.unlink(`uploads/avatar/${oldAvatar.avatar}`, (err) => {
+      if (err)
+        console.log(err)
+    })
+  }
+
+  res.status(200).send({status: 200, message: 'Avatar Updated.', avatar: newAvatar})
 })
 
 userRoutes.get('/stats', auth, getTrades, userStats, (req: RequestInterface, res: Response) => {
