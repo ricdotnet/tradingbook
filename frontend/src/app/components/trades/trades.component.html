@@ -6,6 +6,10 @@
     <app-newtrade></app-newtrade>
   </app-modal>
 
+  <app-modal [_show]="_tradeId !== ''">
+    <app-trade [tradeId]="_tradeId"></app-trade>
+  </app-modal>
+
   <div *ngIf="!_loading" class="w-1/2 mx-auto mt-10">
     <div class="mb-20">
       <form (submit)="$event.preventDefault()" [formGroup]="tradeForm">
@@ -21,7 +25,7 @@
       </form>
     </div>
 
-    <!--    <button (click)="openModal()" class="btn-submit focus:outline-none">Show</button>-->
+        <button (click)="newTrade()" class="btn-submit focus:outline-none">Show</button>
     <table class="w-full text-center">
       <tr class="border border-gray-800">
         <th colspan="5" class="p-5">
@@ -47,14 +51,15 @@
 
       <tbody *ngIf="_tableLoading">... loading ...</tbody>
       <tbody *ngIf="!_tableLoading">
-        <tr *ngFor="let trade of trades">
+      <tr *ngFor="let trade of trades" class="hover:bg-gray-200 hover:cursor-pointer"
+          (click)="viewTrade(trade.tradeId)">
           <td class="border border-gray-800">{{trade.pairName}}</td>
           <td class="border border-gray-800">{{trade.entry}}</td>
           <td class="border border-gray-800">{{trade.exit}}</td>
           <td class="border border-gray-800">{{trade.type}}</td>
           <td
             class="border border-gray-800">{{tradeStatus(trade.type, trade.entry, (trade.exit) ? trade.exit : 0)}}</td>
-        </tr>
+      </tr>
       </tbody>
     </table>
 

@@ -31,7 +31,8 @@ import {Helpers} from "./utils/helpers";
 import {UploadComponent} from './components/upload/upload.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {Icons} from './icons';
-import { AvatarComponent } from './components/avatar/avatar.component'
+import { AvatarComponent } from './components/avatar/avatar.component';
+import { TradeComponent } from './components/trades/trade/trade.component'
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { AvatarComponent } from './components/avatar/avatar.component'
     PaginationComponent,
     UploadComponent,
     FooterComponent,
-    AvatarComponent
+    AvatarComponent,
+    TradeComponent
   ],
   imports: [
     BrowserModule,

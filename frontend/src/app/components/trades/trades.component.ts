@@ -28,6 +28,8 @@ export class TradesComponent implements OnInit {
   tradeForm: FormGroup
   filtersForm: FormGroup
 
+  _tradeId: string = ''
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -49,14 +51,7 @@ export class TradesComponent implements OnInit {
       search: <string>''
     })
 
-    listeners.useDOMEvent({
-      event: 'keyup',
-      func: (e: KeyboardEvent) => {
-        if (e.key === 'Escape' && this._newTrade) {
-          this.closeModal()
-        }
-      }
-    });
+    this.keyEvents()
   }
 
   ngOnInit(): void {
@@ -123,15 +118,6 @@ export class TradesComponent implements OnInit {
         this.toastService.toast(err.error.message, 'error', 10000)
       }
     )
-  }
-
-
-  openModal() {
-    this._newTrade = true
-  }
-
-  closeModal() {
-    this._newTrade = false
   }
 
   /**
@@ -215,6 +201,52 @@ export class TradesComponent implements OnInit {
 
   tradeStatus(type: string, entry: number, exit?: number) {
     return this.helpers.tradeStatus(type, entry, exit)
+  }
+
+  /**
+   * Modals
+   */
+  viewTrade(trade: string) {
+    this._tradeId = trade
+  }
+
+  newTrade() {
+    this._newTrade = true
+  }
+
+  /**
+   * Key events
+   */
+  keyEvents() {
+    let newTrade = {
+      event: 'keyup',
+      func: (e: KeyboardEvent) => {
+        if (e.key === 'Escape' && this._newTrade) {
+          this._newTrade = false
+        }
+      }
+    }
+
+    let viewTrade = {
+      event: 'keyup',
+      func: (e: KeyboardEvent) => {
+        if(e.key === 'Escape') {
+          this._tradeId = ''
+        }
+      }
+    }
+
+    let mouseEvent = {
+      event: 'mousedown',
+      func: (e: MouseEvent) => {
+        // if(!e.composedPath().includes('#modal-inside')) {
+        //
+        // }
+        console.log(e.srcElement)
+      }
+    }
+
+    this.listeners.useDOMEvent([newTrade, viewTrade, mouseEvent]);
   }
 
 }

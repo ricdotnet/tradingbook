@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
-import {catchError, share, tap} from "rxjs/operators";
+import {tap} from "rxjs/operators";
 import {Observable} from "rxjs";
 
 interface EventListener {
@@ -25,8 +25,10 @@ export class Listeners {
   ) {
   }
 
-  useDOMEvent(events: EventListener) {
-    window.addEventListener(events.event, events.func, false)
+  useDOMEvent(events: Array<EventListener>) {
+    events.forEach((ev) => {
+      window.addEventListener(ev.event, ev.func, false)
+    })
   }
 
   post<RequestBody>(options: RequestOptions<RequestBody>): Observable<any> {

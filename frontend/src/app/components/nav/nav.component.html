@@ -10,10 +10,11 @@
            alt="{{userStore.username}}'s avatar" class="w-20 h-20 rounded-full object-cover"/>
 
       <div
-        class="absolute right-0 bottom-0 rounded-full cursor-pointer focus:outline-none bg-gray-900 p-1">
+        class="absolute right-0 bottom-0 rounded-full cursor-pointer focus:outline-none bg-gray-900 p-1
+          hover:text-white transition ease-in-out text-gray-500">
         <form [formGroup]="avatarForm">
           <label for="avatar" class="cursor-pointer">
-            <camera-icon [classes]="'w-4 h-4 text-gray-500'"></camera-icon>
+            <camera-icon [classes]="'w-4 h-4'"></camera-icon>
           </label>
 
           <input type="file" class="hidden" id="avatar" formControlName="avatar"
