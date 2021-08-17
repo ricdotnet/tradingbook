@@ -239,14 +239,19 @@ export class TradesComponent implements OnInit {
     let mouseEvent = {
       event: 'mousedown',
       func: (e: MouseEvent) => {
-        // if(!e.composedPath().includes('#modal-inside')) {
-        //
-        // }
-        console.log(e.srcElement)
+        let target = <Target><unknown>e.target
+        if(target.id === 'modal-out') {
+          if(this._newTrade) this._newTrade = false
+          if(this._tradeId !== '') this._tradeId = ''
+        }
       }
     }
 
     this.listeners.useDOMEvent([newTrade, viewTrade, mouseEvent]);
   }
 
+}
+
+interface Target {
+  id: Object
 }
