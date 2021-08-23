@@ -23,7 +23,7 @@ export class TradesComponent implements OnInit {
   _newTrade: boolean = false
   _pageNumber: number = 1
   _pages: number = 1
-  _take: number = 10
+  _take: number = 20
   _search: string | undefined
   tradeForm: FormGroup
   filtersForm: FormGroup
@@ -47,7 +47,7 @@ export class TradesComponent implements OnInit {
     })
 
     this.filtersForm = tf.group({
-      take: <number>10,
+      take: <number>20,
       search: <string>''
     })
 

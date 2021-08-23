@@ -19,7 +19,7 @@ input:disabled {
 global buttons style
  */
 .btn-submit {
-    @apply px-5 py-2 rounded-sm bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-medium uppercase shadow
+    @apply px-5 py-2 rounded-sm bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-medium uppercase shadow focus:outline-none
 }
 
 /**
@@ -30,5 +30,5 @@ forms styling
 }
 
 .input-general {
-    @apply rounded-sm bg-gray-100 py-3 px-4
+    @apply rounded-sm bg-gray-100 py-2 focus:outline-none shadow-sm
 }
