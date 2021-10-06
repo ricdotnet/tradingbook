@@ -47,8 +47,9 @@ userRoutes.post('/details/save/avatar', auth, saveUserAvatar, (req: RequestInter
 
   if(oldAvatar) {
     fs.unlink(`uploads/avatar/${oldAvatar.avatar}`, (err) => {
-      if (err)
+      if (err) {
         console.log(err)
+      }
     })
   }
 
